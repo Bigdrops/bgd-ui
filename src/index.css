@@ -1,0 +1,545 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --parchment: #f3f1ed;
+    --pure-white: #ffffff;
+    --ink-black: #181011;
+    --charcoal: #222222;
+    --aubergine: #302023;
+    --ash: #aaaaaa;
+    --dim: #666666;
+    --bone: #d8d4d4;
+
+    --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+
+    --radius: 4px;
+    --radius-pill: 100px;
+  }
+
+  * {
+    border-color: var(--bone);
+  }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink-black);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--ink-black);
+    color: var(--parchment);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ── Typography ── */
+@layer utilities {
+  .typo-eyebrow {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 1.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-black);
+  }
+
+  .typo-label {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 1.3;
+    color: var(--ash);
+  }
+
+  .typo-body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--charcoal);
+  }
+
+  .typo-heading {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink-black);
+  }
+
+  .typo-heading-sm {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--ink-black);
+  }
+}
+
+/* ── Surfaces ── */
+@layer utilities {
+  .surface-card {
+    background: var(--pure-white);
+    border: 1px solid var(--bone);
+    border-radius: var(--radius);
+  }
+
+  .surface-dark {
+    background: var(--aubergine);
+    color: var(--parchment);
+    border-radius: var(--radius);
+  }
+
+  .surface-parchment {
+    background: var(--parchment);
+  }
+}
+
+/* ── Buttons ── */
+@layer utilities {
+  .btn-pill {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 14px;
+    padding: 8px 20px;
+    border: 1px solid var(--ink-black);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--ink-black);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-pill:hover {
+    background: var(--ink-black);
+    color: var(--parchment);
+  }
+
+  .btn-square {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 14px;
+    padding: 4px 16px;
+    border: 1px solid var(--ink-black);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ink-black);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-square:hover {
+    background: var(--ink-black);
+    color: var(--parchment);
+  }
+
+  .btn-dark {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--ink-black);
+    color: var(--parchment);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+  }
+
+  .btn-dark:hover {
+    background: var(--aubergine);
+  }
+
+  .btn-dark:active {
+    transform: scale(0.98);
+  }
+
+  .btn-ghost {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 13px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ash);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(24, 16, 17, 0.05);
+    color: var(--ink-black);
+  }
+
+  .btn-icon {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--ash);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-icon:hover {
+    background: rgba(24, 16, 17, 0.05);
+    color: var(--ink-black);
+  }
+
+  .btn-icon-sm {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* ── Inputs ── */
+@layer utilities {
+  .input-field {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--bone);
+    padding: 8px 0;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ink-black);
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+    border-radius: 0;
+  }
+
+  .input-field:focus {
+    border-bottom-color: var(--ink-black);
+    border-bottom-width: 2px;
+    padding-bottom: 7px;
+  }
+
+  .input-field::placeholder {
+    color: var(--ash);
+  }
+
+  .input-field-sm {
+    font-size: 13px;
+    padding: 5px 0;
+  }
+
+  .input-field-sm:focus {
+    padding-bottom: 4px;
+  }
+
+  .input-field-right {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .input-select {
+    appearance: none;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--bone);
+    padding: 5px 24px 5px 0;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--ink-black);
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23181011' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    border-radius: 0;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-select:focus {
+    border-bottom-color: var(--ink-black);
+    border-bottom-width: 2px;
+    padding-bottom: 4px;
+  }
+
+  .input-textarea {
+    background: var(--parchment);
+    border: 1px solid var(--bone);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-black);
+    resize: vertical;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-textarea:focus {
+    border-color: var(--ink-black);
+  }
+
+  .input-textarea::placeholder {
+    color: var(--ash);
+  }
+}
+
+/* ── Badges ── */
+@layer utilities {
+  .badge {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: var(--radius);
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.4;
+  }
+
+  .badge-white {
+    background: var(--pure-white);
+    color: var(--ink-black);
+    border: 1px solid var(--bone);
+  }
+
+  .badge-dark {
+    background: var(--ink-black);
+    color: var(--parchment);
+  }
+
+  .badge-muted {
+    background: var(--parchment);
+    color: var(--ash);
+  }
+}
+
+/* ── Toggle Group ── */
+.toggle-group {
+  display: flex;
+  border: 1px solid var(--bone);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.toggle-item {
+  flex: 1;
+  height: 32px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 12px;
+  background: transparent;
+  color: var(--ash);
+  border: none;
+  border-right: 1px solid var(--bone);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.toggle-item:last-child {
+  border-right: none;
+}
+
+.toggle-item-active {
+  background: var(--ink-black);
+  color: var(--parchment);
+}
+
+.toggle-item:hover:not(.toggle-item-active) {
+  background: rgba(24, 16, 17, 0.03);
+}
+
+/* ── Context Menu ── */
+.context-menu {
+  position: absolute;
+  background: var(--pure-white);
+  border: 1px solid var(--bone);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  z-index: 50;
+  padding: 4px;
+  animation: fade-in-up 0.15s ease-out;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--ink-black);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+
+.context-menu-item:hover {
+  background: rgba(24, 16, 17, 0.04);
+}
+
+.context-menu-item-destructive {
+  color: #b91c1c;
+}
+
+.context-menu-item-destructive:hover {
+  background: #fef2f2;
+}
+
+.context-menu-divider {
+  height: 1px;
+  background: var(--bone);
+  margin: 4px 0;
+}
+
+/* ── Floating Save ── */
+.floating-save {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 50;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--ink-black);
+  background: var(--ink-black);
+  color: var(--parchment);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.floating-save:hover {
+  background: var(--aubergine);
+  transform: scale(1.05);
+}
+
+.floating-save:active {
+  transform: scale(0.95);
+}
+
+/* ── Scrollbar ── */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bone) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--bone);
+  border-radius: 2px;
+}
+
+/* ── Number inputs ── */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--ink-black);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Animations ── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in-up 0.25s ease-out forwards;
+}
+
+/* ── Action Row (inline buttons below item) ── */
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0 0;
+  border-top: 1px solid var(--bone);
+  margin-top: 12px;
+}
+
+.action-row button {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 12px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ash);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.1s, color 0.1s;
+}
+
+.action-row button:hover {
+  background: rgba(24, 16, 17, 0.05);
+  color: var(--ink-black);
+}
+
+.action-row button.action-destructive {
+  color: #b91c1c;
+}
+
+.action-row button.action-destructive:hover {
+  background: #fef2f2;
+}
