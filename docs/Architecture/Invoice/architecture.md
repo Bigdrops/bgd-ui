@@ -216,7 +216,7 @@ UI Re-render
 
 | Step | Action |
 |------|--------|
-| 1 | Select one design reference from `docs/DESIGNMD/` |
+| 1 | Select one design reference from `docs/Designs/` |
 | 2 | Create workspace folder in `src/workspaces/invoice/<name>/` |
 | 3 | Implement all required components |
 | 4 | Define workspace-specific CSS in `index.css` |

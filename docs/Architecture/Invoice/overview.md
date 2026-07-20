@@ -1,5 +1,11 @@
 # Invoice Workspace — Product Overview
 
+**Version:** 1.0
+**Date:** 2026-07-20
+**Status:** Draft
+
+---
+
 ## Purpose
 
 The Invoice Workspace is a mobile-first document creation tool. It enables users to create, edit, and manage invoices within the BIGDROPS product suite.
@@ -79,3 +85,11 @@ This documentation does not cover:
 - Database schema
 - Deployment infrastructure
 - User authentication or authorization
+
+---
+
+## Document Changelog
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | 2026-07-20 | MiMoCode | Initial creation |

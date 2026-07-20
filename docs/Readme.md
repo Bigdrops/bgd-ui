@@ -4,6 +4,8 @@ This folder contains all product documentation.
 
 A building needs three things: a blueprint, construction materials, and finishing. Software follows the same idea. The docs folder is organised around this principle.
 
+For agent documentation standards and writing conventions, see `agents.md`.
+
 ---
 
 ## Folder Structure
@@ -11,9 +13,9 @@ A building needs three things: a blueprint, construction materials, and finishin
 ```
 docs/
 ├── Architecture/     Blueprint — behaviour and rules
-├── Designs/          Paint — visual language and appearance
+├── Designs/          Visual language — appearance and finishing
 ├── Masonry-yard/     Materials — reusable implementation assets
-└── Patterns/         Recurring interaction structures
+└── DESIGNMD/         Empty — legacy folder, use Designs/ instead
 ```
 
 ---
@@ -34,7 +36,7 @@ Current specifications:
 
 ## Designs
 
-**The paint and finishing.**
+**The visual language.**
 
 Each design document defines a complete visual language. It covers colours, typography, spacing, borders, corner radius, elevation, surfaces, component appearance, interaction language, and visual personality.
 
@@ -86,22 +88,8 @@ Applications must never reference this folder directly. It is a reference for ma
 
 ---
 
-## Patterns
+## DESIGNMD
 
-**Recurring interaction structures.**
+**Legacy folder.**
 
-The `Patterns/` folder contains documented interaction patterns used across workspaces. Each pattern defines a consistent structure for a specific UI concern.
-
-Current patterns:
-
-- Commercial Settings
-- Confirmation Dialog
-- Floating Save
-- Group Container
-- Header Fields
-- Image Picker
-- Line Item Card
-- Mobile Form
-- Signature Picker
-- Totals Panel
-- Workspace Gallery
+The `DESIGNMD/` folder is empty. It exists for backwards compatibility only. Use `Designs/` instead.
