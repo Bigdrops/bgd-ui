@@ -5,6 +5,8 @@
 This document is the authoritative reference for every AI agent making changes to this repository. Read it before writing code. Follow it without exception.
 
 ---
+this repo is bun
+use bun run build, dev or whatever, don't use NPM or yarn or shit 
 
 ## 1. Repository Philosophy
 
