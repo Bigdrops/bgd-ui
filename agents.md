@@ -185,11 +185,12 @@ Before completing any task:
 │   ├── types/
 │   └── workspaces/invoice/
 ├── docs/
-│   ├── Architecture/      Product specifications
+│   ├── Workspace-spec/    Workspace-specific product specs
 │   ├── Designs/           Visual language references
 │   ├── Masonry-yard/      Reusable implementation assets
 │   │   ├── reui/          Local REUI snapshot
 │   │   └── reui-upstream/ Upstream reference
+│   ├── ADR/               Architecture decision records
 │   └── DESIGNMD/          Legacy — use Designs/
 └── dist/
 ```
@@ -249,22 +250,28 @@ Before creating or modifying documentation, agents must:
 4. Cross-reference related documents instead of duplicating information.
 5. Keep terminology consistent across the repository.
 6. Update links when files move.
-7. Preserve the Architecture → Designs → Masonry-yard → Patterns separation of responsibilities.
+7. Preserve the Workspace-spec → Designs → Masonry-yard → Patterns separation of responsibilities.
 
 ### Folder Responsibilities
 
 | Folder | Defines | Source of Truth For |
 |--------|---------|---------------------|
-| `docs/Architecture/` | Behaviour | Business rules, calculations, workflows, interaction specifications, navigation, state management, validation |
+| `docs/Workspace-spec/` | Behaviour | Business rules, calculations, workflows, interaction specifications, navigation, state management, validation |
 | `docs/Designs/` | Appearance | Colour systems, typography, spacing, surfaces, borders, radii, elevation, component styling, visual language |
 | `docs/Masonry-yard/` | Implementation assets | Component libraries, layouts, templates, hooks, utilities, interaction primitives |
 | `docs/Patterns/` | UX solutions | Floating save, mobile forms, image picker, confirmation dialog, totals panel, line item card |
+
+### Scope
+
+- `docs/Workspace-spec/` contains workspace-specific product specifications (fields, behaviours, calculations).
+- It does not contain system architecture.
+- Platform architecture decisions are recorded in `docs/ADR/`.
 
 ### Cross-Referencing
 
 Agents must cross-reference existing documentation whenever possible.
 
-- Reference Architecture documents when implementing behaviour.
+- Reference Workspace-spec documents when implementing workspace behaviour.
 - Reference Design documents when implementing visual styles.
 - Reference Masonry-yard documents when using reusable components.
 - Reference Pattern documents when implementing recurring UI solutions.
@@ -321,3 +328,12 @@ Example: `2026-07-20-fix-reui-upstream.md`
 - Write reports in ADS-STE100 style.
 - Save reports immediately after task completion.
 - Do not skip reports for small tasks.
+
+---
+
+## Changelog
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-20 | Initial creation | AI |
+| 2026-07-20 | Replaced `docs/Architecture/` with `docs/Workspace-spec/` throughout. Added scope note distinguishing workspace specs from platform architecture (ADR). | AI |

@@ -7,8 +7,6 @@ owner: "Bigdrops"
 priority: "high"
 style_reference:
   - "docs/Designs"
-architecture_reference:
-  - "docs/Architecture"
 agent_reference:
   - "AGENTS.md"
 last_updated: "2026-07-20"
@@ -616,7 +614,7 @@ app/
 │       └── database/
 ├── docs/
 │   ├── PRD.md
-│   ├── Architecture/
+│   ├── Glossary.md
 │   ├── Designs/
 │   ├── Masonry-yard/
 │   └── ADR/
@@ -840,3 +838,4 @@ A feature is complete only when:
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-07-20 | Initial draft | AI |
+| 2026-07-20 | Removed workspace-specific documentation paths from PRD. The PRD describes the platform, not individual workspaces. | AI |
