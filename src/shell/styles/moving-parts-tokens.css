@@ -1,0 +1,55 @@
+.moving-parts-shell {
+  /* ─── Colors ─── */
+  --mp-color-electric: #0000ff;
+  --mp-color-onyx: #000000;
+  --mp-color-pure: #ffffff;
+  --mp-color-carbon: #121212;
+  --mp-color-slate: #1e1e1e;
+  --mp-color-fog: #bcc1c7;
+  --mp-color-ash: #999999;
+  --mp-color-smoke: #cfcfcf;
+  --mp-color-bone: #efefef;
+  --mp-color-chalk: #f4f4f4;
+  --mp-color-yellow: #fffc52;
+
+  /* ─── Typography ─── */
+  --mp-font-display: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mp-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --mp-font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+  /* ─── Spacing ─── */
+  --mp-space-4: 4px;
+  --mp-space-8: 8px;
+  --mp-space-12: 12px;
+  --mp-space-16: 16px;
+  --mp-space-20: 20px;
+  --mp-space-24: 24px;
+  --mp-space-32: 32px;
+  --mp-space-40: 40px;
+  --mp-space-48: 48px;
+  --mp-space-56: 56px;
+  --mp-space-64: 64px;
+  --mp-space-80: 80px;
+
+  /* ─── Layout ─── */
+  --mp-max-width: 1200px;
+  --mp-layout-section-gap: 80px;
+  --mp-layout-card-padding: 30px;
+
+  /* ─── Border Radius ─── */
+  --mp-radius-hero: 76px;
+  --mp-radius-pill: 9999px;
+  --mp-radius-cards: 90px;
+  --mp-radius-buttons: 18px;
+  --mp-radius-large-cards: 106px;
+  --mp-radius-small: 3px;
+
+  /* ─── Shadows ─── */
+  --mp-shadow-xl: 0 15px 20px 30px rgba(0, 0, 0, 0.3);
+
+  /* ─── Surfaces ─── */
+  --mp-surface-canvas: #ffffff;
+  --mp-surface-carbon: #121212;
+  --mp-surface-slate: #1e1e1e;
+  --mp-surface-yellow: #fffc52;
+}
