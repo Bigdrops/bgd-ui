@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>BGD UI · Workspace Gallery</title>
+
+    <!-- Google Fonts: Playfair Display + Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ══════════════════════════════════════════════════════════════
+           BGD UI SHELL — Design Tokens
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell {
+            /* ── Colors ── */
+            --bgd-color-ink: #191b1f;
+            --bgd-color-paper: #ffffff;
+            --bgd-color-mist: #f6f9f9;
+            --bgd-color-fog: #9fabad;
+            --bgd-color-hairline: #e6ebec;
+            --bgd-color-teal: #186f64;
+            --bgd-color-teal-light: #2a9d8f;
+
+            /* ── Typography ── */
+            --bgd-font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            --bgd-font-display: 'Playfair Display', ui-serif, 'Times New Roman', serif;
+            --bgd-font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+            /* ── Spacing ── */
+            --bgd-space-4: 4px;
+            --bgd-space-8: 8px;
+            --bgd-space-12: 12px;
+            --bgd-space-16: 16px;
+            --bgd-space-24: 24px;
+            --bgd-space-32: 32px;
+            --bgd-space-48: 48px;
+            --bgd-space-64: 64px;
+            --bgd-space-72: 72px;
+
+            /* ── Layout ── */
+            --bgd-max-width: 1200px;
+            --bgd-section-gap: 64px;
+
+            /* ── Border Radius ── */
+            --bgd-radius: 2px;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           RESET — Scoped to shell only
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell,
+        .bgd-shell * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bgd-shell {
+            font-family: var(--bgd-font-body);
+            background: var(--bgd-color-paper);
+            color: var(--bgd-color-ink);
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .bgd-shell ::selection {
+            background: var(--bgd-color-teal);
+            color: var(--bgd-color-paper);
+        }
+
+        .bgd-shell :focus-visible {
+            outline: 2px solid var(--bgd-color-teal);
+            outline-offset: 2px;
+        }
+
+        .bgd-shell button,
+        .bgd-shell .clickable,
+        .bgd-shell [role="button"] {
+            touch-action: manipulation;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .bgd-shell * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           SCROLLBAR
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell ::-webkit-scrollbar { width: 5px; height: 5px; }
+        .bgd-shell ::-webkit-scrollbar-track { background: var(--bgd-color-mist); }
+        .bgd-shell ::-webkit-scrollbar-thumb { background: var(--bgd-color-ink); border-radius: 2px; }
+
+        /* ══════════════════════════════════════════════════════════════
+           ANIMATIONS
+           ══════════════════════════════════════════════════════════════ */
+        @keyframes bgdFadeUp {
+            0% { opacity: 0; transform: translateY(24px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bgdScaleIn {
+            0% { opacity: 0; transform: scale(0.97); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes bgdFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(1.5deg); }
+        }
+        @keyframes bgdSweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(220%); }
+        }
+
+        .bgd-shell .animate-fade-up { animation: bgdFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards; opacity: 0; }
+        .bgd-shell .animate-fade-up.d1 { animation-delay: 0.05s; }
+        .bgd-shell .animate-fade-up.d2 { animation-delay: 0.12s; }
+        .bgd-shell .animate-fade-up.d3 { animation-delay: 0.19s; }
+
+        /* Auto-staggered grid reveal — scales to any card count, no manual classes */
+        .bgd-shell .bgd-shot-grid > .bgd-shot { animation: bgdScaleIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; opacity: 0; }
+        .bgd-shell .bgd-shot-grid > .bgd-shot:nth-child(1) { animation-delay: 0.04s; }
+        .bgd-shell .bgd-shot-grid > .bgd-shot:nth-child(2) { animation-delay: 0.09s; }
+        .bgd-shell .bgd-shot-grid > .bgd-shot:nth-child(3) { animation-delay: 0.14s; }
+        .bgd-shell .bgd-shot-grid > .bgd-shot:nth-child(4) { animation-delay: 0.19s; }
+        .bgd-shell .bgd-shot-grid > .bgd-shot:nth-child(5) { animation-delay: 0.24s; }
+        .bgd-shell .bgd-shot-grid > .bgd-shot:nth-child(6) { animation-delay: 0.29s; }
+        .bgd-shell .bgd-shot-grid > .bgd-shot:nth-child(n+7) { animation-delay: 0.32s; }
+
+        /* ══════════════════════════════════════════════════════════════
+           CONTAINER
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-container { max-width: var(--bgd-max-width); margin: 0 auto; padding: 0 var(--bgd-space-16); width: 100%; }
+        @media (min-width: 768px) { .bgd-shell .bgd-container { padding: 0 var(--bgd-space-32); } }
+        @media (min-width: 1024px) { .bgd-shell .bgd-container { padding: 0 var(--bgd-space-48); } }
+
+        /* ══════════════════════════════════════════════════════════════
+           NAVIGATION
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--bgd-space-16) 0;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 30;
+            transition: background 0.3s ease, border-bottom 0.3s ease;
+            background: transparent;
+            color: var(--bgd-color-paper);
+        }
+        .bgd-shell .bgd-nav.scrolled {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(10px);
+            color: var(--bgd-color-ink);
+            border-bottom: 1px solid var(--bgd-color-hairline);
+        }
+        .bgd-shell .bgd-nav .bgd-brand {
+            font-family: var(--bgd-font-display);
+            font-weight: 600;
+            font-size: 22px;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--bgd-space-12);
+            color: inherit;
+        }
+        .bgd-shell .bgd-nav .bgd-brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px; height: 30px;
+            border: 1.5px solid currentColor;
+            border-radius: var(--bgd-radius);
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .bgd-shell .bgd-nav .bgd-brand-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 220deg, transparent 0deg, currentColor 0deg 90deg, transparent 90deg);
+            opacity: 0.25;
+        }
+        .bgd-shell .bgd-nav-links { display: none; align-items: center; gap: var(--bgd-space-24); }
+        @media (min-width: 768px) {
+            .bgd-shell .bgd-nav-links { display: flex; }
+            .bgd-shell .bgd-hamburger { display: none !important; }
+        }
+        .bgd-shell .bgd-nav-link {
+            font-family: var(--bgd-font-body);
+            font-weight: 400;
+            font-size: 13px;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+            letter-spacing: 0.02em;
+            color: inherit;
+            opacity: 0.7;
+            padding: var(--bgd-space-8);
+        }
+        .bgd-shell .bgd-nav-link:hover, .bgd-shell .bgd-nav-link:focus { opacity: 1; }
+        .bgd-shell .bgd-nav-actions { display: flex; align-items: center; gap: var(--bgd-space-12); }
+
+        .bgd-shell .btn-ghost {
+            background: transparent;
+            color: inherit;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--bgd-radius);
+            padding: 8px 20px;
+            font-family: var(--bgd-font-body);
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            min-height: 40px;
+        }
+        .bgd-shell .bgd-nav.scrolled .btn-ghost { border-color: var(--bgd-color-hairline); color: var(--bgd-color-ink); }
+        .bgd-shell .btn-ghost:hover, .bgd-shell .btn-ghost:focus { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.6); }
+        .bgd-shell .bgd-nav.scrolled .btn-ghost:hover, .bgd-shell .bgd-nav.scrolled .btn-ghost:focus { background: var(--bgd-color-mist); border-color: var(--bgd-color-ink); }
+
+        .bgd-shell .search-toggle {
+            background: none; border: none;
+            font-family: var(--bgd-font-body);
+            font-weight: 400; font-size: 13px;
+            color: inherit; cursor: pointer;
+            padding: 4px 8px;
+            transition: opacity 0.2s ease;
+            touch-action: manipulation;
+            opacity: 0.6;
+            min-height: 44px; min-width: 44px;
+        }
+        .bgd-shell .search-toggle:hover, .bgd-shell .search-toggle:focus { opacity: 1; }
+
+        .bgd-shell .bgd-hamburger {
+            display: flex; align-items: center; justify-content: center;
+            width: 44px; height: 44px;
+            padding: 0; background: transparent; border: none;
+            cursor: pointer; touch-action: manipulation; position: relative;
+        }
+        .bgd-shell .bgd-hamburger span {
+            display: block; width: 22px; height: 1.5px;
+            background: currentColor; border-radius: 1px;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            position: absolute;
+        }
+        .bgd-shell .bgd-hamburger span:nth-child(1) { top: 16px; }
+        .bgd-shell .bgd-hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+        .bgd-shell .bgd-hamburger span:nth-child(3) { bottom: 16px; }
+        .bgd-shell .bgd-hamburger.active span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+        .bgd-shell .bgd-hamburger.active span:nth-child(2) { opacity: 0; transform: translateY(-50%) scaleX(0); }
+        .bgd-shell .bgd-hamburger.active span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+        .bgd-shell #bgd-mobile-menu {
+            position: fixed; top: 0; right: 0;
+            width: 100%; max-width: 340px; height: 100vh;
+            z-index: 100;
+            background: var(--bgd-color-paper);
+            border-left: 1px solid var(--bgd-color-hairline);
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            padding: 2rem 1.5rem;
+            display: flex; flex-direction: column; gap: var(--bgd-space-4);
+            overflow-y: auto;
+        }
+        .bgd-shell #bgd-mobile-menu.open { transform: translateX(0); }
+        .bgd-shell #bgd-mobile-menu .bgd-nav-link {
+            font-size: 16px; padding: 14px 0;
+            border-bottom: 1px solid var(--bgd-color-hairline);
+            display: block; color: var(--bgd-color-ink); opacity: 0.7;
+        }
+        .bgd-shell #bgd-mobile-menu .bgd-nav-link:hover, .bgd-shell #bgd-mobile-menu .bgd-nav-link:focus { opacity: 1; }
+        .bgd-shell #bgd-menu-backdrop {
+            position: fixed; inset: 0; z-index: 99;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+        }
+        .bgd-shell #bgd-menu-backdrop.visible { opacity: 1; pointer-events: auto; }
+        .bgd-shell .menu-close {
+            position: absolute; top: 1rem; right: 1rem;
+            background: transparent; border: 1px solid var(--bgd-color-hairline);
+            border-radius: var(--bgd-radius); width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--bgd-color-ink); cursor: pointer;
+            transition: border-color 0.2s ease; touch-action: manipulation;
+        }
+        .bgd-shell .menu-close:hover, .bgd-shell .menu-close:focus { border-color: var(--bgd-color-ink); }
+        .bgd-shell .menu-close svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* ══════════════════════════════════════════════════════════════
+           HERO — the thesis: the shell is neutral, the shots are not
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-hero {
+            background: var(--bgd-color-ink);
+            min-height: 100vh; min-height: 100dvh;
+            display: flex; align-items: center; justify-content: center;
+            padding: 100px var(--bgd-space-16) 48px;
+            position: relative; overflow: hidden;
+        }
+        @media (min-width: 768px) { .bgd-shell .bgd-hero { padding: 120px var(--bgd-space-32) 64px; } }
+        @media (min-width: 1024px) { .bgd-shell .bgd-hero { padding: 140px var(--bgd-space-48) 72px; } }
+
+        .bgd-shell .bgd-hero-inner {
+            position: relative; z-index: 2;
+            max-width: 1000px; width: 100%;
+            display: grid;
+            gap: var(--bgd-space-32);
+        }
+        .bgd-shell .bgd-hero-eyebrow {
+            font-family: var(--bgd-font-mono);
+            font-weight: 400; font-size: 12px;
+            color: var(--bgd-color-teal-light);
+            text-transform: uppercase; letter-spacing: 0.12em;
+            margin-bottom: var(--bgd-space-16);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .bgd-shell .bgd-hero-eyebrow::before {
+            content: ''; width: 6px; height: 6px; border-radius: 50%;
+            background: var(--bgd-color-teal-light);
+            box-shadow: 0 0 0 3px rgba(42,157,143,0.18);
+        }
+        .bgd-shell .bgd-hero h1 {
+            font-family: var(--bgd-font-display);
+            font-weight: 600;
+            font-size: clamp(40px, 8vw, 72px);
+            line-height: 1.06;
+            letter-spacing: 0.01em;
+            color: var(--bgd-color-paper);
+            max-width: 14ch;
+        }
+        .bgd-shell .bgd-hero h1 em {
+            font-style: italic;
+            color: var(--bgd-color-teal-light);
+        }
+        .bgd-shell .bgd-hero p {
+            font-family: var(--bgd-font-body);
+            font-weight: 400;
+            font-size: clamp(16px, 2vw, 18px);
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.55);
+            max-width: 48ch;
+            margin-top: var(--bgd-space-16);
+        }
+        .bgd-shell .bgd-hero-actions {
+            display: flex; flex-wrap: wrap; gap: var(--bgd-space-12);
+            margin-top: var(--bgd-space-32);
+        }
+        .bgd-shell .btn-teal {
+            background: var(--bgd-color-teal);
+            color: var(--bgd-color-paper);
+            border: none; border-radius: var(--bgd-radius);
+            padding: 13px 27px;
+            font-family: var(--bgd-font-body);
+            font-weight: 500; font-size: 15px;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.15s ease;
+            touch-action: manipulation;
+            display: inline-flex; align-items: center; justify-content: center; gap: var(--bgd-space-8);
+            text-decoration: none; min-height: 48px;
+        }
+        .bgd-shell .btn-teal:hover, .bgd-shell .btn-teal:focus { opacity: 0.88; transform: scale(0.98); }
+        .bgd-shell .btn-teal:active { transform: scale(0.96); }
+        .bgd-shell .btn-ghost-white {
+            background: transparent; color: var(--bgd-color-paper);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: var(--bgd-radius); padding: 13px 27px;
+            font-family: var(--bgd-font-body); font-weight: 500; font-size: 15px;
+            cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease;
+            touch-action: manipulation;
+            display: inline-flex; align-items: center; justify-content: center;
+            text-decoration: none; min-height: 48px;
+        }
+        .bgd-shell .btn-ghost-white:hover, .bgd-shell .btn-ghost-white:focus { background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.4); }
+
+        /* Hero stat strip — real numbers, not decoration */
+        .bgd-shell .bgd-hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, auto);
+            gap: var(--bgd-space-32);
+            margin-top: var(--bgd-space-48);
+            padding-top: var(--bgd-space-24);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: fit-content;
+        }
+        .bgd-shell .bgd-hero-stats dt {
+            font-family: var(--bgd-font-mono);
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+        .bgd-shell .bgd-hero-stats dd {
+            font-family: var(--bgd-font-display);
+            font-size: clamp(22px, 3vw, 30px);
+            font-weight: 600;
+            color: var(--bgd-color-paper);
+        }
+
+        .bgd-shell .bgd-hero-render {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 1100px; height: 45%;
+            z-index: 1; pointer-events: none; opacity: 0.55;
+            background: radial-gradient(ellipse at center bottom, rgba(24, 111, 100, 0.16) 0%, transparent 70%);
+            display: flex; align-items: flex-end; justify-content: center;
+        }
+        .bgd-shell .bgd-render-shape { width: 100%; max-width: 640px; height: 100%; max-height: 300px; position: relative; animation: bgdFloat 7s ease-in-out infinite; }
+        .bgd-shell .bgd-render-shape .shape-layer { position: absolute; background: linear-gradient(135deg, rgba(24, 111, 100, 0.28), rgba(42, 157, 143, 0.16)); border: 1px solid rgba(255, 255, 255, 0.06); }
+        .bgd-shell .bgd-render-shape .shape-layer:nth-child(1) { width: 58%; height: 58%; bottom: 0; left: 8%; transform: skewX(-6deg); border-color: rgba(24, 111, 100, 0.15); }
+        .bgd-shell .bgd-render-shape .shape-layer:nth-child(2) { width: 38%; height: 38%; top: 8%; right: 6%; background: linear-gradient(135deg, rgba(42, 157, 143, 0.2), rgba(24, 111, 100, 0.12)); transform: skewX(4deg); }
+        .bgd-shell .bgd-render-shape .shape-layer:nth-child(3) { width: 28%; height: 46%; bottom: 18%; right: 14%; background: linear-gradient(135deg, rgba(24, 111, 100, 0.14), rgba(42, 157, 143, 0.18)); transform: skewX(-3deg); }
+        .bgd-shell .bgd-render-shape .shape-layer:nth-child(4) { width: 18%; height: 18%; top: 28%; left: 14%; background: rgba(255, 255, 255, 0.04); border-radius: 50%; }
+
+        .bgd-shell .bgd-scroll-indicator {
+            position: absolute; bottom: var(--bgd-space-24); left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: var(--bgd-space-8);
+            color: rgba(255, 255, 255, 0.2);
+            font-family: var(--bgd-font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+            z-index: 2; animation: bgdFadeUp 1s ease-out 1s forwards; opacity: 0;
+        }
+        .bgd-shell .bgd-scroll-indicator .line { width: 1px; height: 32px; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent); }
+
+        /* ══════════════════════════════════════════════════════════════
+           SECTIONS
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-section { padding: var(--bgd-space-48) 0; }
+        @media (min-width: 768px) { .bgd-shell .bgd-section { padding: var(--bgd-space-64) 0; } }
+        @media (min-width: 1024px) { .bgd-shell .bgd-section { padding: var(--bgd-space-72) 0; } }
+        .bgd-shell .bgd-section-alt { background: var(--bgd-color-mist); }
+        .bgd-shell .bgd-section-tight { padding-top: var(--bgd-space-32); }
+
+        /* ══════════════════════════════════════════════════════════════
+           SEARCH
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-search { position: relative; margin-bottom: var(--bgd-space-16); display: none; }
+        .bgd-shell .bgd-search.visible { display: block; }
+        .bgd-shell .bgd-search input {
+            width: 100%; padding: 14px 18px 14px 48px;
+            background: var(--bgd-color-paper); border: 1px solid var(--bgd-color-hairline);
+            border-radius: var(--bgd-radius); font-family: var(--bgd-font-body);
+            font-weight: 400; font-size: 16px; color: var(--bgd-color-ink);
+            outline: none; transition: border-color 0.2s ease;
+            -webkit-appearance: none; appearance: none;
+        }
+        .bgd-shell .bgd-search input::placeholder { color: var(--bgd-color-fog); opacity: 0.6; }
+        .bgd-shell .bgd-search input:focus { border-color: var(--bgd-color-ink); }
+        .bgd-shell .bgd-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--bgd-color-fog); pointer-events: none; opacity: 0.5; }
+        .bgd-shell .bgd-search-icon svg { width: 18px; height: 18px; stroke: currentColor; stroke-width: 1.75; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* ══════════════════════════════════════════════════════════════
+           CATEGORY FILTER
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-categories { display: flex; flex-wrap: wrap; gap: var(--bgd-space-8); padding: var(--bgd-space-4) 0 var(--bgd-space-24); }
+        .bgd-shell .bgd-category-pill {
+            background: transparent; border: 1px solid var(--bgd-color-hairline);
+            border-radius: var(--bgd-radius); padding: 7px 18px;
+            font-family: var(--bgd-font-body); font-weight: 400; font-size: 13px;
+            color: var(--bgd-color-ink); cursor: pointer; transition: all 0.2s ease;
+            touch-action: manipulation; opacity: 0.55;
+        }
+        .bgd-shell .bgd-category-pill:hover { opacity: 0.85; border-color: var(--bgd-color-ink); }
+        .bgd-shell .bgd-category-pill.active { background: var(--bgd-color-ink); color: var(--bgd-color-paper); border-color: var(--bgd-color-ink); opacity: 1; }
+
+        /* ══════════════════════════════════════════════════════════════
+           SECTION LABEL
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-section-label {
+            display: flex; align-items: baseline; justify-content: space-between;
+            padding-bottom: var(--bgd-space-12); border-bottom: 1px solid var(--bgd-color-hairline);
+            margin-bottom: var(--bgd-space-24);
+        }
+        .bgd-shell .bgd-section-label h2 {
+            font-family: var(--bgd-font-display); font-weight: 600;
+            font-size: clamp(26px, 4vw, 40px); line-height: 1.2; letter-spacing: 0.01em; color: var(--bgd-color-ink);
+        }
+        .bgd-shell .bgd-section-label span {
+            font-family: var(--bgd-font-mono); font-weight: 400; font-size: 12px;
+            color: var(--bgd-color-fog); letter-spacing: 0.04em; text-transform: uppercase;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           SHOT CARD — Dribbble-style: preview first, metadata second
+           Signature element: each preview is a live CSS render of the
+           workspace's own token palette, not a generic thumbnail.
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-shot-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--bgd-space-20);
+        }
+        @media (min-width: 560px) { .bgd-shell .bgd-shot-grid { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 1024px) { .bgd-shell .bgd-shot-grid { grid-template-columns: repeat(3, 1fr); gap: var(--bgd-space-24); } }
+
+        .bgd-shell .bgd-shot {
+            background: var(--bgd-color-paper);
+            border: 1px solid var(--bgd-color-hairline);
+            border-radius: var(--bgd-radius);
+            overflow: hidden;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .bgd-shell .bgd-shot:hover,
+        .bgd-shell .bgd-shot:focus-visible {
+            border-color: var(--bgd-color-ink);
+            box-shadow: 0 12px 28px -16px rgba(25, 27, 31, 0.28);
+            transform: translateY(-3px);
+        }
+        .bgd-shell .bgd-shot:active { transform: translateY(-1px) scale(0.99); }
+
+        /* Preview pane — a miniature render of the workspace's own design tokens */
+        .bgd-shell .shot-preview {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            background: var(--shot-bg, var(--bgd-color-mist));
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-bottom: 1px solid var(--bgd-color-hairline);
+        }
+        .bgd-shell .shot-chrome { display: flex; gap: 5px; margin-bottom: 12px; flex-shrink: 0; }
+        .bgd-shell .shot-chrome span { width: 6px; height: 6px; border-radius: 50%; background: var(--shot-ink, currentColor); opacity: 0.2; }
+        .bgd-shell .shot-lines { display: flex; flex-direction: column; gap: 7px; flex: 1; }
+        .bgd-shell .shot-line { height: 6px; border-radius: 1px; background: var(--shot-ink, currentColor); opacity: 0.14; }
+        .bgd-shell .shot-line.w-80 { width: 80%; }
+        .bgd-shell .shot-line.w-55 { width: 55%; }
+        .bgd-shell .shot-line.w-35 { width: 35%; }
+        .bgd-shell .shot-block {
+            margin-top: auto;
+            align-self: flex-start;
+            width: 46%;
+            height: 30%;
+            background: var(--shot-accent, var(--bgd-color-teal));
+            border-radius: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        .bgd-shell .shot-block::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0; left: -30%;
+            width: 30%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+            transform: skewX(-15deg);
+        }
+        .bgd-shell .bgd-shot:hover .shot-block::after,
+        .bgd-shell .bgd-shot:focus-visible .shot-block::after {
+            animation: bgdSweep 1.1s ease forwards;
+        }
+        .bgd-shell .shot-tag-dot {
+            position: absolute; top: 14px; right: 16px;
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--shot-accent, var(--bgd-color-teal));
+        }
+        .bgd-shell .shot-tag-dot.planned {
+            background: transparent;
+            border: 1.5px dashed var(--shot-ink, var(--bgd-color-fog));
+            opacity: 0.5;
+        }
+
+        /* Metadata pane */
+        .bgd-shell .shot-meta { padding: var(--bgd-space-16) var(--bgd-space-20) var(--bgd-space-20); display: flex; flex-direction: column; gap: 6px; }
+        .bgd-shell .shot-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+        .bgd-shell .shot-status {
+            font-family: var(--bgd-font-mono); font-size: 10.5px; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.06em;
+            color: var(--bgd-color-teal);
+        }
+        .bgd-shell .shot-status.is-planned { color: var(--bgd-color-fog); }
+        .bgd-shell .shot-palette { display: flex; gap: 3px; }
+        .bgd-shell .shot-palette i { display: block; width: 9px; height: 9px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.06); }
+        .bgd-shell .shot-name { font-family: var(--bgd-font-display); font-weight: 600; font-size: 21px; line-height: 1.15; letter-spacing: 0.01em; color: var(--bgd-color-ink); }
+        .bgd-shell .shot-domain { font-family: var(--bgd-font-body); font-weight: 400; font-size: 13.5px; color: var(--bgd-color-ink); opacity: 0.55; }
+
+        /* ══════════════════════════════════════════════════════════════
+           EMPTY STATE
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-empty { text-align: center; padding: var(--bgd-space-48) var(--bgd-space-24); color: var(--bgd-color-fog); border: 1px solid var(--bgd-color-hairline); background: var(--bgd-color-mist); }
+        .bgd-shell .bgd-empty p { font-family: var(--bgd-font-body); font-weight: 400; font-size: 16px; }
+        .bgd-shell .bgd-empty strong { color: var(--bgd-color-ink); font-weight: 500; }
+
+        /* ══════════════════════════════════════════════════════════════
+           COLOPHON — short "about" note, moved beside the footer
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-colophon {
+            display: grid;
+            gap: var(--bgd-space-24);
+            padding: var(--bgd-space-32) 0;
+            border-top: 1px solid var(--bgd-color-hairline);
+        }
+        @media (min-width: 768px) { .bgd-shell .bgd-colophon { grid-template-columns: 1fr 1fr; } }
+        .bgd-shell .bgd-colophon h3 {
+            font-family: var(--bgd-font-mono); font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--bgd-color-fog); margin-bottom: var(--bgd-space-12);
+        }
+        .bgd-shell .bgd-colophon p {
+            font-family: var(--bgd-font-body); font-size: 14.5px; line-height: 1.65;
+            color: var(--bgd-color-ink); opacity: 0.72; max-width: 46ch;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           FOOTER
+           ══════════════════════════════════════════════════════════════ */
+        .bgd-shell .bgd-footer {
+            border-top: 1px solid var(--bgd-color-hairline);
+            padding: var(--bgd-space-24) 0 var(--bgd-space-40);
+            display: flex; flex-direction: column; align-items: center; gap: var(--bgd-space-16);
+        }
+        .bgd-shell .bgd-footer-text { font-family: var(--bgd-font-body); font-weight: 400; font-size: 13px; color: var(--bgd-color-fog); text-align: center; }
+        .bgd-shell .bgd-footer-text .brand { font-family: var(--bgd-font-display); font-weight: 600; letter-spacing: 0.02em; color: var(--bgd-color-ink); }
+        .bgd-shell .bgd-footer-links { display: flex; align-items: center; gap: var(--bgd-space-24); }
+        .bgd-shell .bgd-footer-links a { font-family: var(--bgd-font-body); font-weight: 400; font-size: 13px; color: var(--bgd-color-fog); text-decoration: none; transition: color 0.2s ease; }
+        .bgd-shell .bgd-footer-links a:hover, .bgd-shell .bgd-footer-links a:focus { color: var(--bgd-color-ink); }
+
+        /* ══════════════════════════════════════════════════════════════
+           RESPONSIVE TWEAKS
+           ══════════════════════════════════════════════════════════════ */
+        @media (max-width: 374px) {
+            .bgd-shell .shot-meta { padding: var(--bgd-space-12) var(--bgd-space-16) var(--bgd-space-16); }
+            .bgd-shell .shot-name { font-size: 19px; }
+        }
+        @media (min-width: 768px) {
+            .bgd-shell .bgd-hero-stats { grid-template-columns: repeat(3, auto); }
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           DARK MODE GAP — Not implemented
+           Following shell conventions (ADR-001), dark mode would require
+           a [data-theme="dark"] or @media (prefers-color-scheme: dark)
+           override of all --bgd-* tokens. Flagged for follow-up.
+           ══════════════════════════════════════════════════════════════ */
+    </style>
+</head>
+<body>
+
+<div class="bgd-shell">
+
+    <!-- ════════════════════════════════════════════════════════════════
+    NAVIGATION
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="bgd-container" style="position:fixed; top:0; left:0; right:0; z-index:30; pointer-events:none;">
+        <div class="bgd-nav" id="bgd-nav" style="pointer-events:auto;">
+            <a href="#" class="bgd-brand">
+                <span class="bgd-brand-icon"></span>
+                BGD UI
+            </a>
+
+            <nav class="bgd-nav-links" aria-label="Main navigation">
+                <a href="#shots" class="bgd-nav-link">Gallery</a>
+                <a href="#colophon" class="bgd-nav-link">About</a>
+                <a href="#" class="bgd-nav-link">Docs</a>
+            </nav>
+
+            <div class="bgd-nav-actions">
+                <button class="search-toggle" id="search-toggle" aria-label="Search workspaces" aria-expanded="false">Search</button>
+                <a href="#shots" class="btn-ghost">Explore</a>
+                <button class="bgd-hamburger" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+    HERO — thesis: one neutral shell, many distinct workspaces
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="bgd-hero" id="hero" aria-label="Hero">
+        <div class="bgd-hero-inner">
+            <div class="animate-fade-up d1">
+                <div class="bgd-hero-eyebrow">BIGDROPS · Internal design system</div>
+                <h1>One shell.<br /><em>Six</em> distinct workspaces.</h1>
+                <p>
+                    BGD UI holds every screen BIGDROPS ships — invoicing, quotations, inventory, CRM.
+                    The shell you're standing in is neutral on purpose. Each workspace below builds
+                    its own type scale, palette, and voice from scratch.
+                </p>
+                <div class="bgd-hero-actions">
+                    <a href="#shots" class="btn-teal">Browse the gallery</a>
+                    <a href="#colophon" class="btn-ghost-white">How this works</a>
+                </div>
+
+                <dl class="bgd-hero-stats">
+                    <div><dt>Live</dt><dd id="stat-live">3</dd></div>
+                    <div><dt>In development</dt><dd id="stat-planned">3</dd></div>
+                    <div><dt>Categories</dt><dd id="stat-categories">4</dd></div>
+                </dl>
+            </div>
+        </div>
+
+        <div class="bgd-hero-render" aria-hidden="true">
+            <div class="bgd-render-shape">
+                <div class="shape-layer"></div>
+                <div class="shape-layer"></div>
+                <div class="shape-layer"></div>
+                <div class="shape-layer"></div>
+            </div>
+        </div>
+
+        <div class="bgd-scroll-indicator">
+            <span>Scroll</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+    GALLERY — front and center, right after the hero
+    ════════════════════════════════════════════════════════════════ -->
+    <main class="bgd-container" role="main" id="shots">
+
+        <div class="bgd-section bgd-section-tight">
+
+            <!-- Search -->
+            <div class="bgd-search" id="search-bar">
+                <span class="bgd-search-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </span>
+                <input type="text" placeholder="Search by name, domain, or design language…" id="search-input" aria-label="Search workspaces" />
+            </div>
+
+            <!-- Section label -->
+            <div class="bgd-section-label animate-fade-up d1">
+                <h2>Gallery</h2>
+                <span id="workspace-count">6 shots</span>
+            </div>
+
+            <!-- Categories -->
+            <div class="bgd-categories animate-fade-up d2">
+                <button class="bgd-category-pill active" data-category="all">All</button>
+                <button class="bgd-category-pill" data-category="invoice">Invoice</button>
+                <button class="bgd-category-pill" data-category="crm">CRM</button>
+                <button class="bgd-category-pill" data-category="inventory">Inventory</button>
+                <button class="bgd-category-pill" data-category="sales">Sales</button>
+            </div>
+
+            <!-- Grid -->
+            <div class="bgd-shot-grid" id="workspace-grid" role="list">
+
+                <!-- PRAV — Warm Parchment -->
+                <article class="bgd-shot" role="listitem" tabindex="0"
+                    data-workspace="prav" data-category="invoice" data-status="live"
+                    data-name="PRAV" data-domain="Invoice" data-design="Warm parchment"
+                    style="--shot-bg:#F3ECDD; --shot-ink:#5A4632; --shot-accent:#8B5E34;">
+                    <div class="shot-preview">
+                        <span class="shot-tag-dot"></span>
+                        <div class="shot-chrome"><span></span><span></span><span></span></div>
+                        <div class="shot-lines">
+                            <div class="shot-line w-80"></div>
+                            <div class="shot-line w-55"></div>
+                            <div class="shot-line w-35"></div>
+                        </div>
+                        <div class="shot-block"></div>
+                    </div>
+                    <div class="shot-meta">
+                        <div class="shot-top">
+                            <span class="shot-status">Live</span>
+                            <span class="shot-palette" aria-hidden="true">
+                                <i style="background:#F3ECDD;"></i><i style="background:#8B5E34;"></i>
+                            </span>
+                        </div>
+                        <h3 class="shot-name">PRAV</h3>
+                        <p class="shot-domain">Invoice · Warm parchment dossier</p>
+                    </div>
+                </article>
+
+                <!-- Sackville — Editorial Risograph -->
+                <article class="bgd-shot" role="listitem" tabindex="0"
+                    data-workspace="sackville" data-category="invoice" data-status="live"
+                    data-name="Sackville" data-domain="Invoice" data-design="Editorial risograph"
+                    style="--shot-bg:#FBF6EE; --shot-ink:#1B2A4A; --shot-accent:#FF6B4A;">
+                    <div class="shot-preview">
+                        <span class="shot-tag-dot"></span>
+                        <div class="shot-chrome"><span></span><span></span><span></span></div>
+                        <div class="shot-lines">
+                            <div class="shot-line w-80"></div>
+                            <div class="shot-line w-55"></div>
+                            <div class="shot-line w-35"></div>
+                        </div>
+                        <div class="shot-block"></div>
+                    </div>
+                    <div class="shot-meta">
+                        <div class="shot-top">
+                            <span class="shot-status">Live</span>
+                            <span class="shot-palette" aria-hidden="true">
+                                <i style="background:#FBF6EE;"></i><i style="background:#FF6B4A;"></i>
+                            </span>
+                        </div>
+                        <h3 class="shot-name">Sackville</h3>
+                        <p class="shot-domain">Invoice · Cream risograph zine</p>
+                    </div>
+                </article>
+
+                <!-- AMRA — Monochrome Minimal -->
+                <article class="bgd-shot" role="listitem" tabindex="0"
+                    data-workspace="amra" data-category="invoice" data-status="live"
+                    data-name="AMRA" data-domain="Invoice" data-design="Monochrome minimal"
+                    style="--shot-bg:#FAFAFA; --shot-ink:#191b1f; --shot-accent:#B8A6FF;">
+                    <div class="shot-preview">
+                        <span class="shot-tag-dot"></span>
+                        <div class="shot-chrome"><span></span><span></span><span></span></div>
+                        <div class="shot-lines">
+                            <div class="shot-line w-80"></div>
+                            <div class="shot-line w-55"></div>
+                            <div class="shot-line w-35"></div>
+                        </div>
+                        <div class="shot-block"></div>
+                    </div>
+                    <div class="shot-meta">
+                        <div class="shot-top">
+                            <span class="shot-status">Live</span>
+                            <span class="shot-palette" aria-hidden="true">
+                                <i style="background:#191b1f;"></i><i style="background:#B8A6FF;"></i>
+                            </span>
+                        </div>
+                        <h3 class="shot-name">AMRA</h3>
+                        <p class="shot-domain">Invoice · Monochrome with lavender accent</p>
+                    </div>
+                </article>
+
+                <!-- CRM — Modern Utility -->
+                <article class="bgd-shot" role="listitem" tabindex="0"
+                    data-workspace="crm" data-category="crm" data-status="planned"
+                    data-name="CRM" data-domain="Customer Relationship" data-design="Modern utility"
+                    style="--shot-bg:#EEF2F6; --shot-ink:#2F4356; --shot-accent:#3E5C76;">
+                    <div class="shot-preview">
+                        <span class="shot-tag-dot planned"></span>
+                        <div class="shot-chrome"><span></span><span></span><span></span></div>
+                        <div class="shot-lines">
+                            <div class="shot-line w-80"></div>
+                            <div class="shot-line w-55"></div>
+                            <div class="shot-line w-35"></div>
+                        </div>
+                        <div class="shot-block" style="opacity:0.55;"></div>
+                    </div>
+                    <div class="shot-meta">
+                        <div class="shot-top">
+                            <span class="shot-status is-planned">In development</span>
+                            <span class="shot-palette" aria-hidden="true">
+                                <i style="background:#EEF2F6;"></i><i style="background:#3E5C76;"></i>
+                            </span>
+                        </div>
+                        <h3 class="shot-name">CRM</h3>
+                        <p class="shot-domain">Customer relationship management · Modern utility</p>
+                    </div>
+                </article>
+
+                <!-- Inventory — Teal Terminal -->
+                <article class="bgd-shot" role="listitem" tabindex="0"
+                    data-workspace="inventory" data-category="inventory" data-status="planned"
+                    data-name="Inventory" data-domain="Inventory" data-design="Teal terminal"
+                    style="--shot-bg:#0A0E0C; --shot-ink:#00FF9C; --shot-accent:#00E68A;">
+                    <div class="shot-preview">
+                        <span class="shot-tag-dot planned"></span>
+                        <div class="shot-chrome"><span></span><span></span><span></span></div>
+                        <div class="shot-lines">
+                            <div class="shot-line w-80"></div>
+                            <div class="shot-line w-55"></div>
+                            <div class="shot-line w-35"></div>
+                        </div>
+                        <div class="shot-block" style="opacity:0.55;"></div>
+                    </div>
+                    <div class="shot-meta">
+                        <div class="shot-top">
+                            <span class="shot-status is-planned">In development</span>
+                            <span class="shot-palette" aria-hidden="true">
+                                <i style="background:#0A0E0C;"></i><i style="background:#00E68A;"></i>
+                            </span>
+                        </div>
+                        <h3 class="shot-name">Inventory</h3>
+                        <p class="shot-domain">Inventory management · Teal terminal</p>
+                    </div>
+                </article>
+
+                <!-- Quotations — Warm Amber -->
+                <article class="bgd-shot" role="listitem" tabindex="0"
+                    data-workspace="quotations" data-category="sales" data-status="planned"
+                    data-name="Quotations" data-domain="Sales" data-design="Warm amber"
+                    style="--shot-bg:#FDF3E4; --shot-ink:#7A4A12; --shot-accent:#D98E36;">
+                    <div class="shot-preview">
+                        <span class="shot-tag-dot planned"></span>
+                        <div class="shot-chrome"><span></span><span></span><span></span></div>
+                        <div class="shot-lines">
+                            <div class="shot-line w-80"></div>
+                            <div class="shot-line w-55"></div>
+                            <div class="shot-line w-35"></div>
+                        </div>
+                        <div class="shot-block" style="opacity:0.55;"></div>
+                    </div>
+                    <div class="shot-meta">
+                        <div class="shot-top">
+                            <span class="shot-status is-planned">In development</span>
+                            <span class="shot-palette" aria-hidden="true">
+                                <i style="background:#FDF3E4;"></i><i style="background:#D98E36;"></i>
+                            </span>
+                        </div>
+                        <h3 class="shot-name">Quotations</h3>
+                        <p class="shot-domain">Sales · Warm amber</p>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
+
+        <!-- ════════════════════════════════════════════════════════════
+        COLOPHON — moved from a top-level section to a short closing note
+        ════════════════════════════════════════════════════════════════ -->
+        <div class="bgd-colophon" id="colophon">
+            <div>
+                <h3>What this is</h3>
+                <p>
+                    BGD UI is the personal, offline-first shell that houses every screen BIGDROPS ships.
+                    It's not a component library — it's a gallery of finished design directions, kept here
+                    so each one stays reviewable on its own terms before it's wired into the product.
+                </p>
+            </div>
+            <div>
+                <h3>How workspaces work</h3>
+                <p>
+                    Every workspace owns its full identity: type pairing, palette, spacing, motion.
+                    Nothing here is inherited from the shell beyond the grid that holds it. That's
+                    deliberate — invoicing shouldn't look like inventory, and it doesn't.
+                </p>
+            </div>
+        </div>
+
+        <hr style="border: none; border-top: 1px solid var(--bgd-color-hairline);" />
+
+        <footer class="bgd-footer" role="contentinfo">
+            <div class="bgd-footer-links">
+                <a href="#shots">Gallery</a>
+                <a href="#colophon">About</a>
+                <a href="#">Docs</a>
+            </div>
+            <p class="bgd-footer-text"><span class="brand">BGD UI</span> · Shell v2.1 · Offline-first</p>
+            <p class="bgd-footer-text" style="font-size: 12px; opacity: 0.4;">Built for BIGDROPS · Workspaces are independent products</p>
+        </footer>
+
+    </main>
+
+    <!-- Mobile Menu Backdrop -->
+    <div id="bgd-menu-backdrop"></div>
+
+    <!-- Mobile Menu -->
+    <nav id="bgd-mobile-menu" aria-label="Mobile navigation">
+        <button class="menu-close" id="menu-close-btn" aria-label="Close navigation menu">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+
+        <div style="margin-top: var(--bgd-space-48); display: flex; flex-direction: column; gap: var(--bgd-space-4);">
+            <a href="#shots" class="bgd-nav-link">Gallery</a>
+            <a href="#colophon" class="bgd-nav-link">About</a>
+            <a href="#" class="bgd-nav-link">Docs</a>
+            <hr style="border: none; border-top: 1px solid var(--bgd-color-hairline); margin: var(--bgd-space-12) 0;" />
+            <div style="margin-top: var(--bgd-space-8); display: flex; flex-direction: column; gap: var(--bgd-space-8);">
+                <a href="#shots" class="btn-teal" style="width: 100%; justify-content: center;">Explore</a>
+                <a href="#colophon" class="btn-ghost" style="width: 100%; justify-content: center; border-color: var(--bgd-color-hairline); color: var(--bgd-color-ink);">About</a>
+            </div>
+        </div>
+
+        <div style="margin-top: auto; padding-top: var(--bgd-space-16); border-top: 1px solid var(--bgd-color-hairline); font-family: var(--bgd-font-body); font-size: 13px; color: var(--bgd-color-fog);">
+            <span>BGD UI Shell</span>
+            <span style="display: block; margin-top: 4px; opacity: 0.5;">v2.1 · 2026</span>
+        </div>
+    </nav>
+
+</div>
+
+<script>
+    (function() {
+        'use strict';
+
+        // Nav scroll transition
+        const nav = document.getElementById('bgd-nav');
+        const hero = document.getElementById('hero');
+        let heroHeight = 0;
+        function updateHeroHeight() { if (hero) heroHeight = hero.offsetHeight; }
+        updateHeroHeight();
+        window.addEventListener('resize', updateHeroHeight);
+        window.addEventListener('scroll', function() {
+            const threshold = heroHeight * 0.6;
+            nav.classList.toggle('scrolled', window.scrollY > threshold);
+        });
+
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger-btn');
+        const menu = document.getElementById('bgd-mobile-menu');
+        const backdrop = document.getElementById('bgd-menu-backdrop');
+        const closeBtn = document.getElementById('menu-close-btn');
+        let isOpen = false;
+
+        function openMenu() {
+            if (isOpen) return;
+            isOpen = true;
+            menu.classList.add('open');
+            backdrop.classList.add('visible');
+            hamburger.classList.add('active');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMenu() {
+            if (!isOpen) return;
+            isOpen = false;
+            menu.classList.remove('open');
+            backdrop.classList.remove('visible');
+            hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+        hamburger.addEventListener('click', function() { isOpen ? closeMenu() : openMenu(); });
+        closeBtn.addEventListener('click', closeMenu);
+        backdrop.addEventListener('click', closeMenu);
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && isOpen) closeMenu(); });
+        menu.querySelectorAll('.bgd-nav-link').forEach(function(link) {
+            link.addEventListener('click', function() { if (isOpen) closeMenu(); });
+        });
+        let menuResizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(menuResizeTimer);
+            menuResizeTimer = setTimeout(function() {
+                if (window.innerWidth >= 768 && isOpen) closeMenu();
+            }, 150);
+        });
+
+        // Search
+        const searchToggle = document.getElementById('search-toggle');
+        const searchBar = document.getElementById('search-bar');
+        const searchInput = document.getElementById('search-input');
+        const shotCards = document.querySelectorAll('.bgd-shot');
+        const grid = document.getElementById('workspace-grid');
+        let searchVisible = false;
+
+        function toggleSearch() {
+            searchVisible = !searchVisible;
+            searchBar.classList.toggle('visible', searchVisible);
+            if (searchVisible) {
+                searchInput.focus();
+                searchBar.style.animation = 'none';
+                requestAnimationFrame(function() {
+                    searchBar.style.animation = 'bgdFadeUp 0.4s cubic-bezier(0.22,1,0.36,1) forwards';
+                });
+            }
+            searchToggle.setAttribute('aria-expanded', searchVisible);
+        }
+        searchToggle.addEventListener('click', toggleSearch);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && searchVisible) toggleSearch();
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); toggleSearch(); }
+        });
+        document.addEventListener('click', function(e) {
+            if (searchVisible && !searchBar.contains(e.target) && !searchToggle.contains(e.target)) toggleSearch();
+        });
+
+        // Category filter + search combined
+        const categoryPills = document.querySelectorAll('.bgd-category-pill');
+        let activeCategory = 'all';
+
+        function filterWorkspaces(query, category) {
+            let visibleCount = 0;
+            shotCards.forEach(function(card) {
+                const name = (card.dataset.name || '').toLowerCase();
+                const domain = (card.dataset.domain || '').toLowerCase();
+                const design = (card.dataset.design || '').toLowerCase();
+                const status = (card.dataset.status || '').toLowerCase();
+                const cardCategory = (card.dataset.category || '').toLowerCase();
+                const matchesCategory = category === 'all' || cardCategory === category;
+                const matchesQuery = query === '' || name.includes(query) || domain.includes(query) || design.includes(query) || status.includes(query);
+                if (matchesCategory && matchesQuery) {
+                    card.style.display = '';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const countEl = document.getElementById('workspace-count');
+            if (countEl) countEl.textContent = visibleCount + (visibleCount === 1 ? ' shot' : ' shots');
+
+            let emptyState = document.querySelector('.bgd-empty-state');
+            if (visibleCount === 0) {
+                if (!emptyState) {
+                    emptyState = document.createElement('div');
+                    emptyState.className = 'bgd-empty bgd-empty-state';
+                    const categoryLabel = category === 'all' ? 'workspaces' : category + ' workspaces';
+                    emptyState.innerHTML = '<p>No ' + categoryLabel + ' match your search</p><p style="font-size:14px; opacity:0.5; margin-top:8px;">Try adjusting your filters</p>';
+                    grid.parentNode.insertBefore(emptyState, grid.nextSibling);
+                } else {
+                    emptyState.style.display = '';
+                }
+            } else if (emptyState) {
+                emptyState.style.display = 'none';
+            }
+        }
+
+        categoryPills.forEach(function(pill) {
+            pill.addEventListener('click', function() {
+                categoryPills.forEach(function(p) { p.classList.remove('active'); });
+                this.classList.add('active');
+                activeCategory = this.dataset.category || 'all';
+                filterWorkspaces(searchInput.value.toLowerCase().trim(), activeCategory);
+            });
+        });
+        searchInput.addEventListener('input', function() {
+            filterWorkspaces(this.value.toLowerCase().trim(), activeCategory);
+        });
+
+        // Card interactions — open notification (placeholder for real routing)
+        shotCards.forEach(function(card) {
+            card.addEventListener('click', function() {
+                const name = this.dataset.name || 'Workspace';
+                const status = this.dataset.status || 'unknown';
+                const domain = this.dataset.domain || '';
+                const msg = status === 'live'
+                    ? 'Opening "' + name + '" — ' + domain + ' workspace'
+                    : '"' + name + '" is in development · Planned workspace';
+
+                const notif = document.createElement('div');
+                notif.style.cssText = 'position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--bgd-color-ink); color: var(--bgd-color-paper); padding: 16px 32px; border-radius: 2px; font-family: var(--bgd-font-body); font-weight: 500; font-size: 15px; z-index: 1000; max-width: 90%; text-align: center; transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease; opacity: 0; pointer-events: none; border: 1px solid rgba(255,255,255,0.06);';
+                notif.textContent = msg;
+                document.body.appendChild(notif);
+                requestAnimationFrame(function() {
+                    notif.style.opacity = '1';
+                    notif.style.transform = 'translateX(-50%) translateY(0)';
+                });
+                setTimeout(function() {
+                    notif.style.opacity = '0';
+                    notif.style.transform = 'translateX(-50%) translateY(20px)';
+                    setTimeout(function() { if (notif.parentNode) notif.remove(); }, 400);
+                }, 2500);
+            });
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); }
+            });
+        });
+
+        // Live stats from the actual dataset — never hand-typed, always correct
+        const total = shotCards.length;
+        const liveCount = document.querySelectorAll('.bgd-shot[data-status="live"]').length;
+        const plannedCount = total - liveCount;
+        const categories = new Set(Array.from(shotCards).map(function(c) { return c.dataset.category; }));
+
+        document.getElementById('workspace-count').textContent = total + ' shots';
+        document.getElementById('stat-live').textContent = liveCount;
+        document.getElementById('stat-planned').textContent = plannedCount;
+        document.getElementById('stat-categories').textContent = categories.size;
+
+        // iOS 100vh fix
+        function setVH() { document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px'); }
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', function() { setTimeout(setVH, 200); });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+                    window.scrollTo({ top: top, behavior: 'smooth' });
+                }
+            });
+        });
+    })();
+</script>
+
+</body>
+</html>
