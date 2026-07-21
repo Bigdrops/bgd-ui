@@ -5,8 +5,15 @@
 This document is the authoritative reference for every AI agent making changes to this repository. Read it before writing code. Follow it without exception.
 
 ---
-this repo is bun
-use bun run build, dev or whatever, don't use NPM or yarn or shit 
+
+## Runtime
+
+Use **Bun**. Do not use npm, yarn, or pnpm.
+
+- `bun run build`
+- `bun run dev`
+
+---
 
 ## 1. Repository Philosophy
 
@@ -20,6 +27,15 @@ Every workspace is intentionally independent. Every workspace should look like i
 - Do **not** create reusable design tokens.
 - Do **not** attempt to standardize visual design.
 - **The goal is exploration.**
+
+### What agents must NOT do
+
+- Do not create shared CSS, design tokens, or theme files.
+- Do not modify another workspace to support a new workspace.
+- Do not install new dependencies without checking existing alternatives.
+- Do not use placeholder content in components.
+- Do not skip the skill loading step for complex tasks.
+- Do not suppress or ignore build errors.
 
 ---
 
@@ -89,11 +105,11 @@ That document becomes the design inspiration for the entire workspace. Rules:
 
 ## 4. Component Usage
 
-The components inside `docs/Masonry-yard/reui/` are building blocks. Reuse them whenever appropriate. Compose them differently to match the selected design language.
+The components inside `docs/Masonry-yard/reui/` are architectural reference. Study their structure, composition patterns, and interaction models. Build original components in each workspace using different styles, spacing, and visual decisions.
 
-- Never recreate the REUI library.
+- Never recreate the REUI library as a shared dependency.
 - Never change another workspace because a new workspace needs something different.
-- Use REUI as **reference** for architecture and patterns, not as a direct import.
+- Study REUI for architecture and patterns. Build original components from scratch in each workspace.
 
 ---
 
@@ -165,6 +181,12 @@ Before completing any task:
 3. Verify responsive at 375px, 768px, 1024px
 4. Each workspace must compile into its own isolated CSS and JS chunk
 
+### If build fails
+
+- Fix the error. Do not skip or suppress it.
+- If the error is in another workspace, do not modify that workspace. Report it instead.
+- If the error is unresolvable, mark the task as blocked.
+
 ---
 
 ## 10. Directory Structure
@@ -192,7 +214,9 @@ Before completing any task:
 │   ├── Masonry-yard/      Reusable implementation assets
 │   │   ├── reui/          Local REUI snapshot
 │   │   └── reui-upstream/ Upstream reference
+│   ├── Patterns/          UX solutions
 │   ├── ADR/               Architecture decision records
+│   ├── Reports/           Task completion reports
 │   └── DESIGNMD/          Legacy — use Designs/
 └── dist/
 ```
