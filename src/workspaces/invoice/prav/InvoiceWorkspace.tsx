@@ -98,7 +98,7 @@ export default function PRAVInvoiceWorkspace() {
   const totals: InvoiceTotals = { subtotal, discount, vat, wht, additionalCharges: chargeTotal, additionalChargeItems: chargeItems, installTotal: 0, grandTotal: grand, amountInWords: toWords(grand) }
 
   return (
-    <div className="min-h-screen surface-parchment" style={{ overflowX: 'hidden' }}>
+    <div className="pav-root" style={{ overflowX: 'hidden' }}>
       <header className="sticky top-0 z-40" style={{ background: 'rgba(243,241,237,0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--bone)' }}>
         <div className="flex items-center justify-between" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 16px', height: '52px' }}>
           <div className="flex items-center gap-3">

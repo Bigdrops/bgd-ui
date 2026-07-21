@@ -1,2 +1,2 @@
 export { Shell } from './Shell'
-export type { ShellWorkspace, ThemeMode } from './types'
+export type { ShellWorkspace, ShellTopic, ThemeMode } from './types'

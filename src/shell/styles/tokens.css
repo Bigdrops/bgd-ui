@@ -1,87 +1,29 @@
-/*
- * Shell Design Tokens
- *
- * All shell visual values are defined here. No component should
- * hard-code design values. Replace verified values by editing
- * this file only.
- *
- * TODO: verify final hex values for contrast compliance
- */
-
 .bgd-shell {
-  /* ── Color: Canvas ── */
-  --shell-color-canvas: #f5f5f7;
-  --shell-color-canvas-dark: #0e0e10;
-
-  /* ── Color: Surface ── */
+  --shell-color-canvas: #ffffff;
+  --shell-color-canvas-dark: #212529;
   --shell-color-surface: #ffffff;
-  --shell-color-surface-dark: #1a1a1e;
-
-  /* ── Color: Surface Raised ── */
-  --shell-color-surface-raised: #ffffff;
-  --shell-color-surface-raised-dark: #242428;
-
-  /* ── Color: Border ── */
-  --shell-color-border: rgba(0, 0, 0, 0.08);
+  --shell-color-surface-dark: #2d3238;
+  --shell-color-text: #212529;
+  --shell-color-text-dark: #ffffff;
+  --shell-color-text-secondary: #6c757d;
+  --shell-color-text-secondary-dark: #a0a4a8;
+  --shell-color-border: #e4e4e4;
   --shell-color-border-dark: rgba(255, 255, 255, 0.08);
+  --shell-color-accent: #000000;
+  --shell-color-accent-dark: #ffffff;
 
-  /* ── Color: Border Subtle ── */
-  --shell-color-border-subtle: rgba(0, 0, 0, 0.04);
-  --shell-color-border-subtle-dark: rgba(255, 255, 255, 0.04);
+  --shell-font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --shell-font-weight: 400;
 
-  /* ── Color: Text Primary ── */
-  --shell-color-text: #1a1a1e;
-  --shell-color-text-dark: #ececee;
+  --shell-text-body: 16px;
+  --shell-text-body-leading: 1.5;
+  --shell-text-caption: 14px;
+  --shell-text-caption-leading: 1.5;
+  --shell-text-heading: 20px;
+  --shell-text-heading-leading: 1.5;
+  --shell-text-display: 28px;
+  --shell-text-display-leading: 1.2;
 
-  /* ── Color: Text Secondary ── */
-  --shell-color-text-secondary: #6e6e73;
-  --shell-color-text-secondary-dark: #98989d;
-
-  /* ── Color: Text Tertiary ── */
-  --shell-color-text-tertiary: #aeaeb2;
-  --shell-color-text-tertiary-dark: #636366;
-
-  /* ── Color: Accent ── */
-  --shell-color-accent: #0a9396;
-  --shell-color-accent-dark: #94d2bd;
-
-  /* ── Color: Accent Foreground ── */
-  --shell-color-accent-fg: #ffffff;
-  --shell-color-accent-fg-dark: #0e0e10;
-
-  /* ── Color: Info ── */
-  --shell-color-info: #0a84ff;
-  --shell-color-info-dark: #409cff;
-
-  /* ── Color: Success ── */
-  --shell-color-success: #30d158;
-  --shell-color-success-dark: #34c759;
-
-  /* ── Color: Warning ── */
-  --shell-color-warning: #ff9f0a;
-  --shell-color-warning-dark: #ffd60a;
-
-  /* ── Color: Error ── */
-  --shell-color-error: #ff3b30;
-  --shell-color-error-dark: #ff453a;
-
-  /* ── Shadow: Card ── */
-  --shell-shadow-card: none;
-  --shell-shadow-card-dark: none;
-
-  /* ── Shadow: Card Hover ── */
-  --shell-shadow-card-hover: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shell-shadow-card-hover-dark: 0 2px 8px rgba(0, 0, 0, 0.3);
-
-  /* ── Shadow: Raised ── */
-  --shell-shadow-raised: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shell-shadow-raised-dark: 0 2px 8px rgba(0, 0, 0, 0.3);
-
-  /* ── Shadow: Modal ── */
-  --shell-shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shell-shadow-modal-dark: 0 8px 32px rgba(0, 0, 0, 0.5);
-
-  /* ── Spacing ── */
   --shell-spacing-xs: 4px;
   --shell-spacing-sm: 8px;
   --shell-spacing-md: 12px;
@@ -93,67 +35,27 @@
   --shell-spacing-5xl: 48px;
   --shell-spacing-6xl: 64px;
 
-  /* ── Border Radius ── */
-  --shell-radius-sm: 8px;
-  --shell-radius-md: 12px;
-  --shell-radius-lg: 16px;
-  --shell-radius-pill: 9999px;
+  --shell-radius: 0px;
 
-  /* ── Typography ── */
-  --shell-font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --shell-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --shell-topbar-height: 48px;
 
-  /* ── Transitions ── */
-  --shell-transition-fast: 150ms ease;
-  --shell-transition-normal: 200ms ease;
-  --shell-transition-slow: 250ms ease;
-
-  /* ── Layout ── */
-  --shell-topbar-height: 56px;
-  --shell-tabbar-height: 56px;
-  --shell-card-min-height: 88px;
+  --shell-transition: 200ms ease;
 }
 
-/* ── Light Theme (default) ── */
 .bgd-shell[data-theme="light"] {
-  --shell-color-canvas: var(--shell-color-canvas);
-  --shell-color-surface: var(--shell-color-surface);
-  --shell-color-surface-raised: var(--shell-color-surface-raised);
-  --shell-color-border: var(--shell-color-border);
-  --shell-color-border-subtle: var(--shell-color-border-subtle);
-  --shell-color-text: var(--shell-color-text);
-  --shell-color-text-secondary: var(--shell-color-text-secondary);
-  --shell-color-text-tertiary: var(--shell-color-text-tertiary);
-  --shell-color-accent: var(--shell-color-accent);
-  --shell-color-accent-fg: var(--shell-color-accent-fg);
-  --shell-color-info: var(--shell-color-info);
-  --shell-color-success: var(--shell-color-success);
-  --shell-color-warning: var(--shell-color-warning);
-  --shell-color-error: var(--shell-color-error);
-  --shell-shadow-card: var(--shell-shadow-card);
-  --shell-shadow-card-hover: var(--shell-shadow-card-hover);
-  --shell-shadow-raised: var(--shell-shadow-raised);
-  --shell-shadow-modal: var(--shell-shadow-modal);
+  --shell-color-canvas: #ffffff;
+  --shell-color-surface: #ffffff;
+  --shell-color-text: #212529;
+  --shell-color-text-secondary: #6c757d;
+  --shell-color-border: #e4e4e4;
+  --shell-color-accent: #000000;
 }
 
-/* ── Dark Theme ── */
 .bgd-shell[data-theme="dark"] {
-  --shell-color-canvas: var(--shell-color-canvas-dark);
-  --shell-color-surface: var(--shell-color-surface-dark);
-  --shell-color-surface-raised: var(--shell-color-surface-raised-dark);
-  --shell-color-border: var(--shell-color-border-dark);
-  --shell-color-border-subtle: var(--shell-color-border-subtle-dark);
-  --shell-color-text: var(--shell-color-text-dark);
-  --shell-color-text-secondary: var(--shell-color-text-secondary-dark);
-  --shell-color-text-tertiary: var(--shell-color-text-tertiary-dark);
-  --shell-color-accent: var(--shell-color-accent-dark);
-  --shell-color-accent-fg: var(--shell-color-accent-fg-dark);
-  --shell-color-info: var(--shell-color-info-dark);
-  --shell-color-success: var(--shell-color-success-dark);
-  --shell-color-warning: var(--shell-color-warning-dark);
-  --shell-color-error: var(--shell-color-error-dark);
-  --shell-shadow-card: var(--shell-shadow-card-dark);
-  --shell-shadow-card-hover: var(--shell-shadow-card-hover-dark);
-  --shell-shadow-raised: var(--shell-shadow-raised-dark);
-  --shell-shadow-modal: var(--shell-shadow-modal-dark);
+  --shell-color-canvas: #212529;
+  --shell-color-surface: #2d3238;
+  --shell-color-text: #ffffff;
+  --shell-color-text-secondary: #a0a4a8;
+  --shell-color-border: rgba(255, 255, 255, 0.08);
+  --shell-color-accent: #ffffff;
 }

@@ -1,49 +1,60 @@
-.gallery {
-  padding-top: var(--shell-topbar-height);
-  padding-bottom: calc(var(--shell-tabbar-height) + env(safe-area-inset-bottom, 0px) + var(--shell-spacing-lg));
-  padding-left: var(--shell-spacing-lg);
-  padding-right: var(--shell-spacing-lg);
-  max-width: 1200px;
+.page {
+  padding: var(--shell-spacing-4xl) var(--shell-spacing-lg) var(--shell-spacing-6xl);
+  max-width: 600px;
   margin: 0 auto;
 }
 
-@media (min-width: 768px) {
-  .gallery {
-    padding-left: var(--shell-spacing-2xl);
-    padding-right: var(--shell-spacing-2xl);
-  }
+.list {
+  display: flex;
+  flex-direction: column;
 }
 
-@media (min-width: 1024px) {
-  .gallery {
-    padding-left: var(--shell-spacing-3xl);
-    padding-right: var(--shell-spacing-3xl);
-  }
+.topicRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--shell-spacing-lg) 0;
+  border-bottom: 1px solid var(--shell-color-border);
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  gap: var(--shell-spacing-sm);
 }
 
-.sectionLabel {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--shell-color-text-tertiary);
-  padding: var(--shell-spacing-lg) 0 var(--shell-spacing-sm);
+.topicRow:hover .topicName {
+  text-decoration: underline;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--shell-spacing-lg);
+.topicRow:last-of-type {
+  border-bottom: none;
 }
 
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.topicName {
+  font-size: var(--shell-text-body);
+  line-height: var(--shell-text-body-leading);
+  font-weight: var(--shell-font-weight);
+  color: var(--shell-color-text);
 }
 
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.topicArrow {
+  font-size: var(--shell-text-body);
+  line-height: var(--shell-text-body-leading);
+  color: var(--shell-color-text-secondary);
+  flex-shrink: 0;
+}
+
+.settingsLink {
+  display: block;
+  margin-top: var(--shell-spacing-4xl);
+  font-size: var(--shell-text-body);
+  line-height: var(--shell-text-body-leading);
+  color: var(--shell-color-text-secondary);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.settingsLink:hover {
+  text-decoration: underline;
+  color: var(--shell-color-text);
 }

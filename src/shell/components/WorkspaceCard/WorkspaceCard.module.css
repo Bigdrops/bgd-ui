@@ -1,96 +1,31 @@
-.card {
+.item {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: var(--shell-spacing-lg);
-  background: var(--shell-color-surface);
-  border: 0.5px solid var(--shell-color-border);
-  border-radius: var(--shell-radius-md);
-  cursor: pointer;
+  gap: 2px;
+  padding: var(--shell-spacing-lg) 0;
+  border-bottom: 1px solid var(--shell-color-border);
   text-align: left;
   width: 100%;
-  min-height: var(--shell-card-min-height);
-  transition: box-shadow var(--shell-transition-fast),
-              border-color var(--shell-transition-fast);
+  cursor: pointer;
 }
 
-@media (max-resolution: 1dppx) {
-  .card {
-    border-width: 1px;
-  }
+.item:last-child {
+  border-bottom: none;
 }
 
-.card:hover {
-  box-shadow: var(--shell-shadow-card-hover);
-  border-color: var(--shell-color-text-tertiary);
-}
-
-.card:focus-visible {
-  outline: 2px solid var(--shell-color-accent);
-  outline-offset: 2px;
-}
-
-.cardTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--shell-spacing-md);
-}
-
-.iconWrap {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--shell-radius-sm);
-  background: var(--shell-color-canvas);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--shell-color-text-secondary);
-  flex-shrink: 0;
-}
-
-.iconWrap svg {
-  width: 20px;
-  height: 20px;
+.item:hover .name {
+  text-decoration: underline;
 }
 
 .name {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.3;
+  font-size: var(--shell-text-body);
+  line-height: var(--shell-text-body-leading);
+  font-weight: var(--shell-font-weight);
   color: var(--shell-color-text);
-  margin-bottom: 4px;
 }
 
 .description {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: var(--shell-text-caption);
+  line-height: var(--shell-text-caption-leading);
   color: var(--shell-color-text-secondary);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--shell-font-mono);
-  font-size: 10px;
-  line-height: 1.2;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: var(--shell-radius-pill);
-  border: 0.5px solid var(--shell-color-border);
-  color: var(--shell-color-text-secondary);
-  background: transparent;
-  margin-top: var(--shell-spacing-md);
-  width: fit-content;
-}
-
-@media (max-resolution: 1dppx) {
-  .chip {
-    border-width: 1px;
-  }
 }

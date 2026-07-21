@@ -1,79 +1,45 @@
 .topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--shell-topbar-height);
-  background: var(--shell-color-surface);
-  border-bottom: 0.5px solid var(--shell-color-border);
-  display: flex;
-  align-items: center;
-  padding: 0 var(--shell-spacing-lg);
-  z-index: 50;
-}
-
-@media (max-resolution: 1dppx) {
-  .topbar {
-    border-bottom-width: 1px;
-  }
-}
-
-.topbarInner {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: var(--shell-topbar-height);
+  padding: 0 var(--shell-spacing-lg);
+  border-bottom: 1px solid var(--shell-color-border);
 }
 
 .left {
   display: flex;
   align-items: center;
-  gap: var(--shell-spacing-sm);
-}
-
-.backBtn {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--shell-radius-sm);
-  color: var(--shell-color-text);
-  transition: background var(--shell-transition-fast);
-}
-
-.backBtn:hover {
-  background: var(--shell-color-border-subtle);
-}
-
-.title {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--shell-color-text);
 }
 
 .right {
   display: flex;
   align-items: center;
-  gap: var(--shell-spacing-xs);
 }
 
-.iconBtn {
+.backBtn {
+  font-size: var(--shell-text-body);
+  font-weight: var(--shell-font-weight);
+  color: var(--shell-color-text);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.backBtn:hover {
+  text-decoration: underline;
+}
+
+.themeBtn {
   width: 44px;
   height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--shell-radius-sm);
-  color: var(--shell-color-text-secondary);
-  transition: background var(--shell-transition-fast),
-              color var(--shell-transition-fast);
+  color: var(--shell-color-text);
+  border-radius: var(--shell-radius);
 }
 
-.iconBtn:hover {
-  background: var(--shell-color-border-subtle);
-  color: var(--shell-color-text);
+.themeBtn:hover {
+  background: var(--shell-color-border);
 }

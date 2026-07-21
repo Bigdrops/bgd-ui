@@ -1,3 +1,17 @@
+import type { ComponentType, LazyExoticComponent } from 'react'
+
+export interface WorkspaceEntry {
+  id: string
+  name: string
+  description: string
+}
+
+export interface ShellTopic {
+  id: string
+  name: string
+  workspaces: WorkspaceEntry[]
+}
+
 export interface ShellWorkspace {
   id: string
   name: string
@@ -5,10 +19,9 @@ export interface ShellWorkspace {
   icon: string
   category: string
   status: 'active' | 'draft' | 'archived'
-  component: React.LazyExoticComponent<React.ComponentType>
-  themeClass: string
+  component: LazyExoticComponent<ComponentType>
 }
 
 export type ThemeMode = 'light' | 'dark' | 'system'
 
-export type ShellScreen = 'gallery' | 'settings' | 'workspace'
+export type ShellScreen = 'home' | 'topic' | 'workspace' | 'settings'

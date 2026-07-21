@@ -1,63 +1,40 @@
-/*
- * Shell Typography Utilities
- * Inter for body/UI. IBM Plex Mono for category chips.
- */
-
-.bgd-shell .shell-text-micro {
-  font-size: 11px;
-  line-height: 1.3;
-  letter-spacing: 0.03em;
-  font-weight: 400;
+.bgd-shell .shell-display {
+  font-size: var(--shell-text-display);
+  line-height: var(--shell-text-display-leading);
+  font-weight: var(--shell-font-weight);
+  color: var(--shell-color-text);
 }
 
-.bgd-shell .shell-text-caption {
-  font-size: 12px;
-  line-height: 1.4;
-  letter-spacing: 0;
-  font-weight: 400;
+.bgd-shell .shell-heading {
+  font-size: var(--shell-text-heading);
+  line-height: var(--shell-text-heading-leading);
+  font-weight: var(--shell-font-weight);
+  color: var(--shell-color-text);
 }
 
-.bgd-shell .shell-text-body-sm {
-  font-size: 14px;
-  line-height: 1.5;
-  letter-spacing: 0;
-  font-weight: 400;
+.bgd-shell .shell-body {
+  font-size: var(--shell-text-body);
+  line-height: var(--shell-text-body-leading);
+  font-weight: var(--shell-font-weight);
 }
 
-.bgd-shell .shell-text-body {
-  font-size: 16px;
-  line-height: 1.5;
-  letter-spacing: 0;
-  font-weight: 400;
+.bgd-shell .shell-caption {
+  font-size: var(--shell-text-caption);
+  line-height: var(--shell-text-caption-leading);
+  font-weight: var(--shell-font-weight);
+  color: var(--shell-color-text-secondary);
 }
 
-.bgd-shell .shell-text-section {
-  font-size: 11px;
-  line-height: 1.2;
-  letter-spacing: 0.06em;
-  font-weight: 500;
-  text-transform: uppercase;
+.bgd-shell .shell-back-link {
+  font-size: var(--shell-text-body);
+  line-height: var(--shell-text-body-leading);
+  font-weight: var(--shell-font-weight);
+  color: var(--shell-color-text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
 }
 
-.bgd-shell .shell-text-title {
-  font-size: 18px;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  font-weight: 600;
-}
-
-.bgd-shell .shell-text-app-title {
-  font-size: 22px;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  font-weight: 700;
-}
-
-.bgd-shell .shell-text-chip {
-  font-family: var(--shell-font-mono);
-  font-size: 10px;
-  line-height: 1.2;
-  letter-spacing: 0.08em;
-  font-weight: 400;
-  text-transform: uppercase;
+.bgd-shell .shell-back-link:hover {
+  text-decoration: underline;
 }

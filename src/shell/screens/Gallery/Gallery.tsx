@@ -1,86 +1,100 @@
-import { useMemo, useState } from 'react'
-import type { ShellWorkspace } from '../../types'
+import type { ThemeMode } from '../../types'
+import type { ShellTopic, ShellWorkspace } from '../../types'
 import { TopBar } from '../../components/TopBar/TopBar'
-import { BottomTabBar } from '../../components/BottomTabBar/BottomTabBar'
-import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter'
 import { WorkspaceCard } from '../../components/WorkspaceCard/WorkspaceCard'
 import { EmptyState } from '../../components/EmptyState/EmptyState'
 import { LoadingState } from '../../components/LoadingState/LoadingState'
-import { SearchOverlay } from '../../components/SearchOverlay/SearchOverlay'
 import styles from './Gallery.module.css'
 
 interface GalleryProps {
+  topics: ShellTopic[]
   workspaces: ShellWorkspace[]
   loading?: boolean
+  themeMode: ThemeMode
+  resolved: 'light' | 'dark'
+  onToggleTheme: () => void
+  onSelectTopic: (topicId: string) => void
   onSelectWorkspace: (id: string) => void
   onOpenSettings: () => void
+  onBackToTopics: () => void
+  activeTopicId: string | null
 }
 
-export function Gallery({ workspaces, loading, onSelectWorkspace, onOpenSettings }: GalleryProps) {
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [searchOpen, setSearchOpen] = useState(false)
+export function Gallery({
+  topics,
+  workspaces,
+  loading,
+  themeMode,
+  resolved,
+  onToggleTheme,
+  onSelectTopic,
+  onSelectWorkspace,
+  onOpenSettings,
+  onBackToTopics,
+  activeTopicId,
+}: GalleryProps) {
+  if (activeTopicId) {
+    const topic = topics.find((t) => t.id === activeTopicId)
+    if (!topic) return null
 
-  const categories = useMemo(() => {
-    const cats = new Set(workspaces.map((w) => w.category))
-    return Array.from(cats).sort()
-  }, [workspaces])
-
-  const filtered = useMemo(() => {
-    if (activeCategory === 'all') return workspaces
-    return workspaces.filter((w) => w.category === activeCategory)
-  }, [workspaces, activeCategory])
+    return (
+      <>
+        <TopBar showBack onBack={onBackToTopics} />
+        <main className={styles.page}>
+          <h2 className="shell-heading" style={{ marginBottom: 'var(--shell-spacing-lg)' }}>
+            {topic.name}
+          </h2>
+          <div className={styles.list}>
+            {topic.workspaces.map((entry) => {
+              const ws = workspaces.find((w) => w.id === entry.id)
+              return (
+                <WorkspaceCard
+                  key={entry.id}
+                  name={entry.name}
+                  description={entry.description}
+                  onClick={() => onSelectWorkspace(entry.id)}
+                />
+              )
+            })}
+          </div>
+        </main>
+      </>
+    )
+  }
 
   return (
     <>
-      <TopBar title="Workspaces" onSearch={() => setSearchOpen(true)} />
+      <TopBar showThemeToggle themeIsDark={resolved === 'dark'} onToggleTheme={onToggleTheme} />
+      <main className={styles.page}>
+        <h1 className="shell-display" style={{ marginBottom: 'var(--shell-spacing-xl)' }}>
+          WORKSPACES
+        </h1>
 
-      <main className={styles.gallery}>
         {loading ? (
           <LoadingState />
-        ) : workspaces.length === 0 ? (
-          <EmptyState
-            message="No workspaces available."
-            secondary="Add a workspace to get started."
-          />
+        ) : topics.length === 0 ? (
+          <EmptyState />
         ) : (
-          <>
-            <CategoryFilter
-              categories={categories}
-              active={activeCategory}
-              onSelect={setActiveCategory}
-            />
-            <div className={styles.sectionLabel}>Available</div>
-            <div className={styles.grid} role="list" aria-label="Workspaces">
-              {filtered.map((ws) => (
-                <div key={ws.id} role="listitem">
-                  <WorkspaceCard
-                    name={ws.name}
-                    description={ws.description}
-                    icon={ws.icon}
-                    category={ws.category}
-                    onClick={() => onSelectWorkspace(ws.id)}
-                  />
-                </div>
-              ))}
-            </div>
-          </>
+          <div className={styles.list}>
+            {topics.map((topic) => (
+              <button
+                key={topic.id}
+                type="button"
+                className={styles.topicRow}
+                onClick={() => onSelectTopic(topic.id)}
+                aria-label={`${topic.name} workspaces`}
+              >
+                <span className={styles.topicName}>{topic.name}</span>
+                <span className={styles.topicArrow}>→</span>
+              </button>
+            ))}
+          </div>
         )}
+
+        <button type="button" className={styles.settingsLink} onClick={onOpenSettings}>
+          Settings
+        </button>
       </main>
-
-      <BottomTabBar active="gallery" onTabChange={(tab) => {
-        if (tab === 'settings') onOpenSettings()
-      }} />
-
-      {searchOpen && (
-        <SearchOverlay
-          workspaces={workspaces}
-          onSelect={(id) => {
-            setSearchOpen(false)
-            onSelectWorkspace(id)
-          }}
-          onClose={() => setSearchOpen(false)}
-        />
-      )}
     </>
   )
 }

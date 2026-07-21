@@ -1,41 +1,13 @@
 .empty {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--shell-spacing-6xl) var(--shell-spacing-3xl);
+  padding: var(--shell-spacing-6xl) var(--shell-spacing-lg);
   text-align: center;
-  gap: var(--shell-spacing-sm);
 }
 
-.icon {
-  color: var(--shell-color-text-tertiary);
-  margin-bottom: var(--shell-spacing-sm);
-}
-
-.primary {
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--shell-color-text);
-}
-
-.secondary {
-  font-size: 14px;
+.text {
+  font-size: var(--shell-text-body);
+  line-height: var(--shell-text-body-leading);
   color: var(--shell-color-text-secondary);
-}
-
-.action {
-  margin-top: var(--shell-spacing-sm);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--shell-color-accent);
-  padding: var(--shell-spacing-sm) var(--shell-spacing-lg);
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.action:hover {
-  text-decoration: underline;
 }

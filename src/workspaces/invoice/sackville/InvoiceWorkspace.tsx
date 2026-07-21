@@ -71,7 +71,7 @@ export function InvoiceWorkspace() {
   }, [])
 
   return (
-    <div className="sack-cream" style={{ minHeight: '100vh', overflowX: 'hidden' }}>
+    <div className="sak-root" style={{ overflowX: 'hidden' }}>
       {/* Confirm dialog */}
       {confirmClear && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(35,31,32,0.35)', padding: '16px' }} onClick={() => setConfirmClear(false)}>
