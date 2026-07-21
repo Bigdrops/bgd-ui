@@ -1,348 +1,2194 @@
-# Letter — Style Reference
-> Private gallery with iridescent vault artifacts. A black-walled showroom where serif headlines float above chrome sculptures on tinted gallery walls.
-
-**Theme:** mixed
-
-Letter is a private-banking platform that reads like a gallery exhibition for high-net-worth finance. The visual system pivots between a deep ink-black hero stage and a bright editorial body, with 3D metallic and prismatic renders as the recurring sculptural accent. Typography is split into two deliberate registers: a wide grotesque for interface text and navigation, and a high-contrast serif at 80px for headlines that read like magazine cover titles. Color is used as architectural punctuation — three near-gray tinted panels (peach, mint, lavender) act as gallery walls, while teal, violet, and blue claim the action buttons as discrete brand moments. Components are square and confident: 2px corner radii, generous horizontal button padding, and zero decorative shadow — the renders and typography do all the emotional work.
-
-## Tokens — Colors
-
-| Name | Value | Token | Role |
-|------|-------|-------|------|
-| Vault Ink | `#191b1f` | `--color-vault-ink` | Hero background, dark surface stage, dark card panel — deep near-black with the faintest blue chill, warmer than pure black but harder than charcoal |
-| Paper White | `#ffffff` | `--color-paper-white` | Page canvas, light card surface, inverse text on dark backgrounds, outlined button fills |
-| Mist White | `#f6f9f9` | `--color-mist-white` | Soft section background, subtle card surface, secondary canvas — sits one step below pure white without grayness |
-| Fog Gray | `#9fabad` | `--color-fog-gray` | Muted helper text, secondary metadata, low-emphasis labels — a true middle gray with no chromatic bias |
-| Hairline | `#e6ebec` | `--color-hairline` | Borders, dividers, card outlines, button strokes at low contrast — barely-there separators that define structure without drawing the eye |
-| Obsidian | `#000000` | `--color-obsidian` | Primary text, headline ink, logo mark — the only true black in the system, reserved for maximum-contrast typography |
-| Peach Wall | `#fcede1` | `--color-peach-wall` | Hairline borders, dividers, input outlines, and card edges on light surfaces. |
-| Mint Wall | `#eefcef` | `--color-mint-wall` | Tinted card background — cool mint gallery wall, likely the investing/savings panel |
-| Lavender Wall | `#e6def0` | `--color-lavender-wall` | Tinted card background — soft lavender gallery wall for the credit or lending panel |
-| Deep Teal | `#186f64` | `--color-deep-teal` | Teal action color for filled buttons, selected navigation states, and focused conversion moments. |
-| Electric Violet | `#536eff` | `--color-electric-violet` | Violet action color for filled buttons, selected navigation states, and focused conversion moments. |
-| Royal Violet | `#644bc4` | `--color-royal-violet` | Secondary action buttons, hover state on violet CTAs, accent borders — deeper companion to Electric Violet for depth |
-| Sapphire Blue | `#154ea5` | `--color-sapphire-blue` | Blue action color for filled buttons, selected navigation states, and focused conversion moments. |
-
-## Tokens — Typography
-
-### Neufile Grotesk Extended — Body copy, navigation links, button text, card descriptions, footer text, and medium-weight subheads at 28px. This is the working sans — wide apertures and extended proportions give it an editorial, almost monospace rhythm at small sizes. Weight 400 for running text, weight 500 for subheads and emphasized UI labels. · `--font-neufile-grotesk-extended`
-- **Substitute:** Söhne, Inter, IBM Plex Sans
-- **Weights:** 400, 500
-- **Sizes:** 13px, 16px, 28px
-- **Line height:** 1.30, 1.40, 1.00, 2.00
-- **Role:** Body copy, navigation links, button text, card descriptions, footer text, and medium-weight subheads at 28px. This is the working sans — wide apertures and extended proportions give it an editorial, almost monospace rhythm at small sizes. Weight 400 for running text, weight 500 for subheads and emphasized UI labels.
-
-### Albra Sans — All headlines and display text. The serif/sans split is the system's defining typographic move: a high-contrast serif at 80px line-height 1.10 creates magazine-cover presence for the hero, while a 46px line-height 1.20 handles section titles. The 22px size at weight 600 works as a serif subhead — unusual and signature. Positive 0.020em letter-spacing on a serif is anti-convention (most serifs tighten at display sizes), here it breathes the letterforms open for gallery-label elegance. · `--font-albra-sans`
-- **Substitute:** GT Sectra, Tiempos Headline, Canela, Playfair Display
-- **Weights:** 600
-- **Sizes:** 22px, 46px, 80px
-- **Line height:** 1.10, 1.20
-- **Letter spacing:** 0.0200em
-- **Role:** All headlines and display text. The serif/sans split is the system's defining typographic move: a high-contrast serif at 80px line-height 1.10 creates magazine-cover presence for the hero, while a 46px line-height 1.20 handles section titles. The 22px size at weight 600 works as a serif subhead — unusual and signature. Positive 0.020em letter-spacing on a serif is anti-convention (most serifs tighten at display sizes), here it breathes the letterforms open for gallery-label elegance.
-
-### Type Scale
-
-| Role | Size | Line Height | Letter Spacing | Token |
-|------|------|-------------|----------------|-------|
-| caption | 13px | 1.4 | — | `--text-caption` |
-| body | 16px | 1.4 | — | `--text-body` |
-| subheading | 22px | 1.2 | 0.44px | `--text-subheading` |
-| heading-sm | 28px | 1.3 | — | `--text-heading-sm` |
-| heading | 46px | 1.2 | 0.92px | `--text-heading` |
-| display | 80px | 1.1 | 1.6px | `--text-display` |
-
-## Tokens — Spacing & Shapes
-
-**Base unit:** 4px
-
-**Density:** comfortable
-
-### Spacing Scale
-
-| Name | Value | Token |
-|------|-------|-------|
-| 8 | 8px | `--spacing-8` |
-| 12 | 12px | `--spacing-12` |
-| 16 | 16px | `--spacing-16` |
-| 24 | 24px | `--spacing-24` |
-| 32 | 32px | `--spacing-32` |
-| 48 | 48px | `--spacing-48` |
-| 64 | 64px | `--spacing-64` |
-| 72 | 72px | `--spacing-72` |
-
-### Border Radius
-
-| Element | Value |
-|---------|-------|
-| tags | 2px |
-| cards | 0px |
-| inputs | 2px |
-| buttons | 2px |
-
-### Layout
-
-- **Page max-width:** 1200px
-- **Section gap:** 64-96px
-- **Card padding:** 32px
-- **Element gap:** 16px
-
-## Components
-
-### Navigation Bar (Dark)
-**Role:** Primary navigation over hero
-
-Transparent dark bar (#191b1f) with white Neufile Grotesk Extended 13px nav links. Logo mark (white S-shape) left, 7 nav items spaced 23px horizontal padding, 'Join' as ghost button (white border, 2px radius) and 'Sign In' as text link on the far right. No background blur — sits on pure dark.
-
-### Navigation Bar (Light)
-**Role:** Primary navigation on light sections
-
-White background bar, #191b1f text and logo. Same structure as dark nav but inverted. 'Join' becomes a dark filled button (#191b1f fill, white text, 2px radius) and 'Sign In' remains text.
-
-### Teal Filled Button
-**Role:** Primary action — invest, deposit
-
-Background #186f64, white text in Neufile Grotesk Extended 16px weight 500. 2px border radius. Padding 12px vertical, 27px horizontal. No shadow. The flagship CTA color — appears on 'Invest Now' actions.
-
-### Violet Filled Button
-**Role:** Secondary action — borrow, credit
-
-Background #536eff, white text in Neufile Grotesk Extended 16px weight 500. 2px border radius. Padding 12px vertical, 27px horizontal. Appears on 'Borrow Now' actions.
-
-### Blue Filled Button
-**Role:** Tertiary action — card, checking
-
-Background #154ea5, white text in Neufile Grotesk Extended 16px weight 500. 2px border radius. Padding 12px vertical, 27px horizontal. Appears on 'Get Your Card' actions.
-
-### Ghost Text Link
-**Role:** Tertiary action — learn more
-
-No background, no border. Dark text (#191b1f) in Neufile Grotesk Extended 16px. Sits immediately right of a filled button as a low-commitment alternative. Color-tinted to match its sibling filled button (teal link beside teal button, etc.).
-
-### Tinted Feature Card
-**Role:** Product/service showcase panel
-
-Full-width or half-width card with a tinted near-gray background — Peach Wall (#fcede1), Mint Wall (#eefcef), or Lavender Wall (#e6def0). Zero border radius, no border, no shadow. Contains a serif Albra Sans 22px subhead, a 16px body description, a filled action button, a ghost link, and a large 3D render occupying the right or lower half. 32px internal padding. The tinted background is the card's only differentiator from the white page.
-
-### Dark Hero Stage
-**Role:** Above-the-fold hero section
-
-Full-bleed #191b1f background. Centered Albra Sans 80px display headline in white, 46px or 22px serif subhead below, and a large 3D metallic/chrome render with dramatic light flares occupying the lower 60% of the viewport. No border, no card treatment — the dark background IS the surface. Generous vertical padding (96-128px top, 64-96px bottom).
-
-### Split Content Section
-**Role:** Body content with paired 3D render
-
-Two-column layout, roughly 50/50. Left column: Albra Sans 46px heading, 16px body text, optional CTA. Right column: 3D render (iridescent card, liquid-metal form, chrome sphere) with generous breathing room. Background alternates between white and #f6f9f9 between sections.
-
-### 3D Abstract Render
-**Role:** Signature visual element
-
-Full-color 3D renders with metallic, prismatic, or iridescent surfaces. Floating in space with dramatic directional lighting — lens flares, caustic light patterns, and subsurface scattering. Treatment: sharp edges, no rounded masks, overlapping light bloom. Each render is a one-off composition, not a reusable component, but they share a consistent material language: polished chrome, dichroic glass, and liquid metal. This is the brand's most distinctive visual asset.
-
-## Do's and Don'ts
-
-### Do
-- Use Albra Sans serif for all headlines and display text — never substitute a sans-serif for headings; the serif/sans split is the system's identity
-- Keep button corner radius at 2px — the near-square edges read as architectural confidence, not friendliness
-- Use 80px Albra Sans for hero headlines only; section titles cap at 46px
-- Pair every filled colored button with an adjacent ghost text link in the matching brand color — teal button + teal link, violet button + violet link
-- Let 3D renders float in negative space without containers, borders, or rounded masks — the raw edges of the render ARE the visual frame
-- Use tinted card backgrounds (#fcede1, #eefcef, #e6def0) for product panels; reserve #ffffff and #f6f9f9 for structural sections
-- Maintain 27px horizontal button padding — this generous horizontal breathing is what makes the buttons feel premium rather than functional
-
-### Don't
-- Never use shadows, drop shadows, or box-shadows on cards, buttons, or sections — the system is flat and lets background color and 3D renders do the depth work
-- Don't introduce additional border radii beyond 2px — no rounded cards, no pill buttons, no circular avatars
-- Don't use the brand colors (#186f64, #536eff, #644bc4, #154ea5) for body text, borders, or backgrounds — they are reserved for action moments and headlines only
-- Never set headlines in a sans-serif — the serif Albra Sans is non-negotiable for the editorial voice
-- Don't use the tinted card backgrounds (#fcede1, #eefcef, #e6def0) for body text or large surface areas — they are gallery walls for 3D renders, not page backgrounds
-- Don't apply gradients to UI components — gradients appear only in 3D renders and the hero light burst, not in buttons, cards, or backgrounds
-- Avoid tight letter-spacing on serif headlines — the 0.020em positive tracking is deliberate and creates the gallery-label feel
-
-## Surfaces
-
-| Level | Name | Value | Purpose |
-|-------|------|-------|---------|
-| 0 | Vault Ink | `#191b1f` | Hero stage, dark section backgrounds, dark nav — the deepest surface |
-| 1 | Paper White | `#ffffff` | Page canvas, light cards, primary content surface |
-| 2 | Mist White | `#f6f9f9` | Alternating section background, subtle elevation above white |
-| 3 | Tinted Gallery Walls | `#fcede1` | Product panel backgrounds — peach, mint, lavender variants act as gallery walls for 3D renders |
-
-## Elevation
-
-The system is intentionally shadowless. Depth is created through surface color contrast (white → #f6f9f9 → tinted walls → #191b1f) and through 3D renders that carry their own internal lighting. No box-shadows, no drop shadows, no glows on UI elements. This flat treatment is a luxury signal — the confidence to not use visual crutches.
-
-## Imagery
-
-3D abstract renders are the dominant visual asset — polished chrome spheres, iridescent prismatic card forms, liquid-metal organic shapes, and faceted geometric crystals. Treatment: full-color, high-contrast, with dramatic directional lighting (caustic light patterns, lens flares, subsurface glow on metallic surfaces). Renders are never masked or placed in containers — they float in raw negative space with sharp edges. No photography, no illustration, no flat icons. Icon style: minimal outlined line icons in nav and UI chrome, monochrome white or #191b1f, thin consistent stroke weight. Role: the 3D renders are explanatory content (visualizing abstract financial concepts as physical artifacts) and brand atmosphere simultaneously. Density: text-dominant overall, but each major section features one large hero render that commands 40-60% of the viewport.
-
-## Layout
-
-Max-width ~1200px centered container. Hero is full-bleed dark with centered headline stack (display → subhead → no button above fold), then transitions to a rhythm of alternating light sections. Pattern: dark hero → white split section → tinted card row (2-column grid) → white split section → tinted card row. Sections use generous vertical padding (64-96px) for gallery-walk pacing. Content arrangement: 50/50 split layouts pairing text with 3D renders, with text consistently on the left and renders on the right. Tinted feature cards form a 2-column grid for product panels. Navigation: sticky top bar that transitions from dark (on hero) to light (on scroll). No sidebar, no mega-menu.
-
-## Agent Prompt Guide
-
-**Quick Color Reference**
-- text (primary): #191b1f
-- background: #ffffff
-- soft background: #f6f9f9
-- border/hairline: #e6ebec
-- brand accent (teal): #186f64
-- brand accent (violet): #536eff
-- brand accent (blue): #154ea5
-- primary action: #186f64 (filled action)
-
-**3 Example Component Prompts**
-
-1. **Dark Hero Section**: Full-bleed #191b1f background. Centered Albra Sans 80px weight 600 display headline in #ffffff, letter-spacing 1.6px, line-height 1.1. Below: Albra Sans 22px weight 600 subhead in #ffffff at 70% opacity, line-height 1.2. Large 3D metallic render with chrome and prismatic lighting occupying the lower 60% of the viewport, no border, no container, raw edges. 128px top padding, 96px bottom padding.
-
-2. **Tinted Feature Card (Peach)**: Full-width panel with #fcede1 background, zero border-radius, no border, no shadow. 32px padding. Left half: Albra Sans 22px weight 600 heading in #191b1f, 16px Neufile Grotesk Extended weight 400 body text in #191b1f, teal filled button (#186f64, white text, 2px radius, 12px 27px padding), teal ghost text link beside it. Right half: 3D liquid-metal render, no container.
-
-3. **Teal Filled Button**: Background #186f64, white text in Neufile Grotesk Extended 16px weight 500. 2px border-radius. Padding 12px vertical, 27px horizontal. No shadow, no gradient. Adjacent ghost text link in matching #186f64, no background, no border.
-
-## Material Language
-
-The 3D renders share a consistent material vocabulary that functions as the brand's secondary color system: polished chrome, dichroic glass, liquid metal, and iridescent prismatic surfaces. These are rendered with dramatic directional lighting — single key light with lens flare, caustic light patterns on adjacent surfaces, and subtle subsurface glow. Each render is a one-off composition, but the material treatment is the system: objects that look like museum artifacts displayed under gallery spotlights. Never matte, never flat-shaded, never cartoonish.
-
-## Similar Brands
-
-- **Mercury** — Serif headlines paired with sans-serif body, restrained color palette with single accent moments, luxury private-banking tone, near-zero border radii
-- **Arc** — Dramatic dark-to-light section transitions, premium typography mixing serif display with sans body, generous whitespace as luxury signal
-- **Linear** — Dark hero stage transitioning to clean light sections, precise typographic hierarchy, product panels with distinct color identity
-- **Ramp** — Clean financial UI with generous horizontal button padding, flat surfaces without shadows, restrained chromatic palette
-- **Stripe** — Editorial typography treatment applied to financial product, gallery-like section rhythm, confidence through typographic restraint rather than visual effects
-
-## Quick Start
-
-### CSS Custom Properties
-
-```css
-:root {
-  /* Colors */
-  --color-vault-ink: #191b1f;
-  --color-paper-white: #ffffff;
-  --color-mist-white: #f6f9f9;
-  --color-fog-gray: #9fabad;
-  --color-hairline: #e6ebec;
-  --color-obsidian: #000000;
-  --color-peach-wall: #fcede1;
-  --color-mint-wall: #eefcef;
-  --color-lavender-wall: #e6def0;
-  --color-deep-teal: #186f64;
-  --color-electric-violet: #536eff;
-  --color-royal-violet: #644bc4;
-  --color-sapphire-blue: #154ea5;
-
-  /* Typography — Font Families */
-  --font-neufile-grotesk-extended: 'Neufile Grotesk Extended', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-albra-sans: 'Albra Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-
-  /* Typography — Scale */
-  --text-caption: 13px;
-  --leading-caption: 1.4;
-  --text-body: 16px;
-  --leading-body: 1.4;
-  --text-subheading: 22px;
-  --leading-subheading: 1.2;
-  --tracking-subheading: 0.44px;
-  --text-heading-sm: 28px;
-  --leading-heading-sm: 1.3;
-  --text-heading: 46px;
-  --leading-heading: 1.2;
-  --tracking-heading: 0.92px;
-  --text-display: 80px;
-  --leading-display: 1.1;
-  --tracking-display: 1.6px;
-
-  /* Typography — Weights */
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-
-  /* Spacing */
-  --spacing-unit: 4px;
-  --spacing-8: 8px;
-  --spacing-12: 12px;
-  --spacing-16: 16px;
-  --spacing-24: 24px;
-  --spacing-32: 32px;
-  --spacing-48: 48px;
-  --spacing-64: 64px;
-  --spacing-72: 72px;
-
-  /* Layout */
-  --page-max-width: 1200px;
-  --section-gap: 64-96px;
-  --card-padding: 32px;
-  --element-gap: 16px;
-
-  /* Border Radius */
-  --radius-sm: 2px;
-
-  /* Named Radii */
-  --radius-tags: 2px;
-  --radius-cards: 0px;
-  --radius-inputs: 2px;
-  --radius-buttons: 2px;
-
-  /* Surfaces */
-  --surface-vault-ink: #191b1f;
-  --surface-paper-white: #ffffff;
-  --surface-mist-white: #f6f9f9;
-  --surface-tinted-gallery-walls: #fcede1;
-}
-```
-
-### Tailwind v4
-
-```css
-@theme {
-  /* Colors */
-  --color-vault-ink: #191b1f;
-  --color-paper-white: #ffffff;
-  --color-mist-white: #f6f9f9;
-  --color-fog-gray: #9fabad;
-  --color-hairline: #e6ebec;
-  --color-obsidian: #000000;
-  --color-peach-wall: #fcede1;
-  --color-mint-wall: #eefcef;
-  --color-lavender-wall: #e6def0;
-  --color-deep-teal: #186f64;
-  --color-electric-violet: #536eff;
-  --color-royal-violet: #644bc4;
-  --color-sapphire-blue: #154ea5;
-
-  /* Typography */
-  --font-neufile-grotesk-extended: 'Neufile Grotesk Extended', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-albra-sans: 'Albra Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-
-  /* Typography — Scale */
-  --text-caption: 13px;
-  --leading-caption: 1.4;
-  --text-body: 16px;
-  --leading-body: 1.4;
-  --text-subheading: 22px;
-  --leading-subheading: 1.2;
-  --tracking-subheading: 0.44px;
-  --text-heading-sm: 28px;
-  --leading-heading-sm: 1.3;
-  --text-heading: 46px;
-  --leading-heading: 1.2;
-  --tracking-heading: 0.92px;
-  --text-display: 80px;
-  --leading-display: 1.1;
-  --tracking-display: 1.6px;
-
-  /* Spacing */
-  --spacing-8: 8px;
-  --spacing-12: 12px;
-  --spacing-16: 16px;
-  --spacing-24: 24px;
-  --spacing-32: 32px;
-  --spacing-48: 48px;
-  --spacing-64: 64px;
-  --spacing-72: 72px;
-
-  /* Border Radius */
-  --radius-sm: 2px;
-}
-```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Letter · Workspace Gallery</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+
+    <!-- Google Fonts: Playfair Display (Albra Sans serif substitute) + Inter (Neufile Grotesk substitute) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ══════════════════════════════════════════════════════════════
+           LETTER — Design Tokens
+           ══════════════════════════════════════════════════════════════ */
+        :root {
+            /* ── Colors ── */
+            --color-vault-ink: #191b1f;
+            --color-paper-white: #ffffff;
+            --color-mist-white: #f6f9f9;
+            --color-fog-gray: #9fabad;
+            --color-hairline: #e6ebec;
+            --color-obsidian: #000000;
+            --color-peach-wall: #fcede1;
+            --color-mint-wall: #eefcef;
+            --color-lavender-wall: #e6def0;
+            --color-deep-teal: #186f64;
+            --color-electric-violet: #536eff;
+            --color-royal-violet: #644bc4;
+            --color-sapphire-blue: #154ea5;
+
+            /* ── Typography ── */
+            --font-neufile: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            --font-albra: 'Playfair Display', ui-serif, 'Times New Roman', serif;
+
+            /* ── Spacing ── */
+            --spacing-8: 8px;
+            --spacing-12: 12px;
+            --spacing-16: 16px;
+            --spacing-24: 24px;
+            --spacing-32: 32px;
+            --spacing-48: 48px;
+            --spacing-64: 64px;
+            --spacing-72: 72px;
+
+            /* ── Layout ── */
+            --page-max-width: 1200px;
+            --section-gap: 64px;
+            --card-padding: 32px;
+            --element-gap: 16px;
+
+            /* ── Border Radius ── */
+            --radius-sm: 2px;
+
+            /* ── Surfaces ── */
+            --surface-vault: #191b1f;
+            --surface-paper: #ffffff;
+            --surface-mist: #f6f9f9;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           RESET & BASE
+           ══════════════════════════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-neufile);
+            background: var(--surface-paper);
+            color: var(--color-vault-ink);
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           SCROLLBAR
+           ══════════════════════════════════════════════════════════════ */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--surface-mist);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-vault-ink);
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2a2e35;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           ANIMATIONS
+           ══════════════════════════════════════════════════════════════ */
+        @keyframes letterFadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes letterScaleIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes letterFloat {
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-12px) rotate(1.5deg);
+            }
+        }
+
+        @keyframes letterGlow {
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .animate-letter-fade-up {
+            animation: letterFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            opacity: 0;
+        }
+
+        .animate-letter-scale-in {
+            animation: letterScaleIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            opacity: 0;
+        }
+
+        .stagger-1 {
+            animation-delay: 0.05s;
+        }
+        .stagger-2 {
+            animation-delay: 0.1s;
+        }
+        .stagger-3 {
+            animation-delay: 0.15s;
+        }
+        .stagger-4 {
+            animation-delay: 0.2s;
+        }
+        .stagger-5 {
+            animation-delay: 0.25s;
+        }
+        .stagger-6 {
+            animation-delay: 0.3s;
+        }
+        .stagger-7 {
+            animation-delay: 0.35s;
+        }
+        .stagger-8 {
+            animation-delay: 0.4s;
+        }
+        .stagger-9 {
+            animation-delay: 0.45s;
+        }
+        .stagger-10 {
+            animation-delay: 0.5s;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           LETTER — COMPONENTS
+           ══════════════════════════════════════════════════════════════ */
+
+        /* ── Container ── */
+        .letter-container {
+            max-width: var(--page-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-16);
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .letter-container {
+                padding: 0 var(--spacing-32);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .letter-container {
+                padding: 0 var(--spacing-48);
+            }
+        }
+
+        /* ── Section ── */
+        .letter-section {
+            padding: var(--spacing-48) 0;
+        }
+
+        @media (min-width: 768px) {
+            .letter-section {
+                padding: var(--spacing-64) 0;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .letter-section {
+                padding: var(--spacing-72) 0;
+            }
+        }
+
+        /* ── Navigation (Dark) ── */
+        .letter-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-16) 0;
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .letter-nav.dark {
+            background: transparent;
+            color: var(--surface-paper);
+        }
+
+        .letter-nav.light {
+            background: var(--surface-paper);
+            color: var(--color-vault-ink);
+            border-bottom: 1px solid var(--color-hairline);
+        }
+
+        .letter-nav .brand {
+            font-family: var(--font-albra);
+            font-weight: 600;
+            font-size: 24px;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-8);
+        }
+
+        .letter-nav.dark .brand {
+            color: var(--surface-paper);
+        }
+        .letter-nav.light .brand {
+            color: var(--color-vault-ink);
+        }
+
+        .letter-nav .brand-icon {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border: 2px solid currentColor;
+            border-radius: var(--radius-sm);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .letter-nav .brand-icon::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: currentColor;
+            opacity: 0.3;
+            border-radius: 0;
+        }
+
+        .letter-nav-links {
+            display: none;
+            align-items: center;
+            gap: var(--spacing-24);
+        }
+
+        @media (min-width: 768px) {
+            .letter-nav-links {
+                display: flex;
+            }
+            .letter-hamburger {
+                display: none !important;
+            }
+        }
+
+        .letter-nav-link {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 13px;
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .letter-nav.dark .letter-nav-link {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .letter-nav.dark .letter-nav-link:hover {
+            color: #fff;
+            opacity: 1;
+        }
+
+        .letter-nav.light .letter-nav-link {
+            color: var(--color-vault-ink);
+            opacity: 0.6;
+        }
+        .letter-nav.light .letter-nav-link:hover {
+            opacity: 1;
+        }
+
+        .letter-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-12);
+        }
+
+        /* ── Ghost Button (dark nav) ── */
+        .btn-ghost-white {
+            background: transparent;
+            color: var(--surface-paper);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 8px 20px;
+            font-family: var(--font-neufile);
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            min-height: 40px;
+        }
+
+        .btn-ghost-white:hover,
+        .btn-ghost-white:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ── Ghost Button (light nav) ── */
+        .btn-ghost-dark {
+            background: transparent;
+            color: var(--color-vault-ink);
+            border: 1px solid var(--color-hairline);
+            border-radius: var(--radius-sm);
+            padding: 8px 20px;
+            font-family: var(--font-neufile);
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            min-height: 40px;
+        }
+
+        .btn-ghost-dark:hover,
+        .btn-ghost-dark:focus {
+            background: var(--surface-mist);
+            border-color: var(--color-vault-ink);
+        }
+
+        /* ── Text Link ── */
+        .btn-text-link {
+            background: transparent;
+            color: inherit;
+            border: none;
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 13px;
+            cursor: pointer;
+            touch-action: manipulation;
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-text-link:hover,
+        .btn-text-link:focus {
+            opacity: 1;
+        }
+
+        /* ── Brand Buttons ── */
+        .btn-teal {
+            background: var(--color-deep-teal);
+            color: var(--surface-paper);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 12px 27px;
+            font-family: var(--font-neufile);
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.15s ease;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-8);
+            text-decoration: none;
+            min-height: 48px;
+        }
+
+        .btn-teal:hover,
+        .btn-teal:focus {
+            opacity: 0.85;
+            transform: scale(0.98);
+        }
+        .btn-teal:active {
+            transform: scale(0.96);
+        }
+
+        .btn-violet {
+            background: var(--color-electric-violet);
+            color: var(--surface-paper);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 12px 27px;
+            font-family: var(--font-neufile);
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.15s ease;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-8);
+            text-decoration: none;
+            min-height: 48px;
+        }
+
+        .btn-violet:hover,
+        .btn-violet:focus {
+            opacity: 0.85;
+            transform: scale(0.98);
+        }
+        .btn-violet:active {
+            transform: scale(0.96);
+        }
+
+        .btn-blue {
+            background: var(--color-sapphire-blue);
+            color: var(--surface-paper);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 12px 27px;
+            font-family: var(--font-neufile);
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s ease, transform 0.15s ease;
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-8);
+            text-decoration: none;
+            min-height: 48px;
+        }
+
+        .btn-blue:hover,
+        .btn-blue:focus {
+            opacity: 0.85;
+            transform: scale(0.98);
+        }
+        .btn-blue:active {
+            transform: scale(0.96);
+        }
+
+        /* ── Ghost Text Link (color-matched) ── */
+        .btn-ghost-text {
+            background: transparent;
+            border: none;
+            font-family: var(--font-neufile);
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            touch-action: manipulation;
+            text-decoration: none;
+            padding: 12px 8px;
+            transition: opacity 0.2s ease;
+        }
+
+        .btn-ghost-text:hover,
+        .btn-ghost-text:focus {
+            opacity: 0.7;
+        }
+
+        .btn-ghost-text.teal {
+            color: var(--color-deep-teal);
+        }
+        .btn-ghost-text.violet {
+            color: var(--color-electric-violet);
+        }
+        .btn-ghost-text.blue {
+            color: var(--color-sapphire-blue);
+        }
+        .btn-ghost-text.dark {
+            color: var(--color-vault-ink);
+        }
+
+        /* ── Hamburger ── */
+        .letter-hamburger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            touch-action: manipulation;
+            min-height: 44px;
+            min-width: 44px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .letter-hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            transform-origin: center;
+            position: absolute;
+        }
+
+        .letter-hamburger span:nth-child(1) {
+            top: 5px;
+        }
+        .letter-hamburger span:nth-child(2) {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .letter-hamburger span:nth-child(3) {
+            bottom: 5px;
+        }
+
+        .letter-hamburger.active span:nth-child(1) {
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+        }
+        .letter-hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateY(-50%) scaleX(0);
+        }
+        .letter-hamburger.active span:nth-child(3) {
+            bottom: 50%;
+            transform: translateY(50%) rotate(-45deg);
+        }
+
+        .letter-nav.dark .letter-hamburger span {
+            background: var(--surface-paper);
+        }
+        .letter-nav.light .letter-hamburger span {
+            background: var(--color-vault-ink);
+        }
+
+        /* ── Mobile Menu ── */
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 340px;
+            height: 100vh;
+            z-index: 100;
+            background: var(--surface-paper);
+            border-left: 1px solid var(--color-hairline);
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-4);
+            overflow-y: auto;
+        }
+
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        #mobile-menu .letter-nav-link {
+            font-size: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--color-hairline);
+            display: block;
+            color: var(--color-vault-ink);
+            opacity: 0.7;
+        }
+
+        #mobile-menu .letter-nav-link:hover,
+        #mobile-menu .letter-nav-link:focus {
+            opacity: 1;
+        }
+
+        #mobile-menu .letter-nav-link.active {
+            opacity: 1;
+        }
+
+        #menu-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 99;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        #menu-backdrop.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: 1px solid var(--color-hairline);
+            border-radius: var(--radius-sm);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-vault-ink);
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+            touch-action: manipulation;
+        }
+
+        .menu-close:hover,
+        .menu-close:focus {
+            border-color: var(--color-vault-ink);
+        }
+
+        .menu-close svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ─── HERO (Dark Stage) ─── */
+        .letter-hero {
+            background: var(--surface-vault);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px var(--spacing-16) 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .letter-hero {
+                padding: 100px var(--spacing-32) 80px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .letter-hero {
+                padding: 120px var(--spacing-48) 100px;
+            }
+        }
+
+        .letter-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 820px;
+        }
+
+        .letter-hero-eyebrow {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: var(--spacing-16);
+        }
+
+        .letter-hero h1 {
+            font-family: var(--font-albra);
+            font-weight: 600;
+            font-size: clamp(48px, 10vw, 80px);
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+            color: var(--surface-paper);
+            margin-bottom: var(--spacing-16);
+        }
+
+        .letter-hero h1 .highlight {
+            color: var(--color-deep-teal);
+        }
+
+        .letter-hero p {
+            font-family: var(--font-albra);
+            font-weight: 400;
+            font-size: clamp(18px, 2.5vw, 22px);
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.02em;
+            max-width: 560px;
+            margin: 0 auto var(--spacing-32);
+        }
+
+        .letter-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-12);
+            justify-content: center;
+        }
+
+        .letter-hero .hero-render {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 900px;
+            height: 55%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.5;
+            background: radial-gradient(ellipse at center bottom, rgba(24, 111, 100, 0.15) 0%, transparent 70%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .hero-render-shape {
+            width: 100%;
+            max-width: 600px;
+            height: 100%;
+            max-height: 320px;
+            position: relative;
+            animation: letterFloat 6s ease-in-out infinite;
+        }
+
+        .hero-render-shape .shape-layer {
+            position: absolute;
+            border-radius: 0;
+            background: linear-gradient(135deg, rgba(24, 111, 100, 0.3), rgba(83, 110, 255, 0.2));
+            backdrop-filter: blur(1px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-render-shape .shape-layer:nth-child(1) {
+            width: 60%;
+            height: 60%;
+            bottom: 0;
+            left: 10%;
+            background: linear-gradient(135deg, rgba(24, 111, 100, 0.25), rgba(83, 110, 255, 0.15));
+            border-color: rgba(24, 111, 100, 0.15);
+            transform: skewX(-6deg);
+        }
+
+        .hero-render-shape .shape-layer:nth-child(2) {
+            width: 40%;
+            height: 40%;
+            top: 10%;
+            right: 5%;
+            background: linear-gradient(135deg, rgba(83, 110, 255, 0.2), rgba(21, 78, 165, 0.15));
+            border-color: rgba(83, 110, 255, 0.15);
+            transform: skewX(4deg);
+        }
+
+        .hero-render-shape .shape-layer:nth-child(3) {
+            width: 30%;
+            height: 50%;
+            bottom: 20%;
+            right: 15%;
+            background: linear-gradient(135deg, rgba(21, 78, 165, 0.15), rgba(24, 111, 100, 0.2));
+            border-color: rgba(21, 78, 165, 0.12);
+            transform: skewX(-3deg);
+        }
+
+        .hero-render-shape .shape-layer:nth-child(4) {
+            width: 20%;
+            height: 20%;
+            top: 30%;
+            left: 15%;
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+        }
+
+        .hero-render-shape .shape-layer:nth-child(5) {
+            width: 80%;
+            height: 2px;
+            bottom: 15%;
+            left: 10%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            border: none;
+            border-radius: 0;
+        }
+
+        .hero-render-shape .shape-layer:nth-child(6) {
+            width: 2px;
+            height: 50%;
+            bottom: 10%;
+            left: 30%;
+            background: linear-gradient(0deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            border: none;
+            border-radius: 0;
+        }
+
+        /* ── Tinted Feature Card ── */
+        .tinted-card {
+            padding: var(--spacing-32);
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-16);
+        }
+
+        @media (min-width: 768px) {
+            .tinted-card {
+                flex-direction: row;
+                align-items: center;
+                gap: var(--spacing-48);
+                padding: var(--spacing-40);
+            }
+        }
+
+        .tinted-card.peach {
+            background: var(--color-peach-wall);
+        }
+        .tinted-card.mint {
+            background: var(--color-mint-wall);
+        }
+        .tinted-card.lavender {
+            background: var(--color-lavender-wall);
+        }
+
+        .tinted-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-12);
+        }
+
+        .tinted-card-content .card-headline {
+            font-family: var(--font-albra);
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+            color: var(--color-vault-ink);
+        }
+
+        .tinted-card-content .card-body {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.4;
+            color: var(--color-vault-ink);
+            opacity: 0.7;
+        }
+
+        .tinted-card-content .card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--spacing-8);
+            margin-top: var(--spacing-8);
+        }
+
+        .tinted-card-render {
+            flex: 0 0 auto;
+            width: 100%;
+            min-height: 200px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .tinted-card-render {
+                width: 40%;
+                min-height: 240px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .tinted-card-render {
+                width: 45%;
+                min-height: 280px;
+            }
+        }
+
+        .tinted-card-render .render-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .tinted-card-render .render-shape {
+            width: 60%;
+            height: 60%;
+            background: linear-gradient(135deg, rgba(24, 111, 100, 0.15), rgba(83, 110, 255, 0.1));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transform: rotate(12deg) skewX(-4deg);
+            position: relative;
+        }
+
+        .tinted-card-render .render-shape::after {
+            content: '';
+            position: absolute;
+            inset: 20%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tinted-card-render .render-shape-2 {
+            width: 30%;
+            height: 40%;
+            background: linear-gradient(135deg, rgba(83, 110, 255, 0.12), rgba(21, 78, 165, 0.08));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: absolute;
+            right: 10%;
+            bottom: 10%;
+            transform: rotate(-6deg) skewX(3deg);
+        }
+
+        .tinted-card-render .render-shape-3 {
+            width: 20%;
+            height: 20%;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: absolute;
+            top: 15%;
+            left: 10%;
+        }
+
+        /* ── Split Content Section ── */
+        .split-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-32);
+            padding: var(--spacing-48) 0;
+        }
+
+        @media (min-width: 768px) {
+            .split-section {
+                flex-direction: row;
+                align-items: center;
+                gap: var(--spacing-48);
+                padding: var(--spacing-64) 0;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .split-section {
+                gap: var(--spacing-64);
+            }
+        }
+
+        .split-section-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-16);
+        }
+
+        .split-section-content .section-eyebrow {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--color-fog-gray);
+        }
+
+        .split-section-content .section-headline {
+            font-family: var(--font-albra);
+            font-weight: 600;
+            font-size: clamp(32px, 5vw, 46px);
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+            color: var(--color-vault-ink);
+        }
+
+        .split-section-content .section-body {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--color-vault-ink);
+            opacity: 0.7;
+            max-width: 480px;
+        }
+
+        .split-section-content .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--spacing-8);
+            margin-top: var(--spacing-8);
+        }
+
+        .split-section-render {
+            flex: 1;
+            min-height: 240px;
+            background: var(--surface-mist);
+            border: 1px solid var(--color-hairline);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .split-section-render {
+                min-height: 300px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .split-section-render {
+                min-height: 360px;
+            }
+        }
+
+        .split-section-render .render-inner {
+            width: 70%;
+            height: 60%;
+            background: linear-gradient(135deg, rgba(24, 111, 100, 0.08), rgba(83, 110, 255, 0.06));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: rotate(8deg) skewX(-2deg);
+            position: relative;
+        }
+
+        .split-section-render .render-inner::after {
+            content: '';
+            position: absolute;
+            inset: 15%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent);
+        }
+
+        /* ── Workspace Card ── */
+        .workspace-card {
+            background: var(--surface-paper);
+            border: 1px solid var(--color-hairline);
+            border-radius: 0;
+            padding: var(--spacing-24);
+            transition: border-color 0.2s ease, background 0.2s ease;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-12);
+            position: relative;
+        }
+
+        .workspace-card:hover,
+        .workspace-card:focus {
+            border-color: var(--color-vault-ink);
+            background: var(--surface-mist);
+        }
+
+        .workspace-card:active {
+            transform: scale(0.98);
+        }
+
+        .workspace-card .card-tag {
+            font-family: var(--font-neufile);
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--color-fog-gray);
+            align-self: flex-start;
+            padding: 2px 0;
+            border-bottom: 1.5px solid var(--color-hairline);
+        }
+
+        .workspace-card .card-name {
+            font-family: var(--font-albra);
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
+            color: var(--color-vault-ink);
+        }
+
+        .workspace-card .card-domain {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 14px;
+            color: var(--color-vault-ink);
+            opacity: 0.6;
+        }
+
+        .workspace-card .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-8);
+            margin-top: var(--spacing-4);
+        }
+
+        .workspace-card .card-meta .pill {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 12px;
+            padding: 4px 12px;
+            border: 1px solid var(--color-hairline);
+            border-radius: var(--radius-sm);
+            color: var(--color-vault-ink);
+            opacity: 0.5;
+        }
+
+        .workspace-card .card-meta .pill.teal {
+            border-color: var(--color-deep-teal);
+            color: var(--color-deep-teal);
+            opacity: 1;
+        }
+
+        .workspace-card .card-meta .pill.violet {
+            border-color: var(--color-electric-violet);
+            color: var(--color-electric-violet);
+            opacity: 1;
+        }
+
+        .workspace-card .card-meta .pill.blue {
+            border-color: var(--color-sapphire-blue);
+            color: var(--color-sapphire-blue);
+            opacity: 1;
+        }
+
+        .workspace-card .card-meta .pill.status {
+            border-color: var(--color-hairline);
+            background: var(--surface-mist);
+            opacity: 0.7;
+        }
+
+        /* ── Workspace Grid ── */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-16);
+            padding-bottom: var(--spacing-8);
+        }
+
+        @media (min-width: 480px) {
+            .workspace-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .workspace-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: var(--spacing-20);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .workspace-grid {
+                gap: var(--spacing-24);
+            }
+        }
+
+        /* ── Search ── */
+        .letter-search {
+            position: relative;
+            margin-bottom: var(--spacing-16);
+            display: none;
+        }
+
+        .letter-search.visible {
+            display: block;
+        }
+
+        .letter-search input {
+            width: 100%;
+            padding: 14px 18px 14px 48px;
+            background: var(--surface-paper);
+            border: 1px solid var(--color-hairline);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 16px;
+            color: var(--color-vault-ink);
+            outline: none;
+            transition: border-color 0.2s ease;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .letter-search input::placeholder {
+            color: var(--color-fog-gray);
+            opacity: 0.6;
+        }
+
+        .letter-search input:focus {
+            border-color: var(--color-vault-ink);
+        }
+
+        .letter-search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-fog-gray);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .letter-search-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 1.75;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ── Category Filter ── */
+        .letter-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-8);
+            padding: var(--spacing-12) 0 var(--spacing-20);
+        }
+
+        .category-pill {
+            background: transparent;
+            border: 1px solid var(--color-hairline);
+            border-radius: var(--radius-sm);
+            padding: 6px 18px;
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--color-vault-ink);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            opacity: 0.5;
+        }
+
+        .category-pill:hover {
+            opacity: 0.8;
+            border-color: var(--color-vault-ink);
+        }
+
+        .category-pill.active {
+            background: var(--color-vault-ink);
+            color: var(--surface-paper);
+            border-color: var(--color-vault-ink);
+            opacity: 1;
+        }
+
+        .category-pill.featured {
+            border-color: var(--color-deep-teal);
+            color: var(--color-deep-teal);
+            opacity: 0.7;
+        }
+
+        .category-pill.featured.active {
+            background: var(--color-deep-teal);
+            color: var(--surface-paper);
+            border-color: var(--color-deep-teal);
+            opacity: 1;
+        }
+
+        /* ── Section Label ── */
+        .letter-section-label {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding-bottom: var(--spacing-12);
+            border-bottom: 1px solid var(--color-hairline);
+            margin-bottom: var(--spacing-20);
+        }
+
+        .letter-section-label h2 {
+            font-family: var(--font-albra);
+            font-weight: 600;
+            font-size: clamp(28px, 4vw, 46px);
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+            color: var(--color-vault-ink);
+        }
+
+        .letter-section-label span {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 14px;
+            color: var(--color-fog-gray);
+        }
+
+        /* ── Empty State ── */
+        .letter-empty {
+            text-align: center;
+            padding: var(--spacing-48) var(--spacing-24);
+            color: var(--color-fog-gray);
+            border: 1px solid var(--color-hairline);
+            background: var(--surface-mist);
+        }
+
+        .letter-empty p {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 16px;
+        }
+
+        .letter-empty strong {
+            color: var(--color-vault-ink);
+            font-weight: 500;
+        }
+
+        /* ── Footer ── */
+        .letter-footer {
+            border-top: 1px solid var(--color-hairline);
+            padding: var(--spacing-32) 0 var(--spacing-40);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-16);
+            margin-top: var(--spacing-16);
+        }
+
+        .letter-footer-text {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--color-fog-gray);
+            text-align: center;
+        }
+
+        .letter-footer-text .brand {
+            font-family: var(--font-albra);
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--color-vault-ink);
+        }
+
+        .letter-footer-links {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-24);
+        }
+
+        .letter-footer-links a {
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--color-fog-gray);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .letter-footer-links a:hover,
+        .letter-footer-links a:focus {
+            color: var(--color-vault-ink);
+        }
+
+        /* ── Search toggle ── */
+        .search-toggle-link {
+            background: none;
+            border: none;
+            font-family: var(--font-neufile);
+            font-weight: 400;
+            font-size: 13px;
+            color: inherit;
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: opacity 0.2s ease;
+            touch-action: manipulation;
+            opacity: 0.6;
+        }
+
+        .search-toggle-link:hover,
+        .search-toggle-link:focus {
+            opacity: 1;
+        }
+
+        .letter-nav.dark .search-toggle-link {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .letter-nav.light .search-toggle-link {
+            color: var(--color-vault-ink);
+        }
+
+        /* ── Utility ── */
+        .touch-target {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .text-balance {
+            text-wrap: balance;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* ── Responsive tweaks ── */
+        @media (max-width: 374px) {
+            .workspace-card {
+                padding: var(--spacing-16);
+            }
+            .workspace-card .card-name {
+                font-size: 20px;
+            }
+            .tinted-card {
+                padding: var(--spacing-20);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .workspace-card {
+                padding: var(--spacing-28);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .workspace-card {
+                padding: var(--spacing-32);
+            }
+        }
+
+        /* ── Selection ── */
+        ::selection {
+            background: var(--color-deep-teal);
+            color: var(--surface-paper);
+        }
+
+        /* ── Focus visible ── */
+        :focus-visible {
+            outline: 2px solid var(--color-deep-teal);
+            outline-offset: 2px;
+        }
+
+        /* ── All interactive touch-friendly ── */
+        button,
+        .clickable,
+        [role="button"] {
+            touch-action: manipulation;
+        }
+
+        /* ── Nav transition ── */
+        .letter-nav {
+            transition: background 0.3s ease, box-shadow 0.3s ease, border-bottom 0.3s ease;
+        }
+
+        .letter-nav.light {
+            border-bottom: 1px solid var(--color-hairline);
+        }
+
+        /* ── Smooth section transitions ── */
+        .section-alt {
+            background: var(--surface-mist);
+        }
+
+        /* ── Scroll indicator ── */
+        .scroll-indicator {
+            position: absolute;
+            bottom: var(--spacing-24);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-8);
+            color: rgba(255, 255, 255, 0.2);
+            font-family: var(--font-neufile);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            z-index: 2;
+            animation: letterFadeUp 1s ease-out 1.2s forwards;
+            opacity: 0;
+        }
+
+        .scroll-indicator .line {
+            width: 1px;
+            height: 32px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════════════════════════════════════════════════════════════════
+    NAVIGATION (Dark — over hero)
+    ════════════════════════════════════════════════════════════════ -->
+    <div class="letter-container" style="position:fixed; top:0; left:0; right:0; z-index:30; pointer-events:none;">
+        <div class="letter-nav dark" id="main-nav" style="pointer-events:auto; background:transparent; transition:background 0.3s ease, border-bottom 0.3s ease;">
+            <a href="#" class="brand">
+                <span class="brand-icon"></span>
+                Letter
+            </a>
+
+            <nav class="letter-nav-links" aria-label="Main navigation">
+                <a href="#workspaces" class="letter-nav-link">Gallery</a>
+                <a href="#features" class="letter-nav-link">Features</a>
+                <a href="#workspaces" class="letter-nav-link">Workspaces</a>
+                <a href="#" class="letter-nav-link">Docs</a>
+            </nav>
+
+            <div class="letter-nav-actions">
+                <button class="search-toggle-link" id="search-toggle" aria-label="Search workspaces">Search</button>
+                <a href="#" class="btn-ghost-white">Join</a>
+                <a href="#" class="btn-text-link" style="color:rgba(255,255,255,0.6);">Sign In</a>
+                <button class="letter-hamburger" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════════
+    HERO — Dark Stage
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="letter-hero" id="hero" aria-label="Hero">
+        <div class="letter-hero-content animate-letter-fade-up stagger-1">
+            <div class="letter-hero-eyebrow">✦ BGD UI Shell</div>
+            <h1>
+                Workspace<br />
+                <span class="highlight">Gallery</span>
+            </h1>
+            <p>
+                A curated collection of mobile business workspaces — each with its own design language, built on a neutral platform.
+            </p>
+            <div class="letter-hero-actions">
+                <a href="#workspaces" class="btn-teal">Explore workspaces</a>
+                <a href="#features" class="btn-ghost-white" style="border-color:rgba(255,255,255,0.2);">View features</a>
+            </div>
+        </div>
+
+        <!-- 3D Render abstraction -->
+        <div class="hero-render" aria-hidden="true">
+            <div class="hero-render-shape">
+                <div class="shape-layer"></div>
+                <div class="shape-layer"></div>
+                <div class="shape-layer"></div>
+                <div class="shape-layer"></div>
+                <div class="shape-layer"></div>
+                <div class="shape-layer"></div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+    FEATURES — Tinted Gallery Walls
+    ════════════════════════════════════════════════════════════════ -->
+    <section id="features" class="letter-section" style="padding-top:var(--spacing-32);">
+        <div class="letter-container">
+            <div class="letter-section-label animate-letter-fade-up stagger-2">
+                <h2>Features</h2>
+                <span>three galleries</span>
+            </div>
+
+            <!-- Peach Wall -->
+            <div class="tinted-card peach animate-letter-scale-in stagger-3" style="margin-bottom:var(--spacing-24);">
+                <div class="tinted-card-content">
+                    <div class="card-headline">Investment Vault</div>
+                    <div class="card-body">Institutional-grade treasury management with real-time liquidity and portfolio optimization across digital assets.</div>
+                    <div class="card-actions">
+                        <a href="#" class="btn-teal">Invest now</a>
+                        <a href="#" class="btn-ghost-text teal">Learn more →</a>
+                    </div>
+                </div>
+                <div class="tinted-card-render">
+                    <div class="render-glow"></div>
+                    <div class="render-shape"></div>
+                    <div class="render-shape-2"></div>
+                    <div class="render-shape-3"></div>
+                </div>
+            </div>
+
+            <!-- Mint Wall -->
+            <div class="tinted-card mint animate-letter-scale-in stagger-4" style="margin-bottom:var(--spacing-24);">
+                <div class="tinted-card-content">
+                    <div class="card-headline">Credit & Lending</div>
+                    <div class="card-body">On-chain credit facilities with competitive terms, built on a transparent, collateralized framework.</div>
+                    <div class="card-actions">
+                        <a href="#" class="btn-violet">Borrow now</a>
+                        <a href="#" class="btn-ghost-text violet">Learn more →</a>
+                    </div>
+                </div>
+                <div class="tinted-card-render">
+                    <div class="render-glow"></div>
+                    <div class="render-shape" style="background:linear-gradient(135deg, rgba(83,110,255,0.12), rgba(21,78,165,0.08));"></div>
+                    <div class="render-shape-2" style="background:linear-gradient(135deg, rgba(24,111,100,0.10), rgba(83,110,255,0.06));"></div>
+                    <div class="render-shape-3"></div>
+                </div>
+            </div>
+
+            <!-- Lavender Wall -->
+            <div class="tinted-card lavender animate-letter-scale-in stagger-5">
+                <div class="tinted-card-content">
+                    <div class="card-headline">Card & Spending</div>
+                    <div class="card-body">Global spending with real-time rewards, zero FX fees, and enterprise-grade security for your portfolio.</div>
+                    <div class="card-actions">
+                        <a href="#" class="btn-blue">Get your card</a>
+                        <a href="#" class="btn-ghost-text blue">Learn more →</a>
+                    </div>
+                </div>
+                <div class="tinted-card-render">
+                    <div class="render-glow"></div>
+                    <div class="render-shape" style="background:linear-gradient(135deg, rgba(21,78,165,0.10), rgba(24,111,100,0.06));"></div>
+                    <div class="render-shape-2" style="background:linear-gradient(135deg, rgba(83,110,255,0.08), rgba(21,78,165,0.04));"></div>
+                    <div class="render-shape-3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+    SPLIT SECTION — 3D Render + Text
+    ════════════════════════════════════════════════════════════════ -->
+    <section class="section-alt letter-section" style="padding-top:var(--spacing-32);">
+        <div class="letter-container">
+            <div class="split-section animate-letter-fade-up stagger-6">
+                <div class="split-section-content">
+                    <div class="section-eyebrow">✦ Curated collection</div>
+                    <div class="section-headline">A platform for <br />independent workspaces</div>
+                    <div class="section-body">
+                        Each workspace owns its own visual identity — from typography and colors to spacing and animations. The shell is neutral; the workspaces are distinct.
+                    </div>
+                    <div class="section-actions">
+                        <a href="#workspaces" class="btn-teal">Browse workspaces</a>
+                        <a href="#" class="btn-ghost-text dark">Learn more →</a>
+                    </div>
+                </div>
+                <div class="split-section-render">
+                    <div class="render-inner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+    WORKSPACE GALLERY
+    ════════════════════════════════════════════════════════════════ -->
+    <main class="letter-container" role="main" id="workspaces">
+
+        <!-- ─── SEARCH ─── -->
+        <div class="letter-search" id="search-bar">
+            <span class="letter-search-icon">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </span>
+            <input type="text" placeholder="Search workspaces…" id="search-input" aria-label="Search workspaces" />
+        </div>
+
+        <!-- ─── CATEGORIES ─── -->
+        <div class="letter-categories animate-letter-fade-up stagger-7">
+            <button class="category-pill active" data-category="all">All</button>
+            <button class="category-pill" data-category="invoice">Invoice</button>
+            <button class="category-pill" data-category="crm">CRM</button>
+            <button class="category-pill" data-category="inventory">Inventory</button>
+            <button class="category-pill" data-category="sales">Sales</button>
+            <button class="category-pill featured" data-category="featured">✦ Featured</button>
+        </div>
+
+        <!-- ─── SECTION LABEL ─── -->
+        <div class="letter-section-label animate-letter-fade-up stagger-8">
+            <h2>Workspaces</h2>
+            <span id="workspace-count">6 total</span>
+        </div>
+
+        <!-- ─── GRID ─── -->
+        <div class="workspace-grid" id="workspace-grid" role="list">
+
+            <!-- PRAV — Invoice -->
+            <div class="workspace-card animate-letter-scale-in stagger-9" role="listitem"
+            data-workspace="prav" data-category="invoice" data-status="live"
+            data-name="PRAV" data-domain="Invoice" data-design="Warm Parchment">
+            <span class="card-tag">● Live</span>
+            <div class="card-name">PRAV</div>
+            <div class="card-domain">Engineering dossier · Invoice</div>
+            <div class="card-meta">
+                <span class="pill">Warm parchment</span>
+                <span class="pill teal">Dossier</span>
+            </div>
+        </div>
+
+        <!-- SACKVILLE — Invoice -->
+        <div class="workspace-card animate-letter-scale-in stagger-10" role="listitem"
+        data-workspace="sackville" data-category="invoice" data-status="live"
+        data-name="Sackville" data-domain="Invoice" data-design="Editorial Risograph">
+        <span class="card-tag">● Live</span>
+        <div class="card-name">Sackville</div>
+        <div class="card-domain">Editorial risograph · Invoice</div>
+        <div class="card-meta">
+            <span class="pill">Cream risograph</span>
+            <span class="pill violet">Zine</span>
+        </div>
+    </div>
+
+    <!-- AMRA — Invoice -->
+    <div class="workspace-card animate-letter-scale-in stagger-11" role="listitem"
+    data-workspace="amra" data-category="invoice" data-status="live"
+    data-name="AMRA" data-domain="Invoice" data-design="Monochrome Minimal">
+    <span class="card-tag">● Live</span>
+    <div class="card-name">AMRA</div>
+    <div class="card-domain">Monochrome minimal · Invoice</div>
+    <div class="card-meta">
+        <span class="pill">Monochrome</span>
+        <span class="pill blue">Lavender</span>
+    </div>
+</div>
+
+<!-- CRM — Customer Relationship -->
+<div class="workspace-card animate-letter-scale-in stagger-12" role="listitem"
+data-workspace="crm" data-category="crm" data-status="planned"
+data-name="CRM" data-domain="Customer Relationship" data-design="Modern Utility">
+<span class="card-tag">○ Planned</span>
+<div class="card-name">CRM</div>
+<div class="card-domain">Customer Relationship · Management</div>
+<div class="card-meta">
+    <span class="pill">Modern utility</span>
+    <span class="pill">CRM</span>
+</div>
+</div>
+
+<!-- INVENTORY — Inventory -->
+<div class="workspace-card animate-letter-scale-in stagger-13" role="listitem"
+data-workspace="inventory" data-category="inventory" data-status="planned"
+data-name="Inventory" data-domain="Inventory" data-design="Teal Terminal">
+<span class="card-tag">○ Planned</span>
+<div class="card-name">Inventory</div>
+<div class="card-domain">Inventory · Management</div>
+<div class="card-meta">
+    <span class="pill">Teal terminal</span>
+    <span class="pill teal">Terminal</span>
+</div>
+</div>
+
+<!-- QUOTATIONS — Sales -->
+<div class="workspace-card animate-letter-scale-in stagger-14" role="listitem"
+data-workspace="quotations" data-category="sales" data-status="planned"
+data-name="Quotations" data-domain="Sales" data-design="Warm Amber">
+<span class="card-tag">○ Planned</span>
+<div class="card-name">Quotations</div>
+<div class="card-domain">Sales · Quotations</div>
+<div class="card-meta">
+    <span class="pill">Warm amber</span>
+    <span class="pill blue">Sales</span>
+</div>
+</div>
+
+</div>
+
+<!-- ─── DIVIDER ─── -->
+<hr class="border-t border-hairline my-0" style="border-color:var(--color-hairline);" />
+
+<!-- ─── FOOTER ─── -->
+<footer class="letter-footer" role="contentinfo">
+    <div class="letter-footer-links">
+        <a href="#">Gallery</a>
+        <a href="#">Workspaces</a>
+        <a href="#">Features</a>
+        <a href="#">Docs</a>
+        <a href="#">About</a>
+    </div>
+    <p class="letter-footer-text">
+        <span class="brand">BGD UI</span> · Shell v2.0 · Offline-first
+        <span style="color:var(--color-deep-teal);">✦</span>
+    </p>
+    <p class="letter-footer-text" style="font-size:12px; opacity:0.4;">
+        Built for the author · Workspaces are independent products
+    </p>
+</footer>
+
+</main>
+
+<!-- ════════════════════════════════════════════════════════════════
+MOBILE MENU BACKDROP
+════════════════════════════════════════════════════════════════ -->
+<div id="menu-backdrop"></div>
+
+<!-- ════════════════════════════════════════════════════════════════
+MOBILE MENU
+════════════════════════════════════════════════════════════════ -->
+<nav id="mobile-menu" aria-label="Mobile navigation">
+    <button class="menu-close" id="menu-close-btn" aria-label="Close navigation menu">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <div style="margin-top: var(--spacing-48); display: flex; flex-direction: column; gap: var(--spacing-4);">
+        <a href="#" class="letter-nav-link active">Gallery</a>
+        <a href="#features" class="letter-nav-link">Features</a>
+        <a href="#workspaces" class="letter-nav-link">Workspaces</a>
+        <a href="#" class="letter-nav-link">Docs</a>
+        <hr style="border:none; border-top:1px solid var(--color-hairline); margin: var(--spacing-12) 0;" />
+        <div style="margin-top: var(--spacing-8); display:flex; flex-direction:column; gap:var(--spacing-8);">
+            <a href="#" class="btn-teal" style="width:100%; justify-content:center;">Explore</a>
+            <a href="#" class="btn-ghost-dark" style="width:100%; justify-content:center;">Join</a>
+        </div>
+    </div>
+
+    <div style="margin-top: auto; padding-top: var(--spacing-16); border-top: 1px solid var(--color-hairline); font-family: var(--font-neufile); font-size: 13px; color: var(--color-fog-gray);">
+        <span>✦ Letter · BGD UI Shell</span>
+        <span style="display:block; margin-top: 4px; opacity:0.5;">v2.0 · 2026</span>
+    </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════
+JAVASCRIPT
+════════════════════════════════════════════════════════════════ -->
+<script>
+    (function() {
+        'use strict';
+
+        // ────────────────────────────────────────────────────────────────
+        // 1. NAV — Dark to Light transition on scroll
+        // ────────────────────────────────────────────────────────────────
+        const nav = document.getElementById('main-nav');
+        const hero = document.getElementById('hero');
+        let heroHeight = 0;
+
+        function updateHeroHeight() {
+            if (hero) heroHeight = hero.offsetHeight;
+        }
+        updateHeroHeight();
+        window.addEventListener('resize', updateHeroHeight);
+
+        window.addEventListener('scroll', function() {
+            const scrollY = window.scrollY;
+            const threshold = heroHeight * 0.6;
+
+            if (scrollY > threshold) {
+                nav.classList.remove('dark');
+                nav.classList.add('light');
+                nav.style.background = 'var(--surface-paper)';
+                nav.style.borderBottom = '1px solid var(--color-hairline)';
+                // Update link colors via class
+            } else {
+                nav.classList.remove('light');
+                nav.classList.add('dark');
+                nav.style.background = 'transparent';
+                nav.style.borderBottom = 'none';
+            }
+        });
+
+        // ────────────────────────────────────────────────────────────────
+        // 2. MOBILE MENU
+        // ────────────────────────────────────────────────────────────────
+        const hamburger = document.getElementById('hamburger-btn');
+        const menu = document.getElementById('mobile-menu');
+        const backdrop = document.getElementById('menu-backdrop');
+        const closeBtn = document.getElementById('menu-close-btn');
+        let isOpen = false;
+
+        function openMenu() {
+            if (isOpen) return;
+            isOpen = true;
+            menu.classList.add('open');
+            backdrop.classList.add('visible');
+            hamburger.classList.add('active');
+            hamburger.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            if (!isOpen) return;
+            isOpen = false;
+            menu.classList.remove('open');
+            backdrop.classList.remove('visible');
+            hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
+
+        function toggleMenu() {
+            if (isOpen) closeMenu();
+            else openMenu();
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', closeMenu);
+        backdrop.addEventListener('click', closeMenu);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isOpen) closeMenu();
+        });
+
+        menu.querySelectorAll('.letter-nav-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (isOpen) closeMenu();
+            });
+        });
+
+        let menuResizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(menuResizeTimer);
+            menuResizeTimer = setTimeout(function() {
+                if (window.innerWidth >= 768 && isOpen) {
+                    closeMenu();
+                }
+            }, 150);
+        });
+
+        // ────────────────────────────────────────────────────────────────
+        // 3. SEARCH
+        // ────────────────────────────────────────────────────────────────
+        const searchToggle = document.getElementById('search-toggle');
+        const searchBar = document.getElementById('search-bar');
+        const searchInput = document.getElementById('search-input');
+        const workspaceCards = document.querySelectorAll('.workspace-card');
+        const grid = document.getElementById('workspace-grid');
+        let searchVisible = false;
+
+        function toggleSearch() {
+            searchVisible = !searchVisible;
+            searchBar.classList.toggle('visible', searchVisible);
+            if (searchVisible) {
+                searchInput.focus();
+                searchBar.style.animation = 'none';
+                requestAnimationFrame(function() {
+                    searchBar.style.animation = 'letterFadeUp 0.4s cubic-bezier(0.22,1,0.36,1) forwards';
+                });
+            }
+            searchToggle.setAttribute('aria-expanded', searchVisible);
+        }
+
+        searchToggle.addEventListener('click', toggleSearch);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && searchVisible) {
+                toggleSearch();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                toggleSearch();
+            }
+        });
+
+        // Close search on outside click
+        document.addEventListener('click', function(e) {
+            if (searchVisible &&
+                !searchBar.contains(e.target) &&
+                !searchToggle.contains(e.target)) {
+                toggleSearch();
+            }
+        });
+
+        // ────────────────────────────────────────────────────────────────
+        // 4. CATEGORY FILTER
+        // ────────────────────────────────────────────────────────────────
+        const categoryPills = document.querySelectorAll('.category-pill');
+        let activeCategory = 'all';
+
+        function filterWorkspaces(query, category) {
+            let visibleCount = 0;
+
+            workspaceCards.forEach(function(card) {
+                const name = (card.dataset.name || '').toLowerCase();
+                const domain = (card.dataset.domain || '').toLowerCase();
+                const design = (card.dataset.design || '').toLowerCase();
+                const status = (card.dataset.status || '').toLowerCase();
+                const cardCategory = (card.dataset.category || '').toLowerCase();
+
+                const matchesCategory = category === 'all' || cardCategory === category;
+                const matchesQuery = query === '' ||
+                    name.includes(query) ||
+                    domain.includes(query) ||
+                    design.includes(query) ||
+                    status.includes(query);
+
+                if (matchesCategory && matchesQuery) {
+                    card.style.display = '';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const countEl = document.getElementById('workspace-count');
+            if (countEl) {
+                countEl.textContent = visibleCount + ' total';
+            }
+
+            let emptyState = document.querySelector('.letter-empty-state');
+            if (visibleCount === 0) {
+                if (!emptyState) {
+                    emptyState = document.createElement('div');
+                    emptyState.className = 'letter-empty letter-empty-state';
+                    const categoryLabel = category === 'all' ? 'workspaces' : category + ' workspaces';
+                    emptyState.innerHTML = `
+                        <p>No ${categoryLabel} match your search</p>
+                        <p style="font-size:14px; opacity:0.5; margin-top:8px;">Try adjusting your filters</p>
+                    `;
+                    grid.parentNode.insertBefore(emptyState, grid.nextSibling);
+                } else {
+                    emptyState.style.display = '';
+                }
+            } else {
+                if (emptyState) {
+                    emptyState.style.display = 'none';
+                }
+            }
+        }
+
+        categoryPills.forEach(function(pill) {
+            pill.addEventListener('click', function() {
+                categoryPills.forEach(function(p) { p.classList.remove('active'); });
+                this.classList.add('active');
+                activeCategory = this.dataset.category || 'all';
+                const query = searchInput.value.toLowerCase().trim();
+                filterWorkspaces(query, activeCategory);
+            });
+        });
+
+        // ─── Search filter (combined with category) ───
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            filterWorkspaces(query, activeCategory);
+        });
+
+        // ────────────────────────────────────────────────────────────────
+        // 5. CARD INTERACTIONS
+        // ────────────────────────────────────────────────────────────────
+        workspaceCards.forEach(function(card) {
+            card.addEventListener('click', function() {
+                const name = this.dataset.name || 'Workspace';
+                const status = this.dataset.status || 'unknown';
+                const domain = this.dataset.domain || '';
+
+                this.style.transform = 'scale(0.97)';
+                setTimeout(function() {
+                    card.style.transform = '';
+                }, 200);
+
+                const msg = status === 'live' ?
+                    `Opening “${name}” — ${domain} workspace` :
+                    `“${name}” is in development · Planned workspace`;
+
+                const notif = document.createElement('div');
+                notif.style.cssText = `
+                    position: fixed;
+                    bottom: 24px;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(100px);
+                    background: var(--color-vault-ink);
+                    color: var(--surface-paper);
+                    padding: 16px 32px;
+                    border-radius: var(--radius-sm, 2px);
+                    font-family: var(--font-neufile, Inter, sans-serif);
+                    font-weight: 500;
+                    font-size: 16px;
+                    z-index: 1000;
+                    max-width: 90%;
+                    text-align: center;
+                    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+                    opacity: 0;
+                    pointer-events: none;
+                    box-shadow: none;
+                    border: 1px solid rgba(255,255,255,0.06);
+                `;
+                notif.textContent = msg;
+                document.body.appendChild(notif);
+
+                requestAnimationFrame(function() {
+                    notif.style.opacity = '1';
+                    notif.style.transform = 'translateX(-50%) translateY(0)';
+                });
+
+                setTimeout(function() {
+                    notif.style.opacity = '0';
+                    notif.style.transform = 'translateX(-50%) translateY(20px)';
+                    setTimeout(function() {
+                        if (notif.parentNode) notif.remove();
+                    }, 400);
+                }, 2500);
+            });
+
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // ────────────────────────────────────────────────────────────────
+        // 6. INIT
+        // ────────────────────────────────────────────────────────────────
+        const total = document.querySelectorAll('.workspace-card').length;
+        const countEl = document.getElementById('workspace-count');
+        if (countEl) countEl.textContent = total + ' total';
+
+        console.log('✦ Letter · BGD UI Shell');
+        console.log(`  ${total} workspaces registered`);
+        console.log('  Vault ink · Serif headlines · Tinted gallery walls');
+
+        // iOS 100vh fix
+        function setVH() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', vh + 'px');
+        }
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', function() {
+            setTimeout(setVH, 200);
+        });
+
+        // ────────────────────────────────────────────────────────────────
+        // 7. SMOOTH SCROLL for nav links
+        // ────────────────────────────────────────────────────────────────
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    const offset = 80;
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+
+    })();
+</script>
+
+</body>
+</html>
