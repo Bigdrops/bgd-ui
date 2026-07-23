@@ -19,6 +19,7 @@ export interface ShellWorkspace {
   icon: string
   category: string
   status: 'active' | 'draft' | 'archived'
+  accentColor?: string
   component: LazyExoticComponent<ComponentType>
 }
 

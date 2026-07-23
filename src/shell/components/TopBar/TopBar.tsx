@@ -1,4 +1,4 @@
-import { Search, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
 interface TopBarProps {
@@ -27,26 +27,9 @@ export function TopBar({ onToggleTheme, themeIsDark, onNavigate, currentPage }: 
           >
             Gallery
           </a>
-          <a
-            href="#components"
-            className={`mp-nav-link ${currentPage === 'components' ? 'active' : ''}`}
-            onClick={(e) => { e.preventDefault(); onNavigate?.('components') }}
-          >
-            Components
-          </a>
-          <a
-            href="#docs"
-            className={`mp-nav-link ${currentPage === 'docs' ? 'active' : ''}`}
-            onClick={(e) => { e.preventDefault(); onNavigate?.('docs') }}
-          >
-            Docs
-          </a>
         </div>
 
         <div className="mp-nav-actions">
-          <button className="btn-ghost" style={{ minWidth: 44, minHeight: 44, padding: '0 12px' }}>
-            <Search size={18} />
-          </button>
           <a href="#workspaces" className="btn-ghost" onClick={(e) => { e.preventDefault(); onNavigate?.('workspaces') }}>
             Explore
           </a>
@@ -117,22 +100,6 @@ export function TopBar({ onToggleTheme, themeIsDark, onNavigate, currentPage }: 
             onClick={(e) => { e.preventDefault(); onNavigate?.('workspaces'); setMobileMenuOpen(false) }}
           >
             Gallery
-          </a>
-          <a
-            href="#components"
-            className="mp-nav-link"
-            style={{ fontSize: 20, padding: '14px 0', borderBottom: '1px solid var(--mp-color-smoke)', display: 'block' }}
-            onClick={(e) => { e.preventDefault(); onNavigate?.('components'); setMobileMenuOpen(false) }}
-          >
-            Components
-          </a>
-          <a
-            href="#docs"
-            className="mp-nav-link"
-            style={{ fontSize: 20, padding: '14px 0', borderBottom: '1px solid var(--mp-color-smoke)', display: 'block' }}
-            onClick={(e) => { e.preventDefault(); onNavigate?.('docs'); setMobileMenuOpen(false) }}
-          >
-            Docs
           </a>
           <hr style={{ border: 'none', borderTop: '1px solid var(--mp-color-smoke)', margin: 'var(--mp-space-12) 0' }} />
           <div style={{ marginTop: 'var(--mp-space-8)', display: 'flex', flexDirection: 'column', gap: 'var(--mp-space-8)' }}>

@@ -108,14 +108,11 @@ export function Shell({ topics, workspaces, loading }: ShellProps) {
             topics={topics}
             workspaces={workspaces}
             loading={loading}
-            themeMode={mode}
-            resolved={resolved}
-            onToggleTheme={handleToggleTheme}
+            activeTopicId={screen === 'topic' ? activeTopicId : null}
             onSelectTopic={handleSelectTopic}
             onSelectWorkspace={handleSelectWorkspace}
             onOpenSettings={handleOpenSettings}
             onBackToTopics={handleBackToTopics}
-            activeTopicId={screen === 'topic' ? activeTopicId : null}
           />
         )}
       </div>

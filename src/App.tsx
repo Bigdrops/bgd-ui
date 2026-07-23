@@ -20,6 +20,7 @@ const WORKSPACES: ShellWorkspace[] = [
     icon: 'receipt',
     category: 'Invoice',
     status: 'active',
+    accentColor: '#6C5CE7',
     component: PRAVInvoice,
   },
   {
@@ -29,6 +30,7 @@ const WORKSPACES: ShellWorkspace[] = [
     icon: 'grid',
     category: 'Invoice',
     status: 'active',
+    accentColor: '#00B894',
     component: AMRAInvoice,
   },
   {
@@ -38,6 +40,7 @@ const WORKSPACES: ShellWorkspace[] = [
     icon: 'file-text',
     category: 'Invoice',
     status: 'active',
+    accentColor: '#FDCB6E',
     component: RunwayInvoice,
   },
   {
@@ -47,6 +50,7 @@ const WORKSPACES: ShellWorkspace[] = [
     icon: 'layout',
     category: 'Invoice',
     status: 'active',
+    accentColor: '#E17055',
     component: PostHogInvoice,
   },
   {
@@ -56,6 +60,7 @@ const WORKSPACES: ShellWorkspace[] = [
     icon: 'grid',
     category: 'Invoice',
     status: 'active',
+    accentColor: '#0984E3',
     component: NuriInvoice,
   },
 ]

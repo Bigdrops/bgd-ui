@@ -1,135 +1,192 @@
-import { ChevronRight, ArrowLeft, Settings } from 'lucide-react'
-import type { ShellTopic, ShellWorkspace, ThemeMode } from '../../types'
-import { AppWindow } from '../../components/AppWindow/AppWindow'
-import { SidebarNav, SidebarItem } from '../../components/SidebarNav/SidebarNav'
-import { WorkspaceCard } from '../../components/WorkspaceCard/WorkspaceCard'
-import { EmptyState } from '../../components/EmptyState/EmptyState'
-import { LoadingState } from '../../components/LoadingState/LoadingState'
+import { useState, useMemo } from 'react'
+import { ArrowLeft, Search, Settings } from 'lucide-react'
+import type { ShellTopic, ShellWorkspace } from '../../types'
 
 interface GalleryProps {
   topics: ShellTopic[]
   workspaces: ShellWorkspace[]
   loading?: boolean
-  themeMode: ThemeMode
-  resolved: 'light' | 'dark'
-  onToggleTheme: () => void
+  activeTopicId: string | null
   onSelectTopic: (topicId: string) => void
   onSelectWorkspace: (id: string) => void
-  onOpenSettings: () => void
   onBackToTopics: () => void
-  activeTopicId: string | null
+  onOpenSettings: () => void
 }
 
 export function Gallery({
   topics,
   workspaces,
   loading,
+  activeTopicId,
   onSelectTopic,
   onSelectWorkspace,
-  onOpenSettings,
   onBackToTopics,
-  activeTopicId,
+  onOpenSettings,
 }: GalleryProps) {
+  const [query, setQuery] = useState('')
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [category, setCategory] = useState('all')
+
   if (activeTopicId) {
     const topic = topics.find((t) => t.id === activeTopicId)
     if (!topic) return null
 
+    const topicWorkspaces = workspaces.filter((w) =>
+      topic.workspaces.some((e) => e.id === w.id)
+    )
+
+    const categories = useMemo(
+      () => ['all', ...Array.from(new Set(topicWorkspaces.map((w) => w.category.toLowerCase())))],
+      [topicWorkspaces]
+    )
+
+    const filtered = topicWorkspaces.filter((w) => {
+      const matchesCategory = category === 'all' || w.category.toLowerCase() === category
+      const q = query.toLowerCase().trim()
+      const matchesQuery = q === '' || w.name.toLowerCase().includes(q) || w.description.toLowerCase().includes(q)
+      return matchesCategory && matchesQuery
+    })
+
     return (
-      <AppWindow title={`${topic.name}.workspace`}>
-        <div style={{ marginBottom: 'var(--shell-spacing-24)' }}>
-          <button
-            type="button"
-            className="shell-link"
-            onClick={onBackToTopics}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--shell-spacing-8)' }}
-          >
-            <ArrowLeft size={16} />
-            All workspaces
-          </button>
+      <div className="mp-section" style={{ paddingTop: 0 }}>
+        <button
+          type="button"
+          className="btn-ghost"
+          onClick={onBackToTopics}
+          style={{ marginBottom: 'var(--mp-space-16)' }}
+        >
+          <ArrowLeft size={18} />
+          All workspaces
+        </button>
+
+        <div className={`mp-search ${searchOpen ? 'visible' : ''}`}>
+          <span className="mp-search-icon"><Search size={18} /></span>
+          <input
+            type="text"
+            placeholder="Search workspaces…"
+            value={query}
+            onChange={(e) => { setQuery(e.target.value); setSearchOpen(true) }}
+            onFocus={() => setSearchOpen(true)}
+            onBlur={() => { if (!query) setSearchOpen(false) }}
+            aria-label="Search workspaces"
+          />
         </div>
-        <p className="shell-micro" style={{ marginBottom: 'var(--shell-spacing-20)' }}>
-          {topic.workspaces.length} workspace{topic.workspaces.length !== 1 ? 's' : ''}
-        </p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 'var(--shell-spacing-16)' }}>
-          {topic.workspaces.map((entry) => {
-            const ws = workspaces.find((w) => w.id === entry.id)
-            return (
-              <WorkspaceCard
-                key={entry.id}
-                name={entry.name}
-                description={entry.description || ''}
-                onClick={() => onSelectWorkspace(entry.id)}
-                tag={ws?.status === 'active' ? 'Active' : undefined}
-                tagColor={ws?.status === 'active' ? 'green' : 'amber'}
-              />
-            )
-          })}
+
+        <div className="mp-section-label">
+          <h2>{topic.name}</h2>
+          <span>{filtered.length} {filtered.length === 1 ? 'shot' : 'shots'}</span>
         </div>
-      </AppWindow>
+
+        <div className="mp-categories">
+          {categories.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`mp-category-pill ${category === c ? 'active' : ''}`}
+              onClick={() => setCategory(c)}
+            >
+              {c === 'all' ? 'All' : c.charAt(0).toUpperCase() + c.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {loading ? (
+          <p className="mp-mono">Loading workspaces…</p>
+        ) : filtered.length === 0 ? (
+          <div className="mp-empty">
+            <p>No workspaces match your search</p>
+          </div>
+        ) : (
+          <div className="mp-shot-grid" role="list">
+            {filtered.map((ws) => (
+              <article
+                key={ws.id}
+                role="listitem"
+                tabIndex={0}
+                className="mp-shot"
+                onClick={() => onSelectWorkspace(ws.id)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelectWorkspace(ws.id) } }}
+              >
+                <div
+                  className="shot-preview"
+                  style={{ '--shot-bg': ws.accentColor ?? 'var(--mp-color-chalk)', '--shot-accent': ws.accentColor ?? 'var(--mp-color-electric)' } as React.CSSProperties}
+                >
+                  <div className="product-mock">
+                    <div className="mock-content">
+                      <div className="line w-80" />
+                      <div className="line w-60" />
+                      <div className="line w-40" />
+                    </div>
+                  </div>
+                </div>
+                <div className="shot-meta">
+                  <div className="shot-top">
+                    <span className={`shot-status ${ws.status !== 'active' ? 'is-planned' : ''}`}>
+                      {ws.status === 'active' ? 'Live' : 'In development'}
+                    </span>
+                  </div>
+                  <h3 className="shot-name">{ws.name}</h3>
+                  <p className="shot-domain">{ws.category} · {ws.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
     )
   }
 
   return (
-    <AppWindow title="workspaces.mdx" sidebar={
-      <SidebarNav>
-        <SidebarItem label="All Workspaces" active onClick={() => {}} />
-        <SidebarItem label="Settings" icon={<Settings size={16} />} onClick={onOpenSettings} />
-      </SidebarNav>
-    }>
-      <p className="shell-micro" style={{ marginBottom: 'var(--shell-spacing-24)' }}>
-        {topics.reduce((s, t) => s + t.workspaces.length, 0)} total
-      </p>
+    <div className="mp-section" style={{ paddingTop: 0 }}>
+      <div className="mp-section-label">
+        <h2>Workspace Gallery</h2>
+        <span>{topics.reduce((s, t) => s + t.workspaces.length, 0)} total</span>
+      </div>
 
       {loading ? (
-        <LoadingState />
+        <p className="mp-mono">Loading workspaces…</p>
       ) : topics.length === 0 ? (
-        <EmptyState />
+        <div className="mp-empty">
+          <p>No workspaces available</p>
+        </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--shell-spacing-12)' }}>
+        <div className="mp-shot-grid" role="list">
           {topics.map((topic) => (
-            <button
+            <article
               key={topic.id}
-              type="button"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                width: '100%',
-                padding: 'var(--shell-spacing-20) var(--shell-spacing-24)',
-                border: '1px solid var(--shell-color-border)',
-                borderRadius: 'var(--shell-radius-lg)',
-                background: 'var(--shell-color-surface)',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'border-color var(--shell-transition), background var(--shell-transition)',
-              }}
+              role="listitem"
+              tabIndex={0}
+              className="mp-shot"
               onClick={() => onSelectTopic(topic.id)}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'var(--shell-color-surface-alt)'
-                e.currentTarget.style.borderColor = 'var(--shell-color-accent)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'var(--shell-color-surface)'
-                e.currentTarget.style.borderColor = 'var(--shell-color-border)'
-              }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelectTopic(topic.id) } }}
             >
-              <span style={{
-                fontFamily: 'var(--shell-font-display)',
-                fontSize: 'var(--shell-text-heading)',
-                fontWeight: 'var(--shell-font-weight)',
-                color: 'var(--shell-color-text)',
-                letterSpacing: '0.02em',
-              }}>
-                {topic.name}
-              </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--shell-spacing-12)' }}>
-                <span className="shell-caption">{topic.workspaces.length}</span>
-                <ChevronRight size={16} style={{ color: 'var(--shell-color-text-muted)' }} />
+              <div className="shot-preview" style={{ '--shot-bg': 'var(--mp-color-electric)', '--shot-accent': 'var(--mp-color-electric)' } as React.CSSProperties}>
+                <div className="product-mock">
+                  <div className="mock-content">
+                    <div className="line w-80" />
+                    <div className="line w-60" />
+                    <div className="line w-40" />
+                  </div>
+                </div>
               </div>
-            </button>
+              <div className="shot-meta">
+                <div className="shot-top">
+                  <span className="shot-status">{topic.workspaces.length} {topic.workspaces.length === 1 ? 'workspace' : 'workspaces'}</span>
+                </div>
+                <h3 className="shot-name">{topic.name}</h3>
+                <p className="shot-domain">{topic.workspaces.map((w) => w.name).join(', ')}</p>
+              </div>
+            </article>
           ))}
         </div>
       )}
-    </AppWindow>
+
+      <div style={{ marginTop: 'var(--mp-space-32)', textAlign: 'center' }}>
+        <button type="button" className="btn-ghost" onClick={onOpenSettings}>
+          <Settings size={18} />
+          Settings
+        </button>
+      </div>
+    </div>
   )
 }
