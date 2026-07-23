@@ -97,6 +97,99 @@
   gap: var(--mp-space-12);
 }
 
+/* ─── Hamburger (mobile) ─── */
+.moving-parts-shell .mp-hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--mp-color-onyx);
+  touch-action: manipulation;
+}
+
+/* ─── Mobile menu overlay ─── */
+.moving-parts-shell .mp-mobile-menu {
+  display: none;
+}
+
+.moving-parts-shell .mp-mobile-menu.open {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: var(--mp-surface-canvas);
+  padding: var(--mp-space-24);
+  padding-top: 80px;
+  gap: var(--mp-space-8);
+}
+
+.moving-parts-shell .mp-mobile-menu .mp-mobile-nav-link {
+  font-family: var(--mp-font-display);
+  font-weight: 500;
+  font-size: 24px;
+  text-decoration: none;
+  color: var(--mp-color-onyx);
+  padding: var(--mp-space-16) 0;
+  border-bottom: 1px solid var(--mp-color-smoke);
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  cursor: pointer;
+  text-align: left;
+  touch-action: manipulation;
+  transition: color 0.2s ease;
+}
+
+.moving-parts-shell .mp-mobile-menu .mp-mobile-nav-link:hover,
+.moving-parts-shell .mp-mobile-menu .mp-mobile-nav-link.active {
+  color: var(--mp-color-electric);
+}
+
+.moving-parts-shell .mp-mobile-menu .mp-mobile-close {
+  position: absolute;
+  top: var(--mp-space-16);
+  right: var(--mp-space-16);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--mp-color-onyx);
+  touch-action: manipulation;
+}
+
+/* ─── Theme toggle (electric accent) ─── */
+.moving-parts-shell .mp-theme-toggle {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mp-color-electric);
+  color: var(--mp-color-pure);
+  border: none;
+  border-radius: var(--mp-radius-buttons);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  touch-action: manipulation;
+}
+
+.moving-parts-shell .mp-theme-toggle:hover {
+  opacity: 0.85;
+}
+
 /* ══════════════════════════════════════════════════════════════
    BUTTONS
    ══════════════════════════════════════════════════════════════ */

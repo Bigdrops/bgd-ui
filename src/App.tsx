@@ -7,8 +7,10 @@ import { WorkspacesPage } from './pages/workspaces'
 import { DocsPage } from './pages/docs'
 
 const PRAVInvoice = lazy(() => import('./workspaces/invoice/prav/InvoiceWorkspace'))
-const SackvilleInvoice = lazy(() => import('./workspaces/invoice/sackville/InvoiceWorkspace'))
 const AMRAInvoice = lazy(() => import('./workspaces/invoice/amra/InvoiceWorkspace'))
+const RunwayInvoice = lazy(() => import('./workspaces/invoice/runway/InvoiceWorkspace'))
+const PostHogInvoice = lazy(() => import('./workspaces/invoice/posthog/InvoiceWorkspace'))
+const NuriInvoice = lazy(() => import('./workspaces/invoice/nuri/InvoiceWorkspace'))
 
 const WORKSPACES: ShellWorkspace[] = [
   {
@@ -21,15 +23,6 @@ const WORKSPACES: ShellWorkspace[] = [
     component: PRAVInvoice,
   },
   {
-    id: 'invoice-sackville',
-    name: 'Sackville',
-    description: 'Editorial risograph | cream paper, cobalt ink, oval outlined actions',
-    icon: 'file-text',
-    category: 'Invoice',
-    status: 'active',
-    component: SackvilleInvoice,
-  },
-  {
     id: 'invoice-amra',
     name: 'AMRA',
     description: 'Monochrome minimal | white canvas, lavender accent, 44px radius',
@@ -37,6 +30,33 @@ const WORKSPACES: ShellWorkspace[] = [
     category: 'Invoice',
     status: 'active',
     component: AMRAInvoice,
+  },
+  {
+    id: 'invoice-runway',
+    name: 'Runway',
+    description: 'Kraft paper ledger | cream canvas, espresso ink, amber accent, 8px radius',
+    icon: 'file-text',
+    category: 'Invoice',
+    status: 'active',
+    component: RunwayInvoice,
+  },
+  {
+    id: 'invoice-posthog',
+    name: 'PostHog',
+    description: 'Corkboard desktop | sandy beige canvas, deep moss ink, amber accent, 4px radius',
+    icon: 'layout',
+    category: 'Invoice',
+    status: 'active',
+    component: PostHogInvoice,
+  },
+  {
+    id: 'invoice-nuri',
+    name: 'Nuri',
+    description: 'Art-deco fintech | lavender canvas, ink-plum text, violet cards, pill shapes',
+    icon: 'grid',
+    category: 'Invoice',
+    status: 'active',
+    component: NuriInvoice,
   },
 ]
 
