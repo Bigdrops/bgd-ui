@@ -7,10 +7,8 @@ import { WorkspacesPage } from './pages/workspaces'
 import { DocsPage } from './pages/docs'
 
 const PRAVInvoice = lazy(() => import('./workspaces/invoice/prav/InvoiceWorkspace'))
-const AMRAInvoice = lazy(() => import('./workspaces/invoice/amra/InvoiceWorkspace'))
-const RunwayInvoice = lazy(() => import('./workspaces/invoice/runway/InvoiceWorkspace'))
-const PostHogInvoice = lazy(() => import('./workspaces/invoice/posthog/InvoiceWorkspace'))
-const NuriInvoice = lazy(() => import('./workspaces/invoice/nuri/InvoiceWorkspace'))
+const EASEHEALTHInvoice = lazy(() => import('./workspaces/invoice/easehealth/InvoiceWorkspace'))
+const DittoInvoice = lazy(() => import('./workspaces/invoice/ditto/InvoiceWorkspace'))
 
 const WORKSPACES: ShellWorkspace[] = [
   {
@@ -24,44 +22,24 @@ const WORKSPACES: ShellWorkspace[] = [
     component: PRAVInvoice,
   },
   {
-    id: 'invoice-amra',
-    name: 'AMRA',
-    description: 'Monochrome minimal | white canvas, lavender accent, 44px radius',
+    id: 'invoice-easehealth',
+    name: 'EASEHEALTH',
+    description: 'Botanical greenhouse | cream paper, forest ink, sage panels, 14px radius',
     icon: 'grid',
     category: 'Invoice',
     status: 'active',
-    accentColor: '#00B894',
-    component: AMRAInvoice,
+    accentColor: '#0f3e17',
+    component: EASEHEALTHInvoice,
   },
   {
-    id: 'invoice-runway',
-    name: 'Runway',
-    description: 'Kraft paper ledger | cream canvas, espresso ink, amber accent, 8px radius',
+    id: 'invoice-ditto',
+    name: 'Ditto',
+    description: 'Sunlit compliance | warm cream, hi-yellow, deep navy, pill radius',
     icon: 'file-text',
     category: 'Invoice',
     status: 'active',
-    accentColor: '#FDCB6E',
-    component: RunwayInvoice,
-  },
-  {
-    id: 'invoice-posthog',
-    name: 'PostHog',
-    description: 'Corkboard desktop | sandy beige canvas, deep moss ink, amber accent, 4px radius',
-    icon: 'layout',
-    category: 'Invoice',
-    status: 'active',
-    accentColor: '#E17055',
-    component: PostHogInvoice,
-  },
-  {
-    id: 'invoice-nuri',
-    name: 'Nuri',
-    description: 'Art-deco fintech | lavender canvas, ink-plum text, violet cards, pill shapes',
-    icon: 'grid',
-    category: 'Invoice',
-    status: 'active',
-    accentColor: '#0984E3',
-    component: NuriInvoice,
+    accentColor: '#ffe228',
+    component: DittoInvoice,
   },
 ]
 

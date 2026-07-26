@@ -37,11 +37,11 @@
   --mp-layout-card-padding: 30px;
 
   /* ─── Border Radius ─── */
-  --mp-radius-hero: 76px;
+  --mp-radius-hero: 16px;
   --mp-radius-pill: 9999px;
-  --mp-radius-cards: 90px;
-  --mp-radius-buttons: 18px;
-  --mp-radius-large-cards: 106px;
+  --mp-radius-cards: 12px;
+  --mp-radius-buttons: 8px;
+  --mp-radius-large-cards: 16px;
   --mp-radius-small: 3px;
 
   /* ─── Shadows ─── */

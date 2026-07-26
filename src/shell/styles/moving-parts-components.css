@@ -304,13 +304,7 @@
   width: 100%;
   align-items: center;
   position: relative;
-}
-
-@media (min-width: 1024px) {
-  .moving-parts-shell .mp-hero-inner {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--mp-space-64);
-  }
+  justify-items: center;
 }
 
 .moving-parts-shell .mp-hero-content {
@@ -341,6 +335,12 @@
   flex-shrink: 0;
 }
 
+.moving-parts-shell .mp-hero h1 {
+  font-size: clamp(48px, 8vw, 88px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
 .moving-parts-shell .mp-hero h1 .highlight {
   color: var(--mp-color-electric);
 }
@@ -353,7 +353,7 @@
 }
 
 /* ══════════════════════════════════════════════════════════════
-   PHONE MOCKUP
+   PHONE MOCKUP (deprecated — kept for backward compat)
    ══════════════════════════════════════════════════════════════ */
 .moving-parts-shell .mp-hero-visual {
   display: flex;
@@ -617,7 +617,7 @@
   overflow: hidden;
   cursor: pointer;
   touch-action: manipulation;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   box-shadow: var(--mp-shadow-xl);
   display: flex;
   flex-direction: column;
@@ -625,8 +625,9 @@
 
 .moving-parts-shell .mp-shot:hover,
 .moving-parts-shell .mp-shot:focus-visible {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 30px 30px rgba(0, 0, 0, 0.35);
+  border-color: var(--mp-color-electric);
+  outline: 2px solid var(--mp-color-electric);
+  outline-offset: 2px;
 }
 
 .moving-parts-shell .mp-shot:active {
@@ -637,7 +638,6 @@
   position: relative;
   aspect-ratio: 4 / 3;
   background: var(--shot-bg, var(--mp-color-chalk));
-  padding: 20px 24px;
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid var(--mp-color-smoke);
@@ -645,67 +645,37 @@
   flex-shrink: 0;
 }
 
-.moving-parts-shell .shot-preview .product-mock {
+.moving-parts-shell .shot-preview .color-swatch {
   width: 100%;
-  max-width: 80%;
-  aspect-ratio: 9 / 16;
-  border-radius: var(--mp-radius-hero);
+  height: 100%;
   background: var(--shot-accent, var(--mp-color-electric));
-  border: 1px solid var(--mp-color-onyx);
-  margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--mp-color-pure);
-  font-family: var(--mp-font-mono);
-  font-size: 14px;
-  font-weight: 500;
-  padding: var(--mp-space-16);
-  text-align: center;
-  box-shadow: var(--mp-shadow-xl);
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
-.moving-parts-shell .shot-preview .product-mock .mock-content {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-}
-
-.moving-parts-shell .shot-preview .product-mock .mock-content .line {
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.moving-parts-shell .shot-preview .product-mock .mock-content .line.w-80 {
-  width: 80%;
-}
-
-.moving-parts-shell .shot-preview .product-mock .mock-content .line.w-60 {
+.moving-parts-shell .shot-preview .color-swatch-inner {
   width: 60%;
-}
-
-.moving-parts-shell .shot-preview .product-mock .mock-content .line.w-40 {
-  width: 40%;
+  height: 60%;
+  border-radius: var(--mp-radius-hero);
+  background: var(--mp-surface-canvas);
+  opacity: 0.3;
 }
 
 .moving-parts-shell .shot-preview .status-dot {
   position: absolute;
-  top: 16px;
-  right: 20px;
+  top: 12px;
+  right: 12px;
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: var(--shot-accent, var(--mp-color-electric));
-  box-shadow: 0 0 0 4px rgba(0, 0, 255, 0.1);
 }
 
 .moving-parts-shell .shot-preview .status-dot.planned {
   background: transparent;
   border: 2px dashed var(--mp-color-ash);
-  box-shadow: none;
 }
 
 .moving-parts-shell .shot-meta {
