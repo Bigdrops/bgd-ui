@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  Wifi,
-  Signal,
+  Search,
   Bell,
   ArrowRight,
   Plus,
@@ -160,20 +159,8 @@ export default function App() {
       {/* Mobile Shell Frame */}
       <div className="w-full max-w-[430px] h-[100vh] sm:h-[900px] bg-[#ffffff] relative overflow-hidden sm:rounded-[40px] border-0 sm:border-[8px] border-black flex flex-col justify-between">
         
-        {/* Status Bar */}
-        <div className="w-full bg-[#ffffff] pt-3 pb-1 px-5 flex justify-between items-center text-xs font-medium text-black z-40 shrink-0 border-b border-[#e5e5e5]">
-          <span>09:41</span>
-          <div className="flex items-center space-x-2">
-            <Wifi className="w-3.5 h-3.5 text-black" />
-            <Signal className="w-3.5 h-3.5 text-black" />
-            <div className="w-5 h-2.5 border border-black rounded-sm p-[1px] flex items-center">
-              <div className="w-full h-full bg-black rounded-[1px]" />
-            </div>
-          </div>
-        </div>
-
         {/* Header Navigation */}
-        <header className="bg-[#ffffff] px-4 py-3 flex items-center justify-between z-30 shrink-0 border-b border-[#e5e5e5]">
+        <header className="bg-[#ffffff] px-4 py-3.5 flex items-center justify-between z-30 shrink-0 border-b border-[#e5e5e5]">
           <div className="flex items-center space-x-2.5">
             {/* Sidebar Toggle Icon Button */}
             <button
@@ -204,13 +191,28 @@ export default function App() {
           </div>
 
           <div className="flex items-center space-x-2">
-            <div className="bg-[#ebfef6] px-2.5 py-1 rounded-[800px] border border-[#00cc88] flex items-center space-x-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00cc88]" />
-              <span className="text-[10px] font-medium text-black">8 Active</span>
-            </div>
+            {/* Search Icon */}
+            <button
+              onClick={() => showToast('Search opened')}
+              className="p-2 rounded-[800px] bg-[#f6f3ee] text-black hover:bg-[#e5e5e5] transition-transform active:scale-95 border border-[#e5e5e5] flex items-center justify-center"
+              aria-label="Search"
+            >
+              <Search className="w-4 h-4 text-black" />
+            </button>
 
+            {/* Notification Bell */}
+            <button
+              onClick={() => showToast('8 notifications')}
+              className="relative p-2 rounded-[800px] bg-[#f6f3ee] text-black hover:bg-[#e5e5e5] transition-transform active:scale-95 border border-[#e5e5e5] flex items-center justify-center"
+              aria-label="Notifications"
+            >
+              <Bell className="w-4 h-4 text-black" />
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#ff6600]" />
+            </button>
+
+            {/* Profile Avatar */}
             <div
-              className="relative w-7 h-7 rounded-[800px] bg-[#f6f3ee] p-0.5 cursor-pointer transition-transform active:scale-95 border border-black"
+              className="relative w-8 h-8 rounded-[800px] bg-[#f6f3ee] p-0.5 cursor-pointer transition-transform active:scale-95 border border-black"
               onClick={toggleDrawer}
             >
               <img
@@ -239,7 +241,7 @@ export default function App() {
                 </svg>
 
                 <div className="flex justify-between items-center relative z-10">
-                  <span class="text-xs text-[#888888] font-medium">Outstanding</span>
+                  <span className="text-xs text-[#888888] font-medium">Outstanding</span>
                   <span className="bg-[#ffffff] text-black text-[10px] font-medium px-2 py-0.5 rounded-[800px] border border-[#e5e5e5]">48 Inv</span>
                 </div>
                 <div className="my-2 relative z-10">
@@ -503,7 +505,7 @@ export default function App() {
                   <div>
                     <div className="flex items-center space-x-1.5">
                       <span className="text-xs text-black font-medium">RFQ</span>
-                      <span class="text-[10px] font-mono text-[#888888]">#RFQ-000019</span>
+                      <span className="text-[10px] font-mono text-[#888888]">#RFQ-000019</span>
                     </div>
                     <p className="text-[11px] text-[#888888]">Prime Energy</p>
                   </div>
@@ -811,7 +813,7 @@ export default function App() {
 
         {/* Toast Popup Notification */}
         {toastMessage && (
-          <div className="absolute top-14 left-1/2 -translate-x-1/2 bg-black text-[#ffffff] text-xs px-3.5 py-1.5 rounded-[24px] shadow-[0px_16px_32px_0px_rgba(0,0,0,0.08)] z-50 flex items-center space-x-1.5 border border-[#e5e5e5] animate-fade-in">
+          <div className="absolute top-14 left-1/2 -translate-x-1/2 bg-black text-[#ffffff] text-xs px-3.5 py-1.5 rounded-[24px] shadow-[0px_16px_32px_0px_rgba(0,0,0,0.08)] z-50 flex items-center space-x-1.5 border border-[#e5e5e5]">
             <ArrowRight className="w-3 h-3 text-[#ff6600]" />
             <span>{toastMessage}</span>
           </div>
