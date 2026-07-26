@@ -224,7 +224,29 @@ const REGISTRY_DATA: ComponentMeta[] = [
       ]
       comp.designFiles = []
     } else if (comp.id === 'card') {
-      comp.files = []
+      comp.files = [
+        { path: 'components/ui/card.tsx', language: 'typescriptreact' },
+      ]
+      comp.designFiles = []
+    } else if (comp.id === 'table') {
+      comp.files = [
+        { path: 'components/ui/table.tsx', language: 'typescriptreact' },
+      ]
+      comp.designFiles = []
+    } else if (comp.id === 'input') {
+      comp.files = [
+        { path: 'components/ui/input.tsx', language: 'typescriptreact' },
+      ]
+      comp.designFiles = []
+    } else if (comp.id === 'badge') {
+      comp.files = [
+        { path: 'components/ui/badge.tsx', language: 'typescriptreact' },
+      ]
+      comp.designFiles = []
+    } else if (comp.id === 'dialog') {
+      comp.files = [
+        { path: 'components/ui/dialog.tsx', language: 'typescriptreact' },
+      ]
       comp.designFiles = []
     }
   }

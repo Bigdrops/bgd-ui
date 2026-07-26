@@ -228,7 +228,7 @@ export default function ModernWebIntelligenceDashboard() {
 
   return (
     <div className="dashboard-workspace min-h-screen bg-[#043f2e] flex items-start justify-center p-0 sm:p-4 md:p-6 antialiased">
-      <div className="w-full max-w-[430px] min-h-screen sm:min-h-0 bg-[#eef2e3] relative overflow-hidden sm:rounded-[32px] border-0 sm:border-[8px] border-[#043f2e] flex flex-col justify-between">
+      <div className="w-full max-w-[430px] h-[100vh] sm:h-[900px] bg-[#eef2e3] relative overflow-hidden sm:rounded-[32px] border-0 sm:border-[8px] border-[#043f2e] flex flex-col justify-between font-graphik">
         <header className="bg-[#fcfcfc] px-4 py-3.5 flex items-center justify-between z-30 shrink-0 border-b border-[#043f2e]/10">
           <div className="flex items-center space-x-2.5">
             <button
