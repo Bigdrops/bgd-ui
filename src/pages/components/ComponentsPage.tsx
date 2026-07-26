@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Search, Square, LayoutGrid, Table, Type, ChevronDown, MessageSquare, BarChart, ArrowRight, Filter } from 'lucide-react'
+import { Search, Square, LayoutGrid, Table, Type, ChevronDown, MessageSquare, BarChart, ArrowRight, Filter, LayoutDashboard } from 'lucide-react'
 import './styles.css'
 
-const CATEGORIES = ['All', 'Layout', 'Forms', 'Data Display', 'Feedback', 'Navigation']
+const CATEGORIES = ['All', 'Layout', 'Forms', 'Data Display', 'Feedback', 'Navigation', 'Dashboard']
 
 const COMPONENTS = [
   { name: 'Button', category: 'Forms', description: 'Interactive button with multiple variants and sizes.', badge: 'New', icon: Square },
@@ -17,6 +17,8 @@ const COMPONENTS = [
   { name: 'Tabs', category: 'Navigation', description: 'Tabbed navigation for switching views.', badge: null, icon: LayoutGrid },
   { name: 'Sidebar', category: 'Navigation', description: 'Collapsible sidebar navigation.', badge: null, icon: LayoutGrid },
   { name: 'Form', category: 'Forms', description: 'Form layout with validation and error handling.', badge: null, icon: Type },
+  { name: 'Infinite Notification Carousel', category: 'Dashboard', description: 'Production-ready infinite carousel with autoplay, touch swipe, and pagination dots.', badge: null, icon: LayoutDashboard },
+  { name: 'Modern Web Intelligence Dashboard', category: 'Dashboard', description: 'Real-time financial snapshot, telemetry stream, activity feed, and document management.', badge: 'New', icon: LayoutDashboard },
 ]
 
 export function ComponentsPage() {

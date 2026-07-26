@@ -9,6 +9,7 @@ import { DocsPage } from './pages/docs'
 const PRAVInvoice = lazy(() => import('./workspaces/invoice/prav/InvoiceWorkspace'))
 const EASEHEALTHInvoice = lazy(() => import('./workspaces/invoice/easehealth/InvoiceWorkspace'))
 const DittoInvoice = lazy(() => import('./workspaces/invoice/ditto/InvoiceWorkspace'))
+const ModernWebIntelligenceDashboard = lazy(() => import('./components/dashboard/modern-web-intelligence-dashboard'))
 
 const WORKSPACES: ShellWorkspace[] = [
   {
@@ -41,13 +42,28 @@ const WORKSPACES: ShellWorkspace[] = [
     accentColor: '#ffe228',
     component: DittoInvoice,
   },
+  {
+    id: 'dashboard-modern-web-intelligence',
+    name: 'Modern Web Intelligence',
+    description: 'BigDrops mode | deep forest, chartreuse accents, real-time telemetry',
+    icon: 'grid',
+    category: 'Dashboard',
+    status: 'active',
+    accentColor: '#043f2e',
+    component: ModernWebIntelligenceDashboard,
+  },
 ]
 
 const TOPICS: ShellTopic[] = [
   {
     id: 'invoice',
     name: 'Invoice',
-    workspaces: WORKSPACES.map((w) => ({ id: w.id, name: w.name, description: w.description })),
+    workspaces: WORKSPACES.filter((w) => w.category === 'Invoice').map((w) => ({ id: w.id, name: w.name, description: w.description })),
+  },
+  {
+    id: 'dashboard',
+    name: 'Dashboard',
+    workspaces: WORKSPACES.filter((w) => w.category === 'Dashboard').map((w) => ({ id: w.id, name: w.name, description: w.description })),
   },
 ]
 
