@@ -1,36 +1,40 @@
-import { useState } from 'react'
-import { Search, Square, LayoutGrid, Table, Type, ChevronDown, MessageSquare, BarChart, ArrowRight, Filter, LayoutDashboard } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { Search } from 'lucide-react'
+import { COMPONENT_REGISTRY, getComponentById } from '@/lib/component-registry'
+import { ComponentDetail } from '@/components/component-detail'
 import './styles.css'
 
-const CATEGORIES = ['All', 'Layout', 'Forms', 'Data Display', 'Feedback', 'Navigation', 'Dashboard']
-
-const COMPONENTS = [
-  { name: 'Button', category: 'Forms', description: 'Interactive button with multiple variants and sizes.', badge: 'New', icon: Square },
-  { name: 'Card', category: 'Layout', description: 'Container for grouping related content.', badge: null, icon: LayoutGrid },
-  { name: 'Table', category: 'Data Display', description: 'Data table with sorting, filtering, and pagination.', badge: null, icon: Table },
-  { name: 'Input', category: 'Forms', description: 'Text input field with validation states.', badge: null, icon: Type },
-  { name: 'Select', category: 'Forms', description: 'Dropdown select with search and multi-select.', badge: null, icon: ChevronDown },
-  { name: 'Dialog', category: 'Feedback', description: 'Modal dialog for confirmations and forms.', badge: null, icon: MessageSquare },
-  { name: 'Chart', category: 'Data Display', description: 'Data visualization with multiple chart types.', badge: 'New', icon: BarChart },
-  { name: 'Badge', category: 'Data Display', description: 'Status indicator and label component.', badge: null, icon: Square },
-  { name: 'Alert', category: 'Feedback', description: 'Inline notification with severity levels.', badge: null, icon: MessageSquare },
-  { name: 'Tabs', category: 'Navigation', description: 'Tabbed navigation for switching views.', badge: null, icon: LayoutGrid },
-  { name: 'Sidebar', category: 'Navigation', description: 'Collapsible sidebar navigation.', badge: null, icon: LayoutGrid },
-  { name: 'Form', category: 'Forms', description: 'Form layout with validation and error handling.', badge: null, icon: Type },
-  { name: 'Infinite Notification Carousel', category: 'Dashboard', description: 'Production-ready infinite carousel with autoplay, touch swipe, and pagination dots.', badge: null, icon: LayoutDashboard },
-  { name: 'Modern Web Intelligence Dashboard', category: 'Dashboard', description: 'Real-time financial snapshot, telemetry stream, activity feed, and document management.', badge: 'New', icon: LayoutDashboard },
-]
+const CATEGORIES = ['All', ...Array.from(new Set(COMPONENT_REGISTRY.map((c) => c.category)))]
 
 export function ComponentsPage() {
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('All')
+  const [selectedComponentId, setSelectedComponentId] = useState<string | null>(null)
 
-  const filtered = COMPONENTS.filter((comp) => {
-    const matchesSearch = comp.name.toLowerCase().includes(search.toLowerCase()) ||
-      comp.description.toLowerCase().includes(search.toLowerCase())
-    const matchesCategory = activeCategory === 'All' || comp.category === activeCategory
-    return matchesSearch && matchesCategory
-  })
+  const selectedComponent = selectedComponentId ? getComponentById(selectedComponentId) : null
+
+  const filtered = useMemo(() => {
+    return COMPONENT_REGISTRY.filter((comp) => {
+      const matchesSearch = comp.name.toLowerCase().includes(search.toLowerCase()) ||
+        comp.description.toLowerCase().includes(search.toLowerCase())
+      const matchesCategory = activeCategory === 'All' || comp.category === activeCategory
+      return matchesSearch && matchesCategory
+    })
+  }, [search, activeCategory])
+
+  if (selectedComponent) {
+    return (
+      <div className="components-page">
+        <ComponentDetail
+          component={selectedComponent}
+          onBack={() => {
+            setSelectedComponentId(null)
+            setSearch('')
+          }}
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="components-page">
@@ -69,7 +73,11 @@ export function ComponentsPage() {
         {filtered.map((comp) => {
           const Icon = comp.icon
           return (
-            <a key={comp.name} href="#" className="component-card">
+            <button
+              key={comp.id}
+              className="component-card"
+              onClick={() => setSelectedComponentId(comp.id)}
+            >
               <div className="component-card__preview">
                 <Icon size={32} />
               </div>
@@ -83,7 +91,7 @@ export function ComponentsPage() {
                 <p className="component-card__desc">{comp.description}</p>
                 <span className="component-card__category">{comp.category}</span>
               </div>
-            </a>
+            </button>
           )
         })}
       </div>

@@ -159,5 +159,6 @@ function InfiniteNotificationCarousel({
   )
 }
 
+export default InfiniteNotificationCarousel
 export { InfiniteNotificationCarousel }
 export type { NotificationSlide }
