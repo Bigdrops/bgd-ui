@@ -193,6 +193,60 @@ const ENTRIES: RegistryEntry[] = [
     ),
   },
   {
+    id: 'operate-dashboard',
+    name: 'Operate Dashboard',
+    category: 'Dashboard',
+    description: 'Botanist data terminal — sage-green canvas, mono-green family, compact instrument panels.',
+    badge: 'New',
+    icon: LayoutDashboard,
+    files: [
+      'src/components/dashboard/operate-dashboard.tsx',
+      'src/components/dashboard/operate.css',
+    ],
+    designFile: 'docs/Designs/Operate.md',
+    previewComponent: lazy(
+      () => import('@/components/dashboard/operate-dashboard') as Promise<{
+        default: ComponentType<{}>
+      }>
+    ),
+  },
+  {
+    id: 'slash-dashboard',
+    name: 'Slash Dashboard',
+    category: 'Dashboard',
+    description: 'Midnight vault with gilded ledger lines — dark canvas, golden accents, Ivy Presto serif.',
+    badge: 'New',
+    icon: LayoutDashboard,
+    files: [
+      'src/components/dashboard/slash-dashboard.tsx',
+      'src/components/dashboard/slash.css',
+    ],
+    designFile: 'docs/Designs/Slash.md',
+    previewComponent: lazy(
+      () => import('@/components/dashboard/slash-dashboard') as Promise<{
+        default: ComponentType<{}>
+      }>
+    ),
+  },
+  {
+    id: 'paradigm-dashboard',
+    name: 'Paradigm Dashboard',
+    category: 'Dashboard',
+    description: 'Research instrument — dark hero to light body, pastel status badges, Atacama VAR serif.',
+    badge: 'New',
+    icon: LayoutDashboard,
+    files: [
+      'src/components/dashboard/paradigm-dashboard.tsx',
+      'src/components/dashboard/paradigm.css',
+    ],
+    designFile: 'docs/Designs/Paradigm.md',
+    previewComponent: lazy(
+      () => import('@/components/dashboard/paradigm-dashboard') as Promise<{
+        default: ComponentType<{}>
+      }>
+    ),
+  },
+  {
     id: 'button',
     name: 'Button',
     category: 'Forms',

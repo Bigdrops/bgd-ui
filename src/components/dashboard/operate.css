@@ -1,0 +1,353 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap');
+
+.op-workspace {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+.op-brand {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+}
+
+.op-brand-sm {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: +0.30em;
+}
+
+.op-stat-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px;
+  font-weight: 500;
+  color: #09352e;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.op-stat-sm {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: #09352e;
+}
+
+.op-label {
+  font-size: 11px;
+  color: #6c7a79;
+  letter-spacing: -0.01em;
+}
+
+.op-mono {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.op-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 0.5px solid #cad3d2;
+}
+
+.op-dark-panel {
+  background: #29211e;
+  border-radius: 12px;
+  color: #ffffff;
+}
+
+.op-btn-icon {
+  background: transparent;
+  border: 0.5px solid #cad3d2;
+  border-radius: 4px;
+  color: #09352e;
+  transition: background 0.15s;
+}
+
+.op-btn-icon:hover {
+  background: #e5e5e5;
+}
+
+.op-btn-primary {
+  background: #85c093;
+  color: #09352e;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.op-btn-primary:hover {
+  opacity: 0.85;
+}
+
+.op-icon-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #09352e;
+  flex-shrink: 0;
+}
+
+.op-icon-box--accent {
+  background: #09352e;
+  color: #85c093;
+}
+
+.op-icon-box--dark {
+  background: #09352e;
+  color: #ffffff;
+}
+
+.op-icon-box--moss {
+  background: #85c093;
+  color: #09352e;
+}
+
+.op-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background: #09352e;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.op-bracket-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: #09352e;
+  letter-spacing: -0.01em;
+}
+
+.op-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  color: #09352e;
+  letter-spacing: +0.30em;
+  display: inline-block;
+}
+
+.op-tag--action {
+  background: #85c093;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.op-tag--filled {
+  background: #85c093;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.op-tag--alert {
+  background: #85c093;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.op-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  color: #09352e;
+  letter-spacing: +0.30em;
+  padding: 2px 6px;
+  border: 0.5px solid #09352e;
+  border-radius: 4px;
+}
+
+.op-live-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  color: #09352e;
+  font-weight: 500;
+  letter-spacing: +0.30em;
+}
+
+.op-pulse-dot {
+  width: 4px;
+  height: 4px;
+  background-color: #85c093;
+  border-radius: 50%;
+  animation: op-pulse 1.5s infinite;
+}
+
+@keyframes op-pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(133,192,147,0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 4px rgba(133,192,147,0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(133,192,147,0); }
+}
+
+.op-row-hover {
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.op-row-hover:hover {
+  background: #f5f5f5;
+}
+
+.op-nav {
+  background: #ffffff;
+  padding: 8px 8px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 30;
+  flex-shrink: 0;
+  box-shadow: inset 0 0.5px 0 0 #cad3d2;
+}
+
+.op-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #6c7a79;
+  font-size: 9px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.15s;
+}
+
+.op-nav-item--active {
+  color: #09352e;
+  font-weight: 500;
+}
+
+.op-nav-item:hover {
+  color: #09352e;
+}
+
+.op-home-indicator {
+  width: 100%;
+  padding-bottom: 6px;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.op-fab {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  background: #85c093;
+  color: #09352e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.op-fab:active {
+  transform: scale(0.95);
+}
+
+.op-drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 82%;
+  max-width: 310px;
+  background: #e0e0e0;
+  color: #09352e;
+  z-index: 50;
+  transition: transform 0.35s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px;
+  box-shadow: inset -0.5px 0 0 0 #cad3d2;
+}
+
+.op-drawer-btn {
+  background: #ffffff;
+  border: 0.5px solid #cad3d2;
+  border-radius: 4px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.op-drawer-btn:hover {
+  background: #f0f0f0;
+}
+
+.op-drawer-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  color: #09352e;
+  font-size: 11px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.op-drawer-item:hover {
+  background: #ffffff;
+}
+
+.op-drawer-item--active {
+  background: #85c093;
+  color: #09352e;
+  font-weight: 500;
+}
+
+.op-drawer-signout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 4px;
+  background: #09352e;
+  color: #ffffff;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: +0.30em;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.op-drawer-signout:hover {
+  opacity: 0.9;
+}
+
+.op-workspace .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.op-workspace .no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

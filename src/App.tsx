@@ -10,6 +10,9 @@ const PRAVInvoice = lazy(() => import('./workspaces/invoice/prav/InvoiceWorkspac
 const EASEHEALTHInvoice = lazy(() => import('./workspaces/invoice/easehealth/InvoiceWorkspace'))
 const DittoInvoice = lazy(() => import('./workspaces/invoice/ditto/InvoiceWorkspace'))
 const ModernWebIntelligenceDashboard = lazy(() => import('./components/dashboard/modern-web-intelligence-dashboard'))
+const OperateDashboard = lazy(() => import('./components/dashboard/operate-dashboard'))
+const SlashDashboard = lazy(() => import('./components/dashboard/slash-dashboard'))
+const ParadigmDashboard = lazy(() => import('./components/dashboard/paradigm-dashboard'))
 
 const WORKSPACES: ShellWorkspace[] = [
   {
@@ -52,6 +55,39 @@ const WORKSPACES: ShellWorkspace[] = [
     accentColor: '#043f2e',
     component: ModernWebIntelligenceDashboard,
     registryId: 'modern-web-intelligence-dashboard',
+  },
+  {
+    id: 'dashboard-operate',
+    name: 'Operate',
+    description: 'Botanist data terminal | sage-green canvas, mono-green family, compact instrument panels',
+    icon: 'grid',
+    category: 'Dashboard',
+    status: 'active',
+    accentColor: '#09352e',
+    component: OperateDashboard,
+    registryId: 'operate-dashboard',
+  },
+  {
+    id: 'dashboard-slash',
+    name: 'Slash',
+    description: 'Midnight vault | gilded ledger lines, dark canvas, golden accents, Ivy Presto serif',
+    icon: 'grid',
+    category: 'Dashboard',
+    status: 'active',
+    accentColor: '#08080a',
+    component: SlashDashboard,
+    registryId: 'slash-dashboard',
+  },
+  {
+    id: 'dashboard-paradigm',
+    name: 'Paradigm',
+    description: 'Research instrument | dark-to-light transition, pastel status badges, Atacama VAR serif',
+    icon: 'grid',
+    category: 'Dashboard',
+    status: 'active',
+    accentColor: '#080b12',
+    component: ParadigmDashboard,
+    registryId: 'paradigm-dashboard',
   },
 ]
 

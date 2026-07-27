@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Inter:wght@300;400;500;600&display=swap');
+
+.pd-workspace {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+.pd-brand {
+  font-family: 'Lora', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -0.06em;
+}
+
+.pd-serif-lg {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #080b12;
+  letter-spacing: -0.06em;
+}
+
+.pd-stat-value {
+  font-family: 'Lora', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #080b12;
+  letter-spacing: -0.06em;
+  line-height: 1.2;
+}
+
+.pd-stat-sm {
+  font-size: 13px;
+  font-weight: 500;
+  color: #080b12;
+}
+
+.pd-label {
+  font-size: 11px;
+  color: #6c6d73;
+  letter-spacing: -0.01em;
+}
+
+.pd-mono {
+  font-family: 'Inter', monospace;
+  font-size: 10px;
+}
+
+.pd-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6c6d73;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pd-eyebrow-dark {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pd-card {
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #dbdbee;
+}
+
+.pd-hero-header {
+  background: #080b12;
+}
+
+.pd-hero-section {
+  background: #080b12;
+}
+
+.pd-gilded-panel {
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #dbdbee;
+}
+
+.pd-btn-icon {
+  background: transparent;
+  border: 1px solid #b5b9c4;
+  border-radius: 4px;
+  color: #080b12;
+  transition: background 0.15s;
+}
+
+.pd-btn-icon:hover {
+  background: #f6f7f8;
+}
+
+.pd-btn-icon-dark {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  color: #ffffff;
+  transition: background 0.15s;
+}
+
+.pd-btn-icon-dark:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.pd-btn-accent {
+  background: #0a33ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.pd-btn-accent:hover {
+  opacity: 0.85;
+}
+
+.pd-icon-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  background: #f6f7f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c6d73;
+  flex-shrink: 0;
+}
+
+.pd-icon-box--accent {
+  background: #e2efff;
+  color: #0a33ff;
+}
+
+.pd-icon-box--danger {
+  background: #fee8dd;
+  color: #580101;
+}
+
+.pd-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background: #080b12;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.pd-badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: #080b12;
+  padding: 2px 6px;
+  border: 1px solid #b5b9c4;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.pd-badge--action {
+  background: #e2efff;
+  color: #061353;
+  border-color: #061353;
+}
+
+.pd-badge--forest {
+  background: #e4f3e2;
+  color: #03350f;
+  border-color: #03350f;
+}
+
+.pd-badge--mulberry {
+  background: #ffe6f7;
+  color: #600537;
+  border-color: #600537;
+}
+
+.pd-badge--danger {
+  background: #fee8dd;
+  color: #580101;
+  border-color: #580101;
+}
+
+.pd-status-badge {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6c6d73;
+  padding: 2px 6px;
+  border: 1px solid #dbdbee;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.pd-status-badge.pd-badge--forest {
+  background: #e4f3e2;
+  color: #03350f;
+  border-color: #03350f;
+}
+
+.pd-status-badge.pd-badge--mulberry {
+  background: #ffe6f7;
+  color: #600537;
+  border-color: #600537;
+}
+
+.pd-live-badge-dark {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.pd-pulse-dot-dark {
+  width: 4px;
+  height: 4px;
+  background-color: #7f90ce;
+  border-radius: 50%;
+  animation: pd-pulse 1.5s infinite;
+}
+
+@keyframes pd-pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(127,144,206,0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 4px rgba(127,144,206,0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(127,144,206,0); }
+}
+
+.pd-row-hover {
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.pd-row-hover:hover {
+  background: #f6f7f8;
+}
+
+.pd-nav {
+  background: #ffffff;
+  border-top: 1px solid #dbdbee;
+  padding: 8px 8px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 30;
+  flex-shrink: 0;
+}
+
+.pd-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: #6c6d73;
+  font-size: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.15s;
+}
+
+.pd-nav-item--active {
+  color: #080b12;
+  font-weight: 500;
+}
+
+.pd-nav-item:hover {
+  color: #080b12;
+}
+
+.pd-fab {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  background: #080b12;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.pd-fab:active {
+  transform: scale(0.95);
+}
+
+.pd-drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 82%;
+  max-width: 310px;
+  background: #ffffff;
+  color: #080b12;
+  z-index: 50;
+  transition: transform 0.35s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px;
+  border-right: 1px solid #dbdbee;
+}
+
+.pd-drawer-btn {
+  background: #f6f7f8;
+  border: 1px solid #dbdbee;
+  border-radius: 4px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pd-drawer-btn:hover {
+  background: #edeef1;
+}
+
+.pd-workspace .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.pd-workspace .no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
