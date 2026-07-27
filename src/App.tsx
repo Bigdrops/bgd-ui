@@ -51,6 +51,7 @@ const WORKSPACES: ShellWorkspace[] = [
     status: 'active',
     accentColor: '#043f2e',
     component: ModernWebIntelligenceDashboard,
+    registryId: 'modern-web-intelligence-dashboard',
   },
 ]
 

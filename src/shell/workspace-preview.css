@@ -1,0 +1,199 @@
+/* ══════════════════════════════════════════════════════════════
+   WORKSPACE TOOLBAR
+   Matches model-behaviour.html tab container pattern
+   ══════════════════════════════════════════════════════════════ */
+.workspace-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--mp-space-12) 0;
+  border-bottom: 1px solid var(--mp-color-smoke);
+  gap: var(--mp-space-12);
+  flex-wrap: wrap;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   WORKSPACE TABS
+   Pill-style segmented control matching model-behaviour.html
+   ══════════════════════════════════════════════════════════════ */
+.workspace-tabs {
+  display: flex;
+  gap: var(--mp-space-4);
+}
+
+.workspace-tab {
+  font-family: var(--mp-font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mp-color-ash);
+  padding: 7px var(--mp-space-16);
+  border: 1px solid transparent;
+  border-radius: var(--mp-radius-pill);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.workspace-tab svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.workspace-tab:hover {
+  color: var(--mp-color-onyx);
+}
+
+.workspace-tab--active {
+  background: var(--mp-color-chalk);
+  color: var(--mp-color-onyx);
+  border-color: var(--mp-color-smoke);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   WORKSPACE PREVIEW CONTAINER
+   ══════════════════════════════════════════════════════════════ */
+.workspace-preview {
+  min-height: 400px;
+}
+
+.workspace-tab-content {
+  padding-top: var(--mp-space-24);
+  padding-bottom: var(--mp-space-24);
+}
+
+.workspace-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: var(--mp-color-ash);
+  font-family: var(--mp-font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EMPTY STATE
+   ══════════════════════════════════════════════════════════════ */
+.workspace-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: var(--mp-color-ash);
+  font-family: var(--mp-font-display);
+  font-size: 15px;
+  text-align: center;
+  padding: var(--mp-space-24);
+  gap: var(--mp-space-12);
+}
+
+.workspace-empty svg {
+  color: var(--mp-color-fog);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TYPOGRAPHY RESET FOR WORKSPACE COMPONENTS
+   Prevent Shell typography overrides from breaking workspace
+   component heading sizes, weights, and colors.
+   ══════════════════════════════════════════════════════════════ */
+.workspace-preview h1,
+.workspace-preview h2,
+.workspace-preview h3,
+.workspace-preview h4,
+.workspace-preview h5,
+.workspace-preview h6 {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+.workspace-preview p {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: inherit;
+  color: inherit;
+  opacity: inherit;
+}
+
+.workspace-preview a {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.workspace-preview strong,
+.workspace-preview b {
+  font-weight: inherit;
+  color: inherit;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MARKDOWN VIEWER COPY BUTTON
+   ══════════════════════════════════════════════════════════════ */
+.workspace-preview .markdown-viewer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.workspace-preview .markdown-viewer__copy-btn {
+  font-family: var(--mp-font-display);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mp-color-ash);
+  padding: var(--mp-space-4) var(--mp-space-10);
+  border: 1px solid var(--mp-color-smoke);
+  border-radius: var(--mp-radius-pill);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: transparent;
+}
+
+.workspace-preview .markdown-viewer__copy-btn:hover {
+  color: var(--mp-color-onyx);
+  border-color: var(--mp-color-onyx);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .workspace-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--mp-space-8);
+  }
+
+  .workspace-tabs {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .workspace-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .workspace-tab {
+    font-size: 13px;
+    padding: 6px var(--mp-space-12);
+  }
+}

@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useCallback } from 'react'
+import { copyToClipboard } from '@/lib/clipboard'
 
 interface MarkdownViewerProps {
   content: string
@@ -105,11 +106,29 @@ function parseInline(text: string): string {
 
 function MarkdownViewer({ content, filename }: MarkdownViewerProps) {
   const rendered = useMemo(() => renderMarkdown(content), [content])
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = useCallback(async () => {
+    const ok = await copyToClipboard(content)
+    if (ok) {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
+  }, [content])
 
   return (
     <div className="markdown-viewer">
       <div className="markdown-viewer__header">
         <span className="markdown-viewer__filename">{filename}</span>
+        {content && (
+          <button
+            type="button"
+            className="markdown-viewer__copy-btn"
+            onClick={handleCopy}
+          >
+            {copied ? 'Copied' : 'Copy'}
+          </button>
+        )}
       </div>
       <div className="markdown-viewer__body">
         {!content && (

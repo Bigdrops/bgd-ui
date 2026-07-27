@@ -794,6 +794,24 @@
   font-family: 'JetBrains Mono', ui-monospace, monospace;
 }
 
+.markdown-viewer__copy-btn {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--bgd-muted);
+  padding: var(--space-4) var(--space-10);
+  border: 1px solid var(--bgd-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background: transparent;
+  font-family: inherit;
+}
+
+.markdown-viewer__copy-btn:hover {
+  color: var(--bgd-obsidian);
+  border-color: var(--bgd-obsidian);
+}
+
 .markdown-viewer__body {
   padding: var(--space-24);
   max-height: 600px;

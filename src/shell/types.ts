@@ -21,6 +21,7 @@ export interface ShellWorkspace {
   status: 'active' | 'draft' | 'archived'
   accentColor?: string
   component: LazyExoticComponent<ComponentType>
+  registryId?: string
 }
 
 export type ThemeMode = 'light' | 'dark' | 'system'

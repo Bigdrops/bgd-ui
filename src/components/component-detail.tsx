@@ -1,4 +1,4 @@
-import { useState, Suspense, useCallback } from 'react'
+import { useState, Suspense } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import type { ComponentMeta } from '@/lib/component-registry'
 import { getRawFileContent } from '@/lib/component-registry'
@@ -18,30 +18,6 @@ function ComponentDetail({ component, onBack }: ComponentDetailProps) {
   const hasSourceFiles = component.files.length > 0
   const hasDesignFile = component.designFile !== null
   const LazyComp = component.previewComponent
-
-  const copyText = useCallback(async (text: string) => {
-    await navigator.clipboard.writeText(text)
-  }, [])
-
-  const copyFileByPath = useCallback(async (path: string) => {
-    const content = getRawFileContent(path)
-    if (content !== undefined) {
-      await copyText(content)
-    }
-  }, [copyText])
-
-  const handleCopyAll = useCallback(async () => {
-    const parts: string[] = []
-    for (const file of component.files) {
-      const content = getRawFileContent(file.path)
-      if (content !== undefined) {
-        parts.push(`// ${file.path}`)
-        parts.push(content)
-        parts.push('')
-      }
-    }
-    await copyText(parts.join('\n').trim())
-  }, [component.files, copyText])
 
   const tabs: { id: Tab; label: string }[] = [
     { id: 'preview', label: 'Preview' },
@@ -110,8 +86,6 @@ function ComponentDetail({ component, onBack }: ComponentDetailProps) {
               <SourceFileList
                 files={component.files}
                 getContent={getRawFileContent}
-                onCopyAll={handleCopyAll}
-                onCopyFile={copyFileByPath}
               />
             )}
           </div>

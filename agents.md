@@ -215,6 +215,7 @@ Before completing any task:
 │   │   ├── reui/          Local REUI snapshot
 │   │   └── reui-upstream/ Upstream reference
 │   ├── Patterns/          UX solutions
+│   ├── Standards/         Implementation standards and conventions
 │   ├── ADR/               Architecture decision records
 │   ├── Reports/           Task completion reports
 │   └── DESIGNMD/          Legacy — use Designs/
@@ -286,6 +287,7 @@ Before creating or modifying documentation, agents must:
 | `docs/Designs/` | Appearance | Colour systems, typography, spacing, surfaces, borders, radii, elevation, component styling, visual language |
 | `docs/Masonry-yard/` | Implementation assets | Component libraries, layouts, templates, hooks, utilities, interaction primitives |
 | `docs/Patterns/` | UX solutions | Floating save, mobile forms, image picker, confirmation dialog, totals panel, line item card |
+| `docs/Standards/` | Standards | Implementation conventions, tab systems, documentation patterns, code standards |
 
 ### Scope
 
@@ -363,3 +365,4 @@ Example: `2026-07-20-fix-reui-upstream.md`
 |------|--------|--------|
 | 2026-07-20 | Initial creation | AI |
 | 2026-07-20 | Replaced `docs/Architecture/` with `docs/Workspace-spec/` throughout. Added scope note distinguishing workspace specs from platform architecture (ADR). | AI |
+| 2026-07-27 | Added `docs/Standards/` to directory structure and folder responsibilities. Created `workspace-documentation.md` standard. | AI |
