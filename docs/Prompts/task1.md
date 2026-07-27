@@ -163,3 +163,20 @@ No placeholder text.
 No duplicated viewer implementation.
 
 Build passes with no runtime errors.
+
+
+No dead ends or redirect messages
+Do NOT implement any UI that tells the user to go somewhere else.
+I do NOT want behaviour like:
+"Source files are available in the Components page."
+"Design is available elsewhere."
+"Open Components to view source."
+"Go to another page."
+"This workspace doesn't support preview."
+Any equivalent placeholder or redirect.
+If the Workspace exposes Preview, Code, and Design.md, then those tabs must actually work.
+The user should never be sent to another page to access functionality that already exists.
+Bad behaviour:
+Design isn't available here. Go to Components.
+Good behaviour:
+The Workspace uses the same viewer and the same registry as the Components page, so Preview, Code, and Design.md are available directly within the Workspace.
