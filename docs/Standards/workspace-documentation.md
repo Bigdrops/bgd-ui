@@ -2,118 +2,264 @@
 
 ## Purpose
 
-Define the tab system and documentation viewer behavior for the BGD UI Shell workspace view.
+Define the mandatory documentation behaviour for all Workspace components in the BGD UI Shell.
 
-## Scope
+A Workspace is not a demo, mockup, or standalone implementation.
 
-This standard covers the Shell workspace viewer tabs (Preview, Code, Design.md). It does not cover invoice workspace implementation or the Components page detail view.
+A Workspace is a repository-backed view that exposes the component itself, its source code and its design documentation through a consistent interface.
 
----
-
-## Tab System
-
-The Shell workspace view exposes three tabs below the workspace title and back navigation.
-
-| Tab | Icon | Source | Behavior |
-|-----|------|--------|----------|
-| Preview | `Eye` (lucide-react) | Workspace React component | Renders the workspace component inside a typography-reset wrapper |
-| Code | `Code` (lucide-react) | Component registry source files | Shows `SourceFileList` with file explorer and syntax-highlighted code |
-| Design.md | `FileText` (lucide-react) | Component registry design file | Renders `MarkdownViewer` with copy-to-clipboard support |
-
-### Tab Appearance
-
-- Pill-style tabs matching `model-behaviour.html` reference
-- Border-radius: `100px`
-- Font-weight: `600`
-- Active tab: filled background
-- Inactive tab: transparent background
-- Tab CSS: `src/shell/workspace-preview.css`
+This standard ensures every Workspace provides the same documentation experience and remains aligned with the rest of the repository.
 
 ---
 
-## Component Registry
+# Scope
 
-The Shell workspace viewer resolves files through the component registry.
+This standard applies to every Workspace rendered inside the Shell.
 
-### Registry Lookup
+It does not define the implementation of individual Workspace components.
 
-1. Each workspace in the `WORKSPACES` array declares an optional `registryId` field.
-2. On workspace selection, Shell calls `getComponentById(registryId)`.
-3. The returned `ComponentMeta` provides `sourceFiles`, `designFile`, and other metadata.
+It does not replace component documentation standards.
 
-### Registry Fields Used by Shell
-
-| Field | Used By | Purpose |
-|-------|---------|---------|
-| `sourceFiles` | Code tab | Array of source file paths for `SourceFileList` |
-| `designFile` | Design.md tab | Path to design markdown file, or `null` |
-
-### Registration
-
-Each workspace that wants Code/Design.md tabs must:
-
-1. Have an entry in `src/lib/component-registry.ts` with a unique `id`.
-2. Set `registryId` in the `WORKSPACES` array in `src/App.tsx` to match the registry entry `id`.
+It defines how Workspace documentation must be exposed.
 
 ---
 
-## Shared Components
+# Repository First
 
-The Shell workspace viewer uses these shared components:
+The repository is the single source of truth.
 
-| Component | Location | Used By |
-|-----------|----------|---------|
-| `SourceFileList` | `src/components/ui/source-file-list.tsx` | Code tab |
-| `MarkdownViewer` | `src/components/ui/markdown-viewer.tsx` | Design.md tab |
+Workspace documentation must expose repository assets.
 
-### SourceFileList
+It must never generate replacement assets.
 
-- Displays source files with syntax highlighting (highlight.js)
-- Internal clipboard logic via `src/lib/clipboard.ts`
-- Per-file "Copied" feedback (2 seconds)
-- Copy All button with success state
-- Shows "N/A" for missing files
+Source code comes from the component registry.
 
-### MarkdownViewer
+Design documentation comes from:
 
-- Renders markdown content (headers, code blocks, lists, links, bold, italic)
-- Copy button for raw markdown content
-- "Copied" feedback (2 seconds)
-
----
-
-## Clipboard
-
-All copy operations use `src/lib/clipboard.ts`:
-
-- Primary: `navigator.clipboard.writeText()`
-- Fallback: `document.execCommand('copy')`
-- Returns `boolean` for success/failure
-
----
-
-## Typography Reset
-
-The Shell applies a typography reset to workspace components rendered in Preview mode:
-
-```css
-.workspace-preview h1, .workspace-preview h2, ...
-{ all: revert; font-size: inherit; }
+```text
+docs/Designs
 ```
 
-This prevents Shell heading styles from overriding workspace heading sizes.
+The Workspace viewer exists only to expose those assets.
 
 ---
 
-## Adding Tabs to a New Workspace
+# Required Workspace Tabs
 
-1. Add a registry entry to `src/lib/component-registry.ts` with `id`, `sourceFiles`, and `designFile`.
-2. Add `registryId: '<registry-entry-id>'` to the workspace entry in `src/App.tsx`.
-3. The Shell automatically shows Code and Design.md tabs when `registryId` resolves to a valid entry.
+Every Workspace component must expose the following tabs.
+
+| Tab | Purpose |
+|------|----------|
+| Preview | Live React/TSX component |
+| Code | Repository source files |
+| Design.md | Repository design documentation |
+
+These tabs are mandatory.
+
+A Workspace is considered incomplete if any of these are missing.
 
 ---
 
-## Related Documents
+# Preview
 
-- `docs/bgd-ui-prd/model-behaviour.html` — Tab visual reference
-- `AGENTS.md` — Section 8 (Code Standards), Section 12 (Documentation Workflow)
+The Preview tab renders the actual Workspace component.
+
+Requirements:
+
+- Render the real React component.
+- Preserve the original appearance.
+- Do not render screenshots.
+- Do not render generated HTML.
+- Do not simplify the implementation.
+- Do not replace the component with a static mock.
+
+The Preview must always represent the actual implementation.
+
+---
+
+# Code
+
+The Code tab exposes the actual repository source.
+
+Requirements:
+
+- Display registered repository source files.
+- Support syntax highlighting.
+- Support collapsible source files.
+- Support per-file Copy.
+- Support Copy All.
+- Display file names and paths where appropriate.
+
+The Code tab must never:
+
+- generate source code
+- create example implementations
+- hide repository files that belong to the component
+- substitute fake code
+
+Only repository source may be displayed.
+
+---
+
+# Design.md
+
+Every Workspace component must expose its Design.md document.
+
+Design documentation is sourced from:
+
+```text
+docs/Designs
+```
+
+Requirements:
+
+- Render the original markdown.
+- Preserve formatting.
+- Support copying the raw markdown.
+- Display the repository document exactly as stored.
+
+Agents must never:
+
+- generate Design.md
+- rewrite Design.md
+- summarise Design.md
+- invent documentation
+- replace repository documentation
+
+The repository markdown is authoritative.
+
+---
+
+# Component Registry
+
+Workspace documentation is resolved through the shared component registry.
+
+Every Workspace that exposes Code or Design.md must have a registry entry.
+
+Each Workspace must register:
+
+- unique component identifier
+- repository source files
+- Design.md path
+
+The Workspace viewer must consume the shared registry rather than maintaining its own mapping.
+
+---
+
+# Shared Viewer
+
+There must be a single documentation viewer implementation.
+
+Workspace and Components must reuse the same:
+
+- documentation viewer
+- source viewer
+- markdown viewer
+- syntax highlighting
+- copy behaviour
+- toolbar
+- tabs
+- registry lookup
+
+Duplicate implementations are prohibited.
+
+---
+
+# Clipboard Behaviour
+
+Documentation viewers must provide consistent clipboard functionality.
+
+Code viewer requirements:
+
+- Copy selected file
+- Copy All source files
+- Success feedback after copying
+
+Design viewer requirements:
+
+- Copy raw markdown
+- Success feedback after copying
+
+Copy operations must copy repository content exactly.
+
+Rendered HTML or generated text must never be copied.
+
+---
+
+# No Placeholder Behaviour
+
+Workspace documentation must never redirect users elsewhere.
+
+The following behaviours are prohibited:
+
+- "Go to Components"
+- "Available elsewhere"
+- "Open another page"
+- "Coming soon"
+- "Documentation unavailable"
+- "Source available on another screen"
+
+If repository assets exist, they must be displayed within the current Workspace.
+
+If an asset genuinely does not exist, display a simple inline empty state.
+
+Never redirect the user to another page.
+
+---
+
+# Design Source of Truth
+
+All Workspace design documentation originates from:
+
+```text
+docs/Designs
+```
+
+Workspace implementations must expose these documents.
+
+They must never generate replacements.
+
+Every Design.md displayed in the Workspace should correspond to an existing repository document.
+
+---
+
+# Future Workspace Requirements
+
+Every new Workspace added to the repository must:
+
+- expose Preview
+- expose Code
+- expose Design.md
+- register itself in the component registry
+- map to an existing Design.md document
+- reuse the shared documentation viewer
+
+Creating separate documentation systems for individual Workspaces is prohibited.
+
+---
+
+# Definition of Done
+
+A Workspace implementation is not complete until all of the following are true:
+
+- Preview renders the live component.
+- Code exposes the actual repository source.
+- Design.md exposes the repository markdown.
+- Copy works.
+- Copy All works.
+- Design.md supports copying raw markdown.
+- The shared viewer implementation is reused.
+- No placeholder or redirect behaviour exists.
+- Repository assets are exposed directly.
+
+---
+
+# Related Standards
+
+This standard should be used together with:
+
+- `AGENTS.md`
+- Other documents under `docs/Standards`
+- `docs/bgd-ui-prd/model-behaviour.html` (visual behaviour reference)
+
+When conflicts arise, repository standards take precedence over ad hoc implementations.
