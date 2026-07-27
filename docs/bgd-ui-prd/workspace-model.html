@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bgdui · Dashboard</title>
+    <style>
+        /* ----- Reset & Base ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+            background: #222;
+            color: #fff;
+            padding-bottom: 40px;
+            font-weight: 300;
+            line-height: 1.42;
+        }
+
+        /* ----- Header ----- */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid #333;
+            background: #222;
+        }
+        .brand-mark {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        .brand-mark span {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1.5px solid #fff;
+            background: transparent;
+        }
+        .brand-mark span:first-child {
+            left: 0;
+            top: 2px;
+            opacity: .85;
+        }
+        .brand-mark span:last-child {
+            right: 0;
+            bottom: 2px;
+            opacity: .55;
+        }
+        .breadcrumbs {
+            color: #aaa;
+            font-size: 16px;
+        }
+        .breadcrumbs strong {
+            color: #fff;
+            font-weight: 400;
+        }
+
+        /* ----- Tabs ----- */
+        .tabs-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            border-bottom: 1px solid #333;
+            background: #222;
+        }
+        .tabs {
+            display: flex;
+            gap: 8px;
+        }
+        .tab {
+            padding: 6px 16px;
+            font-size: 16px;
+            color: #aaa;
+            cursor: pointer;
+            border-bottom: 1px solid transparent;
+            transition: border-color .2s, color .2s;
+            font-weight: 300;
+        }
+        .tab.active {
+            color: #fff;
+            border-bottom-color: #ffaa20;
+            font-weight: 400;
+        }
+        .tab:hover {
+            color: #fff;
+        }
+        .tab-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+
+        /* hide action buttons by default, will show only on certain tabs (we'll keep them hidden) */
+        .tab-actions {
+            display: none;
+        }
+
+        /* ----- Content ----- */
+        .content {
+            padding: 32px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ----- Dashboard Preview ----- */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-card .label {
+            font-size: 14px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: 400;
+            margin-top: 4px;
+        }
+        .stat-card .change {
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .stat-card .change.up { color: #66d9ef; }
+        .stat-card .change.down { color: #ff5555; }
+
+        .chart-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 30px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .chart-box .bars {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 12px;
+            height: 120px;
+            margin-top: 16px;
+        }
+        .chart-box .bar {
+            width: 30px;
+            background: #ffaa20;
+            border-radius: 2px 2px 0 0;
+        }
+        .chart-box .bar:nth-child(1) { height: 60px; }
+        .chart-box .bar:nth-child(2) { height: 90px; }
+        .chart-box .bar:nth-child(3) { height: 40px; }
+        .chart-box .bar:nth-child(4) { height: 110px; }
+        .chart-box .bar:nth-child(5) { height: 70px; }
+        .chart-box .bar:nth-child(6) { height: 85px; }
+
+        .activity-list {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 20px;
+        }
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+            font-size: 16px;
+        }
+        .activity-item:last-child { border-bottom: none; }
+        .activity-item .time { color: #888; }
+
+        /* ----- Code & Design (shared) ----- */
+        .code-block {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            color: #ddd;
+            overflow-x: auto;
+        }
+        .code-block .hl-kw { color: #ff79c6; }
+        .code-block .hl-str { color: #f1fa8c; }
+        .code-block .hl-cm { color: #6272a4; }
+        .code-block .hl-fn { color: #50fa7b; }
+        .code-block .hl-var { color: #8be9fd; }
+        .code-block .hl-num { color: #bd93f9; }
+
+        .design-token-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        .design-token-grid .token-group {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 16px;
+        }
+        .design-token-grid .token-group h3 {
+            font-weight: 400;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .design-token-grid .token-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 14px;
+        }
+        .design-token-grid .token-item .swatch {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #555;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        /* ----- Footer ----- */
+        .footer-gesture {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #222;
+            pointer-events: none;
+        }
+        .gesture-bar {
+            width: 134px;
+            height: 5px;
+            background: #505050;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 600px) {
+            .header, .tabs-container { flex-wrap: wrap; gap: 8px; }
+            .stat-grid { grid-template-columns: 1fr 1fr; }
+            .design-token-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <div class="header">
+        <div class="brand-mark" aria-label="Brand mark">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="breadcrumbs">
+            Bgdui: Workspace / dashboard / <strong>main</strong>
+        </div>
+    </div>
+
+    <!-- ===== TABS ===== -->
+    <div class="tabs-container">
+        <div class="tabs" id="tabHeaders">
+            <div class="tab active" data-tab="preview">Preview</div>
+            <div class="tab" data-tab="code">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="16 18 22 12 16 6"></polyline>
+                    <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+                Code
+            </div>
+            <div class="tab" data-tab="design">Design</div>
+        </div>
+        <!-- action buttons removed (per request) -->
+        <div class="tab-actions"></div>
+    </div>
+
+    <!-- ===== CONTENT ===== -->
+    <div class="content">
+
+        <!-- PREVIEW TAB -->
+        <div id="preview-content" class="tab-content active">
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="label">Total Users</div>
+                    <div class="value">12,847</div>
+                    <div class="change up">↑ 8.2%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Revenue</div>
+                    <div class="value">$48,392</div>
+                    <div class="change up">↑ 12.4%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Active Sessions</div>
+                    <div class="value">1,203</div>
+                    <div class="change down">↓ 2.1%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Conversion</div>
+                    <div class="value">4.7%</div>
+                    <div class="change up">↑ 0.3%</div>
+                </div>
+            </div>
+
+            <div class="chart-box">
+                <div style="font-weight:400; color:#fff;">Weekly Activity</div>
+                <div class="bars">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+
+            <div class="activity-list">
+                <div class="activity-item"><span>User #4532 signed up</span><span class="time">2 min ago</span></div>
+                <div class="activity-item"><span>New order #1024 placed</span><span class="time">14 min ago</span></div>
+                <div class="activity-item"><span>Payment of $129.99 processed</span><span class="time">1 hour ago</span></div>
+                <div class="activity-item"><span>User feedback: ⭐⭐⭐⭐</span><span class="time">3 hours ago</span></div>
+            </div>
+        </div>
+
+        <!-- CODE TAB -->
+        <div id="code-content" class="tab-content">
+            <div class="code-block">
+<span class="hl-cm">// Dashboard.tsx – Bgdui style</span>
+<span class="hl-kw">import</span> React <span class="hl-kw">from</span> <span class="hl-str">'react'</span>;
+<span class="hl-kw">import</span> { StatsCard, Chart, ActivityFeed } <span class="hl-kw">from</span> <span class="hl-str">'@bgdui/ui'</span>;
+
+<span class="hl-kw">export const</span> <span class="hl-fn">Dashboard</span> = () <span class="hl-kw">=></span> {
+  <span class="hl-kw">const</span> <span class="hl-var">data</span> = {
+    users: <span class="hl-num">12847</span>,
+    revenue: <span class="hl-num">48392</span>,
+    sessions: <span class="hl-num">1203</span>,
+    conversion: <span class="hl-num">4.7</span>
+  };
+
+  <span class="hl-kw">return</span> (
+    <span class="hl-kw">&lt;div</span> <span class="hl-var">className</span>=<span class="hl-str">"dashboard"</span><span class="hl-kw">&gt;</span>
+      <span class="hl-kw">&lt;div</span> <span class="hl-var">className</span>=<span class="hl-str">"grid"</span><span class="hl-kw">&gt;</span>
+        <span class="hl-kw">&lt;StatsCard</span> <span class="hl-var">label</span>=<span class="hl-str">"Total Users"</span> <span class="hl-var">value</span>={<span class="hl-var">data</span>.users} <span class="hl-var">change</span>=<span class="hl-str">"+8.2%"</span> <span class="hl-kw">/&gt;</span>
+        <span class="hl-kw">&lt;StatsCard</span> <span class="hl-var">label</span>=<span class="hl-str">"Revenue"</span> <span class="hl-var">value</span>={<span class="hl-var">data</span>.revenue} <span class="hl-var">change</span>=<span class="hl-str">"+12.4%"</span> <span class="hl-kw">/&gt;</span>
+        <span class="hl-kw">&lt;StatsCard</span> <span class="hl-var">label</span>=<span class="hl-str">"Active Sessions"</span> <span class="hl-var">value</span>={<span class="hl-var">data</span>.sessions} <span class="hl-var">change</span>=<span class="hl-str">"-2.1%"</span> <span class="hl-kw">/&gt;</span>
+        <span class="hl-kw">&lt;StatsCard</span> <span class="hl-var">label</span>=<span class="hl-str">"Conversion"</span> <span class="hl-var">value</span>={<span class="hl-var">data</span>.conversion + <span class="hl-str">'%'</span>} <span class="hl-var">change</span>=<span class="hl-str">"+0.3%"</span> <span class="hl-kw">/&gt;</span>
+      <span class="hl-kw">&lt;/div&gt;</span>
+      <span class="hl-kw">&lt;Chart</span> <span class="hl-var">data</span>={<span class="hl-var">weeklyData</span>} <span class="hl-kw">/&gt;</span>
+      <span class="hl-kw">&lt;ActivityFeed</span> <span class="hl-var">items</span>={<span class="hl-var">recentActivity</span>} <span class="hl-kw">/&gt;</span>
+    <span class="hl-kw">&lt;/div&gt;</span>
+  );
+};
+            </div>
+        </div>
+
+        <!-- DESIGN TAB (generic design tokens) -->
+        <div id="design-content" class="tab-content">
+            <div class="code-block" style="border:1px solid #333; background:#1a1a1a; padding:24px;">
+                <div style="font-weight:400; font-size:20px; margin-bottom:12px; color:#fff;">Design Tokens</div>
+                <div class="design-token-grid">
+                    <div class="token-group">
+                        <h3>Colors</h3>
+                        <div class="token-item"><span><span class="swatch" style="background:#222;"></span> Background</span><span>#222222</span></div>
+                        <div class="token-item"><span><span class="swatch" style="background:#1a1a1a;"></span> Surface</span><span>#1a1a1a</span></div>
+                        <div class="token-item"><span><span class="swatch" style="background:#333;"></span> Border</span><span>#333333</span></div>
+                        <div class="token-item"><span><span class="swatch" style="background:#fff;"></span> Text</span><span>#ffffff</span></div>
+                        <div class="token-item"><span><span class="swatch" style="background:#aaa;"></span> Muted</span><span>#aaaaaa</span></div>
+                        <div class="token-item"><span><span class="swatch" style="background:#ffaa20;"></span> Accent</span><span>#ffaa20</span></div>
+                    </div>
+                    <div class="token-group">
+                        <h3>Typography</h3>
+                        <div class="token-item"><span>Font</span><span>Cormorant Garamond</span></div>
+                        <div class="token-item"><span>Weights</span><span>300, 400</span></div>
+                        <div class="token-item"><span>Body</span><span>20px / 1.42</span></div>
+                        <div class="token-item"><span>Display</span><span>56px / 0.83</span></div>
+                        <div class="token-item"><span>Spacing</span><span>4px base</span></div>
+                        <div class="token-item"><span>Radii</span><span>0px (except pills: 50px)</span></div>
+                    </div>
+                </div>
+                <div style="margin-top:20px; color:#aaa; font-size:14px; border-top:1px solid #333; padding-top:12px;">
+                    <strong style="color:#fff;">Layout</strong> &middot; max-width: 1440px &middot; padding: 24–108px
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer-gesture">
+        <div class="gesture-bar"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = {
+                preview: document.getElementById('preview-content'),
+                code: document.getElementById('code-content'),
+                design: document.getElementById('design-content')
+            };
+
+            function activateTab(tabId) {
+                // update tab headers
+                tabs.forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.tab === tabId);
+                });
+                // show corresponding content
+                Object.keys(contents).forEach(key => {
+                    contents[key].classList.toggle('active', key === tabId);
+                });
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    const tabId = this.dataset.tab;
+                    activateTab(tabId);
+                });
+            });
+
+            // default: preview active (already)
+        });
+    </script>
+
+</body>
+</html>
