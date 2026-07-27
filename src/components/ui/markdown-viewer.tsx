@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 interface MarkdownViewerProps {
   content: string
@@ -10,20 +10,26 @@ function renderMarkdown(md: string): string {
   const html: string[] = []
   let inCodeBlock = false
   let codeBuffer: string[] = []
-  let codeLang = ''
+  let inList: false | 'ul' | 'ol' = false
+
+  function closeList() {
+    if (inList) {
+      html.push('</' + inList + '>')
+      inList = false
+    }
+  }
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
 
     if (line.startsWith('```')) {
+      closeList()
       if (inCodeBlock) {
         html.push('<pre><code>' + escapeHtml(codeBuffer.join('\n')) + '</code></pre>')
         codeBuffer = []
         inCodeBlock = false
-        codeLang = ''
       } else {
         inCodeBlock = true
-        codeLang = line.slice(3).trim()
       }
       continue
     }
@@ -36,26 +42,48 @@ function renderMarkdown(md: string): string {
     const trimmed = line.trim()
 
     if (trimmed === '') {
-      html.push('<p></p>')
+      closeList()
       continue
     }
 
     if (trimmed.startsWith('# ')) {
+      closeList()
       html.push('<h1>' + parseInline(trimmed.slice(2)) + '</h1>')
     } else if (trimmed.startsWith('## ')) {
+      closeList()
       html.push('<h2>' + parseInline(trimmed.slice(3)) + '</h2>')
     } else if (trimmed.startsWith('### ')) {
+      closeList()
       html.push('<h3>' + parseInline(trimmed.slice(4)) + '</h3>')
     } else if (trimmed.startsWith('#### ')) {
+      closeList()
       html.push('<h4>' + parseInline(trimmed.slice(5)) + '</h4>')
     } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      if (!inList) {
+        inList = 'ul'
+        html.push('<ul>')
+      }
       html.push('<li>' + parseInline(trimmed.slice(2)) + '</li>')
     } else if (/^\d+\.\s/.test(trimmed)) {
+      if (!inList) {
+        inList = 'ol'
+        html.push('<ol>')
+      }
       html.push('<li>' + parseInline(trimmed.replace(/^\d+\.\s/, '')) + '</li>')
+    } else if (trimmed.startsWith('> ')) {
+      closeList()
+      html.push('<blockquote><p>' + parseInline(trimmed.slice(2)) + '</p></blockquote>')
+    } else if (/^#{1,6}\s/.test(trimmed)) {
+      closeList()
+      const level = trimmed.match(/^#{1,6}/)![0].length
+      html.push('<h' + level + '>' + parseInline(trimmed.slice(level + 1)) + '</h' + level + '>')
     } else {
+      closeList()
       html.push('<p>' + parseInline(trimmed) + '</p>')
     }
   }
+
+  closeList()
 
   return html.join('\n')
 }
@@ -76,48 +104,21 @@ function parseInline(text: string): string {
 }
 
 function MarkdownViewer({ content, filename }: MarkdownViewerProps) {
-  const [viewMode, setViewMode] = useState<'rendered' | 'raw'>('rendered')
-
   const rendered = useMemo(() => renderMarkdown(content), [content])
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(content)
-  }
 
   return (
     <div className="markdown-viewer">
       <div className="markdown-viewer__header">
         <span className="markdown-viewer__filename">{filename}</span>
-        <div className="markdown-viewer__actions">
-          <div className="markdown-viewer__toggles">
-            <button
-              className={`markdown-viewer__toggle ${viewMode === 'rendered' ? 'markdown-viewer__toggle--active' : ''}`}
-              onClick={() => setViewMode('rendered')}
-            >
-              Preview
-            </button>
-            <button
-              className={`markdown-viewer__toggle ${viewMode === 'raw' ? 'markdown-viewer__toggle--active' : ''}`}
-              onClick={() => setViewMode('raw')}
-            >
-              Raw
-            </button>
-          </div>
-          <button className="code-viewer__copy-btn" onClick={handleCopy}>
-            Copy File
-          </button>
-        </div>
       </div>
       <div className="markdown-viewer__body">
-        {viewMode === 'rendered' ? (
-          <div className="markdown-viewer__rendered" dangerouslySetInnerHTML={{ __html: rendered }} />
-        ) : (
-          <pre className="markdown-viewer__raw"><code>{content}</code></pre>
-        )}
         {!content && (
           <div className="markdown-viewer__empty">
-            No design document found for this component.
+            No design.md available for this component.
           </div>
+        )}
+        {content && (
+          <div className="markdown-viewer__rendered" dangerouslySetInnerHTML={{ __html: rendered }} />
         )}
       </div>
     </div>

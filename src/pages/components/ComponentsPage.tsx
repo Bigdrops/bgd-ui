@@ -73,25 +73,31 @@ export function ComponentsPage() {
         {filtered.map((comp) => {
           const Icon = comp.icon
           return (
-            <button
-              key={comp.id}
-              className="component-card"
-              onClick={() => setSelectedComponentId(comp.id)}
-            >
-              <div className="component-card__preview">
-                <Icon size={32} />
-              </div>
-              <div className="component-card__content">
-                <div className="component-card__header">
-                  <h3 className="component-card__name">{comp.name}</h3>
-                  {comp.badge && (
-                    <span className="component-card__badge">{comp.badge}</span>
-                  )}
+              <button
+                key={comp.id}
+                className="component-card"
+                onClick={() => setSelectedComponentId(comp.id)}
+                title="Click to view Preview, Code, and Design details"
+              >
+                <div className="component-card__preview">
+                  <Icon size={32} />
                 </div>
-                <p className="component-card__desc">{comp.description}</p>
-                <span className="component-card__category">{comp.category}</span>
-              </div>
-            </button>
+                <div className="component-card__content">
+                  <div className="component-card__header">
+                    <h3 className="component-card__name">{comp.name}</h3>
+                    {comp.badge && (
+                      <span className="component-card__badge">{comp.badge}</span>
+                    )}
+                  </div>
+                  <p className="component-card__desc">{comp.description}</p>
+                  <div className="component-card__footer">
+                    <span className="component-card__category">{comp.category}</span>
+                    <span className="component-card__files-badge">
+                      {comp.files.length} file{comp.files.length !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                </div>
+              </button>
           )
         })}
       </div>

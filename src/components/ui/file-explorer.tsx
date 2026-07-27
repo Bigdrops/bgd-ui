@@ -5,9 +5,10 @@ interface FileExplorerProps {
   componentName: string
   selectedPath: string | null
   onSelectFile: (path: string) => void
+  onCopyFile: (path: string) => void
 }
 
-function FileExplorer({ files, componentName, selectedPath, onSelectFile }: FileExplorerProps) {
+function FileExplorer({ files, componentName, selectedPath, onSelectFile, onCopyFile }: FileExplorerProps) {
   const directories = new Map<string, ComponentFile[]>()
 
   for (const file of files) {
@@ -34,17 +35,33 @@ function FileExplorer({ files, componentName, selectedPath, onSelectFile }: File
             )}
             <div className="file-explorer__files">
               {dirFiles.map((file) => (
-                <button
+                <div
                   key={file.path}
                   className={`file-explorer__file ${selectedPath === file.path ? 'file-explorer__file--active' : ''}`}
-                  onClick={() => onSelectFile(file.path)}
                 >
-                  <span className="file-explorer__file-icon">
-                    {file.language === 'typescriptreact' || file.language === 'typescript' ? 'T' :
-                     file.language === 'css' ? '#' : 'F'}
-                  </span>
-                  <span className="file-explorer__file-name">{file.path.split('/').pop()}</span>
-                </button>
+                  <button
+                    type="button"
+                    className="file-explorer__file-main"
+                    onClick={() => onSelectFile(file.path)}
+                  >
+                    <span className="file-explorer__file-icon">
+                      {file.language === 'typescriptreact' || file.language === 'typescript'
+                        ? 'T'
+                        : file.language === 'css'
+                          ? '#'
+                          : 'F'}
+                    </span>
+                    <span className="file-explorer__file-name">{file.path.split('/').pop()}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="file-explorer__file-copy"
+                    onClick={() => onCopyFile(file.path)}
+                    aria-label={`Copy ${file.path.split('/').pop() ?? file.path}`}
+                  >
+                    Copy
+                  </button>
+                </div>
               ))}
             </div>
           </div>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bgdui · Component Library</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/huge-icons@1.0.0/index.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900;1,6..12,800;1,6..12,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --color-canvas-charcoal:#222222;--color-paper-white:#ffffff;--color-border-stone:#333333;--color-muted-graphite:#666666;--color-whisper-gray:#999999;--color-fog-line:#eeeeee;--color-ifttt-signal-blue:#0099ff;--color-applet-green:#2cbe60;--color-forest-green:#1d9a59;--color-alert-red:#e44332;--color-pure-red:#ff0000;
+            --font-avenir-next:'Nunito Sans','Avenir Next',system-ui,sans-serif;--font-mono:'JetBrains Mono','Courier New',monospace;
+            --radius-cards:12px;--radius-buttons:100px;--radius-sm:8px;--radius-xs:6px;
+            --shadow-sm:0 1px 3px rgba(0,0,0,0.3);--shadow-md:0 4px 12px rgba(0,0,0,0.4);--shadow-gloss:0 1px 0 rgba(255,255,255,0.06) inset,0 8px 32px rgba(0,0,0,0.4);
+            --sp-4:4px;--sp-8:8px;--sp-12:12px;--sp-16:16px;--sp-20:20px;--sp-24:24px;--sp-32:32px;--sp-40:40px;--sp-48:48px;--sp-64:64px
+        }
+        [data-theme="dark"]{
+            --bg-primary:#050505;--bg-secondary:#0a0a0a;--bg-elevated:#0d0d0d;--bg-gloss:linear-gradient(180deg,rgba(255,255,255,0.04) 0%,rgba(255,255,255,0.01) 100%);--bg-gloss-border:rgba(255,255,255,0.06);--text-primary:#f5f5f5;--text-secondary:#a0a0a0;--text-muted:#666666;--border-color:rgba(255,255,255,0.08);--border-hover:rgba(255,255,255,0.14);--card-bg:#0a0a0a;--card-bg-hover:#0f0f0f;--shadow:var(--shadow-md);--code-bg:#080808;--code-border:rgba(255,255,255,0.06);--chip-bg:rgba(255,255,255,0.05);--chip-border:rgba(255,255,255,0.08);--success-bg:rgba(44,190,96,0.1);--success-border:rgba(44,190,96,0.2)
+        }
+        [data-theme="light"]{
+            --bg-primary:#fafafa;--bg-secondary:#f0f0f0;--bg-elevated:#ffffff;--bg-gloss:linear-gradient(180deg,rgba(255,255,255,1) 0%,rgba(250,250,250,1) 100%);--bg-gloss-border:rgba(0,0,0,0.06);--text-primary:#111111;--text-secondary:#666666;--text-muted:#999999;--border-color:rgba(0,0,0,0.08);--border-hover:rgba(0,0,0,0.14);--card-bg:#ffffff;--card-bg-hover:#fafafa;--shadow:0 2px 8px rgba(0,0,0,0.06);--code-bg:#f8f8f8;--code-border:rgba(0,0,0,0.08);--chip-bg:rgba(0,0,0,0.03);--chip-border:rgba(0,0,0,0.06);--success-bg:rgba(44,190,96,0.08);--success-border:rgba(44,190,96,0.15)
+        }
+        body{font-family:var(--font-avenir-next);background-color:var(--bg-primary);color:var(--text-primary);padding-bottom:40px;font-weight:400;line-height:1.5;transition:background-color .3s ease,color .3s ease;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+        .app{max-width:1100px;margin:0 auto;padding:0 var(--sp-24)}
+        .top-nav{display:flex;align-items:center;justify-content:space-between;padding:var(--sp-16) 0;border-bottom:1px solid var(--border-color);margin-bottom:var(--sp-16);background-color:var(--bg-primary);transition:border-color .3s ease}
+        .nav-left{display:flex;align-items:center;gap:var(--sp-16)}
+        .brand-mark{position:relative;width:32px;height:32px;flex-shrink:0}
+        .brand-mark span{position:absolute;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--text-primary);background:transparent;transition:border-color .3s ease}
+        .brand-mark span:first-child{left:0;top:2px;opacity:.85}.brand-mark span:last-child{right:0;bottom:2px;opacity:.55}
+        .breadcrumbs{font-size:15px;color:var(--text-secondary);font-weight:400;letter-spacing:-.01em}
+        .breadcrumbs strong{color:var(--text-primary);font-weight:700}
+        .nav-right{display:flex;align-items:center;gap:var(--sp-12)}
+        .theme-toggle{background:var(--chip-bg);border:1px solid var(--chip-border);border-radius:var(--radius-buttons);padding:6px 14px;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text-primary);font-size:13px;font-weight:600;font-family:var(--font-avenir-next);transition:all .2s ease;line-height:1}
+        .theme-toggle:hover{background:var(--bg-secondary);border-color:var(--border-hover)}
+        .theme-toggle i{font-size:18px;display:flex}
+        .tabs-container{display:flex;justify-content:space-between;align-items:center;padding:var(--sp-8) 0;border-bottom:1px solid var(--border-color);margin-bottom:var(--sp-32);background-color:var(--bg-primary);transition:border-color .3s ease}
+        .tabs{display:flex;gap:var(--sp-4)}
+        .tab{padding:7px var(--sp-16);font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;border-radius:var(--radius-buttons);transition:all .2s ease;background:transparent;border:none;display:flex;align-items:center;gap:6px;font-family:var(--font-avenir-next)}
+        .tab.active{background:var(--chip-bg);color:var(--text-primary);border:1px solid var(--chip-border)}
+        .tab:hover{color:var(--text-primary)}
+        .tab svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+        .tab-actions{display:flex;gap:var(--sp-16);color:var(--text-muted);font-size:13px;font-weight:600}
+        .content{padding:var(--sp-8) 0}
+        .tab-content{display:none;animation:fadeIn .25s ease}.tab-content.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+        .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--sp-16);margin-bottom:var(--sp-32)}
+        .stat-card{background:var(--card-bg);background-image:var(--bg-gloss);border:1px solid var(--border-color);border-radius:var(--radius-cards);padding:var(--sp-24);text-align:left;transition:all .2s ease;position:relative;overflow:hidden}
+        .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--bg-gloss-border),transparent)}
+        .stat-card:hover{border-color:var(--border-hover);transform:translateY(-1px);box-shadow:var(--shadow-gloss)}
+        .stat-card .label{font-size:13px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.5px}
+        .stat-card .value{font-size:32px;font-weight:800;margin-top:var(--sp-8);color:var(--text-primary);letter-spacing:-.02em}
+        .stat-card .change{font-size:13px;font-weight:600;margin-top:var(--sp-8);display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--radius-xs)}
+        .stat-card .change.up{color:var(--color-applet-green);background:var(--success-bg)}
+        .stat-card .change.down{color:var(--color-alert-red);background:rgba(228,67,50,0.08)}
+        .service-tile-mini{display:inline-flex;align-items:center;gap:var(--sp-8);background:var(--color-forest-green);padding:4px 12px 4px 8px;border-radius:var(--radius-buttons);color:#fff;font-weight:600;font-size:12px}
+        .service-tile-mini.blue{background:var(--color-ifttt-signal-blue)}.service-tile-mini.red{background:var(--color-pure-red)}
+        .service-tile-mini .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5)}
+        .chart-box{background:var(--card-bg);background-image:var(--bg-gloss);border:1px solid var(--border-color);border-radius:var(--radius-cards);padding:var(--sp-24);margin-bottom:var(--sp-32);transition:all .2s ease;position:relative;overflow:hidden}
+        .chart-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--bg-gloss-border),transparent)}
+        .chart-box .chart-title{font-weight:700;font-size:16px;margin-bottom:var(--sp-20);color:var(--text-primary)}
+        .chart-box .bars{display:flex;justify-content:space-around;align-items:flex-end;height:120px;gap:var(--sp-8)}
+        .chart-box .bar{width:100%;max-width:36px;background:linear-gradient(180deg,var(--color-ifttt-signal-blue),rgba(0,153,255,0.4));border-radius:6px 6px 0 0;transition:height .4s cubic-bezier(0.4,0,0.2,1);position:relative}
+        .chart-box .bar::after{content:'';position:absolute;top:0;left:0;right:0;height:40%;background:linear-gradient(180deg,rgba(255,255,255,0.15),transparent);border-radius:6px 6px 0 0}
+        .chart-box .bar:nth-child(1){height:60px}.chart-box .bar:nth-child(2){height:90px}.chart-box .bar:nth-child(3){height:40px}.chart-box .bar:nth-child(4){height:110px}.chart-box .bar:nth-child(5){height:70px}.chart-box .bar:nth-child(6){height:85px}.chart-box .bar:nth-child(7){height:55px}
+        .activity-list{background:var(--card-bg);background-image:var(--bg-gloss);border:1px solid var(--border-color);border-radius:var(--radius-cards);padding:var(--sp-8) var(--sp-24);transition:all .2s ease;position:relative;overflow:hidden}
+        .activity-list::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--bg-gloss-border),transparent)}
+        .activity-item{display:flex;justify-content:space-between;align-items:center;padding:var(--sp-14) 0;border-bottom:1px solid var(--border-color);font-size:15px}
+        .activity-item:last-child{border-bottom:none}.activity-item .time{color:var(--text-muted);font-size:13px;font-weight:500}
+        .activity-item .service-badge{display:flex;align-items:center;gap:var(--sp-10)}
+        .code-meta-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--sp-24);flex-wrap:wrap;gap:var(--sp-12)}
+        .code-meta-left{display:flex;align-items:center;gap:var(--sp-12);flex-wrap:wrap}
+        .meta-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:var(--radius-xs);background:var(--chip-bg);border:1px solid var(--chip-border);font-size:13px;font-weight:600;color:var(--text-secondary)}
+        .meta-chip i{font-size:14px}.meta-chip .dot{width:6px;height:6px;border-radius:50%;background:var(--color-applet-green)}
+        .install-card{background:var(--code-bg);border:1px solid var(--code-border);border-radius:var(--radius-sm);padding:var(--sp-16) var(--sp-20);margin-bottom:var(--sp-24);display:flex;align-items:center;justify-content:space-between;gap:var(--sp-16);flex-wrap:wrap}
+        .install-card .install-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:var(--sp-4)}
+        .install-card .install-cmd{font-family:var(--font-mono);font-size:14px;color:var(--text-primary);font-weight:500}.install-card .install-cmd span{color:var(--color-ifttt-signal-blue)}
+        .framework-tabs{display:flex;gap:var(--sp-4);margin-bottom:var(--sp-16)}
+        .fw-tab{padding:5px 14px;font-size:13px;font-weight:600;color:var(--text-secondary);cursor:pointer;border-radius:var(--radius-xs);transition:all .2s ease;background:transparent;border:1px solid transparent;font-family:var(--font-avenir-next)}
+        .fw-tab.active{background:var(--chip-bg);border-color:var(--chip-border);color:var(--text-primary)}.fw-tab:hover{color:var(--text-primary)}
+        .code-block-wrap{background:var(--code-bg);border:1px solid var(--code-border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:var(--sp-24);position:relative}
+        .code-block-header{display:flex;align-items:center;justify-content:space-between;padding:var(--sp-12) var(--sp-16);border-bottom:1px solid var(--code-border);background:rgba(255,255,255,0.02)}
+        .code-block-header .file-path{display:flex;align-items:center;gap:var(--sp-8);font-size:13px;font-weight:600;color:var(--text-secondary);font-family:var(--font-mono)}
+        .code-block-header .file-path i{font-size:14px}
+        .copy-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:var(--radius-xs);background:var(--chip-bg);border:1px solid var(--chip-border);color:var(--text-secondary);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s ease;font-family:var(--font-avenir-next)}
+        .copy-btn:hover{background:var(--bg-secondary);color:var(--text-primary);border-color:var(--border-hover)}
+        .copy-btn.copied{background:var(--success-bg);border-color:var(--success-border);color:var(--color-applet-green)}
+        .copy-btn i{font-size:14px}
+        .code-block{padding:var(--sp-20) var(--sp-24);font-family:var(--font-mono);font-size:13.5px;line-height:1.7;overflow-x:auto;color:var(--text-primary);white-space:pre}
+        .code-block .hl-keyword{color:var(--color-ifttt-signal-blue)}.code-block .hl-string{color:var(--color-applet-green)}.code-block .hl-comment{color:var(--text-muted);font-style:italic}.code-block .hl-function{color:#ff6b6b}.code-block .hl-variable{color:#c9a0dc}.code-block .hl-tag{color:#7ee787}.code-block .hl-attr{color:#79c0ff}.code-block .hl-number{color:#79c0ff}
+        .deps-grid{display:flex;flex-wrap:wrap;gap:var(--sp-8);margin-top:var(--sp-8)}
+        .dep-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:var(--radius-xs);background:var(--chip-bg);border:1px solid var(--chip-border);font-size:12px;font-weight:600;color:var(--text-secondary);font-family:var(--font-mono)}
+        .design-toolbar{display:flex;justify-content:flex-end;gap:var(--sp-8);margin-bottom:var(--sp-24)}
+        .toolbar-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-xs);background:var(--chip-bg);border:1px solid var(--chip-border);color:var(--text-secondary);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s ease;font-family:var(--font-avenir-next)}
+        .toolbar-btn:hover{background:var(--bg-secondary);color:var(--text-primary);border-color:var(--border-hover)}.toolbar-btn i{font-size:15px}
+        .design-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16)}
+        .design-card{background:var(--card-bg);background-image:var(--bg-gloss);border:1px solid var(--border-color);border-radius:var(--radius-cards);padding:var(--sp-24);transition:all .2s ease;position:relative;overflow:hidden}
+        .design-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--bg-gloss-border),transparent)}
+        .design-card:hover{border-color:var(--border-hover)}
+        .design-card h3{font-weight:800;font-size:16px;margin-bottom:var(--sp-16);color:var(--text-primary);display:flex;align-items:center;justify-content:space-between}
+        .design-card h3 .card-actions{display:flex;gap:var(--sp-4)}.design-card h3 .card-actions button{background:transparent;border:none;color:var(--text-muted);cursor:pointer;padding:4px;border-radius:var(--radius-xs);transition:all .15s ease;display:flex;align-items:center}
+        .design-card h3 .card-actions button:hover{color:var(--text-primary);background:var(--chip-bg)}
+        .design-token{display:flex;justify-content:space-between;align-items:center;padding:var(--sp-10) 0;font-size:14px;border-bottom:1px solid var(--border-color)}
+        .design-token:last-child{border-bottom:none}.design-token .token-left{display:flex;align-items:center;gap:var(--sp-10);color:var(--text-primary);font-weight:600}
+        .design-token .swatch{display:inline-block;width:18px;height:18px;border-radius:5px;vertical-align:middle;border:1px solid var(--border-color);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.1)}
+        .design-token .token-val{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);font-weight:500;cursor:pointer;padding:2px 6px;border-radius:var(--sp-4);transition:all .15s ease}
+        .design-token .token-val:hover{background:var(--chip-bg);color:var(--text-primary)}
+        .design-note{margin-top:var(--sp-24);padding:var(--sp-16) var(--sp-20);background:var(--bg-secondary);border-radius:var(--radius-sm);border:1px solid var(--border-color);color:var(--text-secondary);font-size:14px;line-height:1.6}
+        .design-note strong{color:var(--text-primary);font-weight:700}
+        .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--text-primary);color:var(--bg-primary);padding:10px 20px;border-radius:var(--radius-buttons);font-size:13px;font-weight:600;z-index:1000;opacity:0;transition:all .3s cubic-bezier(0.4,0,0.2,1);pointer-events:none;box-shadow:var(--shadow-md)}
+        .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+        .footer-gesture{position:fixed;bottom:0;left:0;width:100%;height:20px;display:flex;justify-content:center;align-items:center;background-color:var(--bg-primary);transition:background-color .3s ease;pointer-events:none}
+        .gesture-bar{width:134px;height:5px;background-color:var(--text-secondary);border-radius:3px;opacity:.3}
+        @media(max-width:768px){.app{padding:0 var(--sp-16)}.top-nav{flex-wrap:wrap;gap:var(--sp-8)}.nav-right{margin-left:auto}.stat-grid{grid-template-columns:1fr 1fr}.design-grid{grid-template-columns:1fr}.tabs-container{flex-wrap:wrap;gap:var(--sp-8)}.tab-actions{display:none}.code-meta-bar{flex-direction:column;align-items:flex-start}.install-card{flex-direction:column;align-items:flex-start}}
+        @media(max-width:480px){.stat-grid{grid-template-columns:1fr}.breadcrumbs{font-size:13px}.code-block{font-size:12px;padding:var(--sp-16)}}
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="app">
+        <header class="top-nav">
+            <div class="nav-left">
+                <div class="brand-mark" aria-label="Brand mark"><span></span><span></span></div>
+                <div class="breadcrumbs">Bgdui: Workspace / dashboard / <strong>main</strong></div>
+            </div>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <i class="hgi hgi-stroke hgi-rounded hgi-moon-02" id="themeIcon"></i>
+                    <span id="themeLabel">Dark</span>
+                </button>
+            </div>
+        </header>
+        <div class="tabs-container">
+            <div class="tabs" id="tabHeaders">
+                <button class="tab active" data-tab="preview">Preview</button>
+                <button class="tab" data-tab="code"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Code</button>
+                <button class="tab" data-tab="design">Design</button>
+            </div>
+            <div class="tab-actions"><span>v2.4.0</span></div>
+        </div>
+        <main class="content">
+            <div id="preview-content" class="tab-content active">
+                <div class="stat-grid">
+                    <div class="stat-card"><div class="label">Total Users</div><div class="value">12,847</div><div class="change up">&#8593; 8.2%</div></div>
+                    <div class="stat-card"><div class="label">Revenue</div><div class="value">$48,392</div><div class="change up">&#8593; 12.4%</div></div>
+                    <div class="stat-card"><div class="label">Active Sessions</div><div class="value">1,203</div><div class="change down">&#8595; 2.1%</div></div>
+                    <div class="stat-card"><div class="label">Conversion</div><div class="value">4.7%</div><div class="change up">&#8593; 0.3%</div></div>
+                </div>
+                <div class="chart-box"><div class="chart-title">Weekly Activity</div><div class="bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div></div>
+                <div class="activity-list">
+                    <div class="activity-item"><span class="service-badge"><span class="service-tile-mini"><span class="dot"></span>Spotify</span>User #4532 signed up</span><span class="time">2 min ago</span></div>
+                    <div class="activity-item"><span class="service-badge"><span class="service-tile-mini blue"><span class="dot"></span>Gmail</span>New order #1024 placed</span><span class="time">14 min ago</span></div>
+                    <div class="activity-item"><span class="service-badge"><span class="service-tile-mini red"><span class="dot"></span>YouTube</span>Payment of $129.99 processed</span><span class="time">1 hour ago</span></div>
+                    <div class="activity-item"><span class="service-badge"><span class="service-tile-mini"><span class="dot"></span>Slack</span>User feedback: &#9733;&#9733;&#9733;&#9733;</span><span class="time">3 hours ago</span></div>
+                </div>
+            </div>
+            <div id="code-content" class="tab-content">
+                <div class="code-meta-bar">
+                    <div class="code-meta-left">
+                        <div class="meta-chip"><i class="hgi hgi-stroke hgi-rounded hgi-file-01"></i> 3 files</div>
+                        <div class="meta-chip"><i class="hgi hgi-stroke hgi-rounded hgi-package"></i> 2 deps</div>
+                        <div class="meta-chip"><span class="dot"></span> React 18+</div>
+                    </div>
+                </div>
+                <div class="install-card">
+                    <div><div class="install-label">Install</div><div class="install-cmd"><span>npx</span> bgdui add dashboard</div></div>
+                    <button class="copy-btn" onclick="copyToClipboard('npx bgdui add dashboard',this)"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01"></i> Copy</button>
+                </div>
+                <div class="framework-tabs">
+                    <button class="fw-tab active" data-fw="react">React</button>
+                    <button class="fw-tab" data-fw="vue">Vue</button>
+                    <button class="fw-tab" data-fw="svelte">Svelte</button>
+                    <button class="fw-tab" data-fw="html">HTML</button>
+                </div>
+                <div class="fw-panel active" data-fw-panel="react">
+                    <div class="code-block-wrap">
+                        <div class="code-block-header"><div class="file-path"><i class="hgi hgi-stroke hgi-rounded hgi-file-01"></i>app/dashboard/page.tsx</div><button class="copy-btn" onclick="copyCodeBlock(this)"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01"></i> Copy</button></div>
+                        <div class="code-block"><span class="hl-comment">// Dashboard.tsx - Bgdui + IFTTT style</span>
+<span class="hl-keyword">import</span> React <span class="hl-keyword">from</span> <span class="hl-string">'react'</span>
+<span class="hl-keyword">import</span> { StatsCard, Chart, ActivityFeed } <span class="hl-keyword">from</span> <span class="hl-string">'@bgdui/ui'</span>
+
+<span class="hl-keyword">export const</span> <span class="hl-function">Dashboard</span> = () <span class="hl-keyword">=&gt;</span> {
+  <span class="hl-keyword">const</span> <span class="hl-variable">data</span> = {
+    users: <span class="hl-number">12847</span>,
+    revenue: <span class="hl-number">48392</span>,
+    sessions: <span class="hl-number">1203</span>,
+    conversion: <span class="hl-number">4.7</span>
+  }
+
+  <span class="hl-keyword">return</span> (
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">className</span>=<span class="hl-string">"dashboard"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;div</span> <span class="hl-attr">className</span>=<span class="hl-string">"grid"</span><span class="hl-tag">&gt;</span>
+        <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Total Users"</span> <span class="hl-attr">value</span>={<span class="hl-variable">data</span>.users} <span class="hl-attr">change</span>=<span class="hl-string">"+8.2%"</span> <span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Revenue"</span> <span class="hl-attr">value</span>={<span class="hl-variable">data</span>.revenue} <span class="hl-attr">change</span>=<span class="hl-string">"+12.4%"</span> <span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Active Sessions"</span> <span class="hl-attr">value</span>={<span class="hl-variable">data</span>.sessions} <span class="hl-attr">change</span>=<span class="hl-string">"-2.1%"</span> <span class="hl-tag">/&gt;</span>
+        <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Conversion"</span> <span class="hl-attr">value</span>={<span class="hl-variable">data</span>.conversion + <span class="hl-string">'%'</span>} <span class="hl-attr">change</span>=<span class="hl-string">"+0.3%"</span> <span class="hl-tag">/&gt;</span>
+      <span class="hl-tag">&lt;/div&gt;</span>
+      <span class="hl-tag">&lt;Chart</span> <span class="hl-attr">data</span>={<span class="hl-variable">weeklyData</span>} <span class="hl-tag">/&gt;</span>
+      <span class="hl-tag">&lt;ActivityFeed</span> <span class="hl-attr">items</span>={<span class="hl-variable">recentActivity</span>} <span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+  )
+}</div>
+                    </div>
+                    <div class="code-block-wrap">
+                        <div class="code-block-header"><div class="file-path"><i class="hgi hgi-stroke hgi-rounded hgi-file-01"></i>components/stats-card.tsx</div><button class="copy-btn" onclick="copyCodeBlock(this)"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01"></i> Copy</button></div>
+                        <div class="code-block"><span class="hl-keyword">interface</span> <span class="hl-function">StatsCardProps</span> {
+  label: <span class="hl-keyword">string</span>
+  value: <span class="hl-keyword">string</span> | <span class="hl-keyword">number</span>
+  change: <span class="hl-keyword">string</span>
+  trend?: <span class="hl-string">'up'</span> | <span class="hl-string">'down'</span>
+}
+
+<span class="hl-keyword">export const</span> <span class="hl-function">StatsCard</span> = ({ label, value, change, trend = <span class="hl-string">'up'</span> }: <span class="hl-function">StatsCardProps</span>) <span class="hl-keyword">=&gt;</span> {
+  <span class="hl-keyword">return</span> (
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">className</span>=<span class="hl-string">"stat-card"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">className</span>=<span class="hl-string">"label"</span><span class="hl-tag">&gt;</span>{label}<span class="hl-tag">&lt;/span&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">className</span>=<span class="hl-string">"value"</span><span class="hl-tag">&gt;</span>{value}<span class="hl-tag">&lt;/span&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">className</span>={<span class="hl-string">`change ${trend}`</span>}<span class="hl-tag">&gt;</span>{change}<span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+  )
+}</div>
+                    </div>
+                </div>
+                <div class="fw-panel" data-fw-panel="vue" style="display:none;">
+                    <div class="code-block-wrap">
+                        <div class="code-block-header"><div class="file-path"><i class="hgi hgi-stroke hgi-rounded hgi-file-01"></i>app/dashboard/page.vue</div><button class="copy-btn" onclick="copyCodeBlock(this)"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01"></i> Copy</button></div>
+                        <div class="code-block"><span class="hl-tag">&lt;script</span> <span class="hl-attr">setup</span> <span class="hl-attr">lang</span>=<span class="hl-string">"ts"</span><span class="hl-tag">&gt;</span>
+<span class="hl-keyword">import</span> { StatsCard, Chart, ActivityFeed } <span class="hl-keyword">from</span> <span class="hl-string">'@bgdui/ui'</span>
+
+<span class="hl-keyword">const</span> <span class="hl-variable">data</span> = {
+  users: <span class="hl-number">12847</span>,
+  revenue: <span class="hl-number">48392</span>,
+  sessions: <span class="hl-number">1203</span>,
+  conversion: <span class="hl-number">4.7</span>
+}
+<span class="hl-tag">&lt;/script&gt;</span>
+
+<span class="hl-tag">&lt;template&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"dashboard"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"grid"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Total Users"</span> <span class="hl-attr">:value</span>=<span class="hl-string">"data.users"</span> <span class="hl-attr">change</span>=<span class="hl-string">"+8.2%"</span> <span class="hl-tag">/&gt;</span>
+      <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Revenue"</span> <span class="hl-attr">:value</span>=<span class="hl-string">"data.revenue"</span> <span class="hl-attr">change</span>=<span class="hl-string">"+12.4%"</span> <span class="hl-tag">/&gt;</span>
+      <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Active Sessions"</span> <span class="hl-attr">:value</span>=<span class="hl-string">"data.sessions"</span> <span class="hl-attr">change</span>=<span class="hl-string">"-2.1%"</span> <span class="hl-tag">/&gt;</span>
+      <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Conversion"</span> <span class="hl-attr">:value</span>=<span class="hl-string">"data.conversion + '%'"</span> <span class="hl-attr">change</span>=<span class="hl-string">"+0.3%"</span> <span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+    <span class="hl-tag">&lt;Chart</span> <span class="hl-attr">:data</span>=<span class="hl-string">"weeklyData"</span> <span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;ActivityFeed</span> <span class="hl-attr">:items</span>=<span class="hl-string">"recentActivity"</span> <span class="hl-tag">/&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;/template&gt;</span></div>
+                    </div>
+                </div>
+                <div class="fw-panel" data-fw-panel="svelte" style="display:none;">
+                    <div class="code-block-wrap">
+                        <div class="code-block-header"><div class="file-path"><i class="hgi hgi-stroke hgi-rounded hgi-file-01"></i>app/dashboard/+page.svelte</div><button class="copy-btn" onclick="copyCodeBlock(this)"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01"></i> Copy</button></div>
+                        <div class="code-block"><span class="hl-tag">&lt;script</span> <span class="hl-attr">lang</span>=<span class="hl-string">"ts"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-keyword">import</span> { StatsCard, Chart, ActivityFeed } <span class="hl-keyword">from</span> <span class="hl-string">'@bgdui/ui'</span>
+
+  <span class="hl-keyword">const</span> <span class="hl-variable">data</span> = {
+    users: <span class="hl-number">12847</span>,
+    revenue: <span class="hl-number">48392</span>,
+    sessions: <span class="hl-number">1203</span>,
+    conversion: <span class="hl-number">4.7</span>
+  }
+<span class="hl-tag">&lt;/script&gt;</span>
+
+<span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"dashboard"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"grid"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Total Users"</span> <span class="hl-attr">value</span>={data.users} <span class="hl-attr">change</span>=<span class="hl-string">"+8.2%"</span> <span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Revenue"</span> <span class="hl-attr">value</span>={data.revenue} <span class="hl-attr">change</span>=<span class="hl-string">"+12.4%"</span> <span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Active Sessions"</span> <span class="hl-attr">value</span>={data.sessions} <span class="hl-attr">change</span>=<span class="hl-string">"-2.1%"</span> <span class="hl-tag">/&gt;</span>
+    <span class="hl-tag">&lt;StatsCard</span> <span class="hl-attr">label</span>=<span class="hl-string">"Conversion"</span> <span class="hl-attr">value</span>={data.conversion + '%'} <span class="hl-attr">change</span>=<span class="hl-string">"+0.3%"</span> <span class="hl-tag">/&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;Chart</span> <span class="hl-attr">data</span>={weeklyData} <span class="hl-tag">/&gt;</span>
+  <span class="hl-tag">&lt;ActivityFeed</span> <span class="hl-attr">items</span>={recentActivity} <span class="hl-tag">/&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span></div>
+                    </div>
+                </div>
+                <div class="fw-panel" data-fw-panel="html" style="display:none;">
+                    <div class="code-block-wrap">
+                        <div class="code-block-header"><div class="file-path"><i class="hgi hgi-stroke hgi-rounded hgi-file-01"></i>index.html</div><button class="copy-btn" onclick="copyCodeBlock(this)"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01"></i> Copy</button></div>
+                        <div class="code-block"><span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"dashboard"</span><span class="hl-tag">&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"stat-grid"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"stat-card"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-string">"label"</span><span class="hl-tag">&gt;</span>Total Users<span class="hl-tag">&lt;/span&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-string">"value"</span><span class="hl-tag">&gt;</span>12,847<span class="hl-tag">&lt;/span&gt;</span>
+      <span class="hl-tag">&lt;span</span> <span class="hl-attr">class</span>=<span class="hl-string">"change up"</span><span class="hl-tag">&gt;</span>&#8593; 8.2%<span class="hl-tag">&lt;/span&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+    <span class="hl-comment">&lt;!-- ... more stat cards ... --&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"chart-box"</span><span class="hl-tag">&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"chart-title"</span><span class="hl-tag">&gt;</span>Weekly Activity<span class="hl-tag">&lt;/div&gt;</span>
+    <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"bars"</span><span class="hl-tag">&gt;</span>
+      <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"bar"</span> <span class="hl-attr">style</span>=<span class="hl-string">"height:60px"</span><span class="hl-tag">&gt;&lt;/div&gt;</span>
+      <span class="hl-tag">&lt;div</span> <span class="hl-attr">class</span>=<span class="hl-string">"bar"</span> <span class="hl-attr">style</span>=<span class="hl-string">"height:90px"</span><span class="hl-tag">&gt;&lt;/div&gt;</span>
+    <span class="hl-tag">&lt;/div&gt;</span>
+  <span class="hl-tag">&lt;/div&gt;</span>
+<span class="hl-tag">&lt;/div&gt;</span></div>
+                    </div>
+                </div>
+                <div style="margin-top:var(--sp-8)"><div class="install-label" style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:var(--sp-8)">Dependencies</div><div class="deps-grid"><div class="dep-chip">@bgdui/ui ^2.4.0</div><div class="dep-chip">tailwindcss ^3.4.0</div><div class="dep-chip">lucide-react ^0.400.0</div></div></div>
+            </div>
+            <div id="design-content" class="tab-content">
+                <div class="design-toolbar">
+                    <button class="toolbar-btn" onclick="copyDesignTokens()"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01"></i> Copy All</button>
+                    <button class="toolbar-btn" onclick="downloadDesignTokens()"><i class="hgi hgi-stroke hgi-rounded hgi-download-01"></i> Download .md</button>
+                </div>
+                <div class="design-grid">
+                    <div class="design-card">
+                        <h3>Colors<div class="card-actions"><button onclick="copyCardTokens(this)" title="Copy colors"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01" style="font-size:14px"></i></button></div></h3>
+                        <div class="design-token"><span class="token-left"><span class="swatch" style="background:#050505"></span>Canvas Black</span><span class="token-val" onclick="copyValue(this)">#050505</span></div>
+                        <div class="design-token"><span class="token-left"><span class="swatch" style="background:#0a0a0a"></span>Elevated</span><span class="token-val" onclick="copyValue(this)">#0a0a0a</span></div>
+                        <div class="design-token"><span class="token-left"><span class="swatch" style="background:#ffffff;border-color:#ddd"></span>Paper White</span><span class="token-val" onclick="copyValue(this)">#ffffff</span></div>
+                        <div class="design-token"><span class="token-left"><span class="swatch" style="background:#eeeeee;border-color:#ccc"></span>Fog Line</span><span class="token-val" onclick="copyValue(this)">#eeeeee</span></div>
+                        <div class="design-token"><span class="token-left"><span class="swatch" style="background:#0099ff"></span>Signal Blue</span><span class="token-val" onclick="copyValue(this)">#0099ff</span></div>
+                        <div class="design-token"><span class="token-left"><span class="swatch" style="background:#2cbe60"></span>Applet Green</span><span class="token-val" onclick="copyValue(this)">#2cbe60</span></div>
+                        <div class="design-token"><span class="token-left"><span class="swatch" style="background:#e44332"></span>Alert Red</span><span class="token-val" onclick="copyValue(this)">#e44332</span></div>
+                    </div>
+                    <div class="design-card">
+                        <h3>Typography<div class="card-actions"><button onclick="copyCardTokens(this)" title="Copy typography"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01" style="font-size:14px"></i></button></div></h3>
+                        <div class="design-token"><span class="token-left">Font Family</span><span class="token-val" onclick="copyValue(this)">Nunito Sans</span></div>
+                        <div class="design-token"><span class="token-left">Weights</span><span class="token-val" onclick="copyValue(this)">400, 600, 700, 800, 900</span></div>
+                        <div class="design-token"><span class="token-left">Body</span><span class="token-val" onclick="copyValue(this)">16px / 1.5</span></div>
+                        <div class="design-token"><span class="token-left">Display</span><span class="token-val" onclick="copyValue(this)">68px / 1.11</span></div>
+                        <div class="design-token"><span class="token-left">Mono</span><span class="token-val" onclick="copyValue(this)">JetBrains Mono</span></div>
+                        <div class="design-token"><span class="token-left">Spacing</span><span class="token-val" onclick="copyValue(this)">8px base</span></div>
+                        <div class="design-token"><span class="token-left">Radii</span><span class="token-val" onclick="copyValue(this)">Cards 12px - Buttons 100px</span></div>
+                    </div>
+                    <div class="design-card">
+                        <h3>Shadows<div class="card-actions"><button onclick="copyCardTokens(this)" title="Copy shadows"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01" style="font-size:14px"></i></button></div></h3>
+                        <div class="design-token"><span class="token-left">sm</span><span class="token-val" onclick="copyValue(this)">0 1px 3px rgba(0,0,0,0.3)</span></div>
+                        <div class="design-token"><span class="token-left">md</span><span class="token-val" onclick="copyValue(this)">0 4px 12px rgba(0,0,0,0.4)</span></div>
+                        <div class="design-token"><span class="token-left">gloss</span><span class="token-val" onclick="copyValue(this)">inset 0 1px 0 rgba(255,255,255,0.06)</span></div>
+                        <div class="design-token"><span class="token-left">card</span><span class="token-val" onclick="copyValue(this)">gloss + 0 8px 32px rgba(0,0,0,0.4)</span></div>
+                    </div>
+                    <div class="design-card">
+                        <h3>Spacing Scale<div class="card-actions"><button onclick="copyCardTokens(this)" title="Copy spacing"><i class="hgi hgi-stroke hgi-rounded hgi-copy-01" style="font-size:14px"></i></button></div></h3>
+                        <div class="design-token"><span class="token-left">xs</span><span class="token-val" onclick="copyValue(this)">4px</span></div>
+                        <div class="design-token"><span class="token-left">sm</span><span class="token-val" onclick="copyValue(this)">8px</span></div>
+                        <div class="design-token"><span class="token-left">md</span><span class="token-val" onclick="copyValue(this)">16px</span></div>
+                        <div class="design-token"><span class="token-left">lg</span><span class="token-val" onclick="copyValue(this)">24px</span></div>
+                        <div class="design-token"><span class="token-left">xl</span><span class="token-val" onclick="copyValue(this)">32px</span></div>
+                        <div class="design-token"><span class="token-left">2xl</span><span class="token-val" onclick="copyValue(this)">48px</span></div>
+                        <div class="design-token"><span class="token-left">3xl</span><span class="token-val" onclick="copyValue(this)">64px</span></div>
+                    </div>
+                </div>
+                <div class="design-note"><strong>Layout:</strong> Alternating dark/light bands - Max-width 1100px - Section gap 64px - Glossy surface treatment with inset highlight borders on cards</div>
+            </div>
+        </main>
+        <div class="footer-gesture"><div class="gesture-bar"></div></div>
+    </div>
+    <div class="toast" id="toast">Copied to clipboard</div>
+    <script>
+        const tabs=document.querySelectorAll('.tab');
+        const contents={preview:document.getElementById('preview-content'),code:document.getElementById('code-content'),design:document.getElementById('design-content')};
+        function activateTab(tabId){tabs.forEach(tab=>tab.classList.toggle('active',tab.dataset.tab===tabId));Object.keys(contents).forEach(key=>contents[key].classList.toggle('active',key===tabId))}
+        tabs.forEach(tab=>tab.addEventListener('click',()=>activateTab(tab.dataset.tab)));
+        const fwTabs=document.querySelectorAll('.fw-tab');
+        const fwPanels=document.querySelectorAll('.fw-panel');
+        fwTabs.forEach(tab=>tab.addEventListener('click',()=>{const fw=tab.dataset.fw;fwTabs.forEach(t=>t.classList.toggle('active',t.dataset.fw===fw));fwPanels.forEach(p=>p.style.display=p.dataset.fwPanel===fw?'block':'none')}));
+        const themeToggle=document.getElementById('themeToggle');
+        const themeIcon=document.getElementById('themeIcon');
+        const themeLabel=document.getElementById('themeLabel');
+        const body=document.body;
+        let currentTheme=localStorage.getItem('bgdui-theme')||'dark';
+        body.setAttribute('data-theme',currentTheme);
+        updateThemeUI(currentTheme);
+        themeToggle.addEventListener('click',()=>{const cur=body.getAttribute('data-theme');const next=cur==='dark'?'light':'dark';body.setAttribute('data-theme',next);localStorage.setItem('bgdui-theme',next);updateThemeUI(next)});
+        function updateThemeUI(theme){if(theme==='dark'){themeIcon.className='hgi hgi-stroke hgi-rounded hgi-moon-02';themeLabel.textContent='Dark'}else{themeIcon.className='hgi hgi-stroke hgi-rounded hgi-sun-01';themeLabel.textContent='Light'}}
+        function showToast(msg){const toast=document.getElementById('toast');toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2000)}
+        function copyToClipboard(text,btn){navigator.clipboard.writeText(text).then(()=>{if(btn){const original=btn.innerHTML;btn.classList.add('copied');btn.innerHTML='<i class="hgi hgi-stroke hgi-rounded hgi-tick-02"></i> Copied';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML=original},2000)}showToast('Copied to clipboard')})}
+        function copyCodeBlock(btn){const wrap=btn.closest('.code-block-wrap');const code=wrap.querySelector('.code-block');const text=code.textContent;copyToClipboard(text,btn)}
+        function copyValue(el){const text=el.textContent;navigator.clipboard.writeText(text).then(()=>showToast('Copied: '+text))}
+        function copyCardTokens(btn){const card=btn.closest('.design-card');const tokens=[];card.querySelectorAll('.design-token').forEach(t=>{const name=t.querySelector('.token-left').textContent.trim();const val=t.querySelector('.token-val').textContent.trim();tokens.push(name+': '+val)});navigator.clipboard.writeText(tokens.join('\n')).then(()=>showToast('Card tokens copied'))}
+        function copyDesignTokens(){const tokens=[];document.querySelectorAll('.design-token').forEach(t=>{const name=t.querySelector('.token-left').textContent.trim();const val=t.querySelector('.token-val').textContent.trim();tokens.push(name+': '+val)});navigator.clipboard.writeText(tokens.join('\n')).then(()=>showToast('All tokens copied'))}
+        function downloadDesignTokens(){let md='# Bgdui Design Tokens\n\n';document.querySelectorAll('.design-card').forEach(card=>{const title=card.querySelector('h3').childNodes[0].textContent.trim();md+='## '+title+'\n\n';card.querySelectorAll('.design-token').forEach(t=>{const name=t.querySelector('.token-left').textContent.trim();const val=t.querySelector('.token-val').textContent.trim();md+='- **'+name+'**: `'+val+'`\n'});md+='\n'});const blob=new Blob([md],{type:'text/markdown'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='design-tokens.md';a.click();URL.revokeObjectURL(url);showToast('design-tokens.md downloaded')}
+    </script>
+</body>
+</html>

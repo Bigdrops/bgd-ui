@@ -1,10 +1,9 @@
-import { useState, Suspense, useMemo, useCallback } from 'react'
+import { useState, Suspense, useCallback } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import type { ComponentMeta } from '@/lib/component-registry'
 import { getRawFileContent } from '@/lib/component-registry'
-import { FileExplorer } from '@/components/ui/file-explorer'
-import { CodeViewer } from '@/components/ui/code-viewer'
 import { MarkdownViewer } from '@/components/ui/markdown-viewer'
+import { SourceFileList } from '@/components/ui/source-file-list'
 
 type Tab = 'preview' | 'code' | 'design'
 
@@ -15,40 +14,34 @@ interface ComponentDetailProps {
 
 function ComponentDetail({ component, onBack }: ComponentDetailProps) {
   const [activeTab, setActiveTab] = useState<Tab>('preview')
-  const [selectedFile, setSelectedFile] = useState<string | null>(null)
 
   const hasSourceFiles = component.files.length > 0
-  const hasDesignFiles = component.designFiles.length > 0
-  const LazyComp = component.lazyComponent
+  const hasDesignFile = component.designFile !== null
+  const LazyComp = component.previewComponent
 
-  const initialSelectedFile = useMemo(() => {
-    if (selectedFile) return selectedFile
-    return component.files.length > 0 ? component.files[0].path : null
-  }, [component.files, selectedFile])
+  const copyText = useCallback(async (text: string) => {
+    await navigator.clipboard.writeText(text)
+  }, [])
 
-  const selectedFileContent = useMemo(() => {
-    if (!initialSelectedFile) return null
-    return getRawFileContent(initialSelectedFile) ?? null
-  }, [initialSelectedFile])
-
-  const selectedFileMeta = useMemo(() => {
-    if (!initialSelectedFile) return null
-    return component.files.find((f) => f.path === initialSelectedFile) ?? null
-  }, [component.files, initialSelectedFile])
+  const copyFileByPath = useCallback(async (path: string) => {
+    const content = getRawFileContent(path)
+    if (content !== undefined) {
+      await copyText(content)
+    }
+  }, [copyText])
 
   const handleCopyAll = useCallback(async () => {
     const parts: string[] = []
     for (const file of component.files) {
       const content = getRawFileContent(file.path)
       if (content !== undefined) {
-        parts.push('========================================')
-        parts.push(file.path)
-        parts.push('')
+        parts.push(`// ${file.path}`)
         parts.push(content)
+        parts.push('')
       }
     }
-    await navigator.clipboard.writeText(parts.join('\n'))
-  }, [component.files])
+    await copyText(parts.join('\n').trim())
+  }, [component.files, copyText])
 
   const tabs: { id: Tab; label: string }[] = [
     { id: 'preview', label: 'Preview' },
@@ -114,55 +107,27 @@ function ComponentDetail({ component, onBack }: ComponentDetailProps) {
                 <p>No source files registered for this component.</p>
               </div>
             ) : (
-              <>
-                <FileExplorer
-                  files={component.files}
-                  componentName={component.name}
-                  selectedPath={initialSelectedFile}
-                  onSelectFile={setSelectedFile}
-                />
-                <div className="component-detail__code-main">
-                  <div className="component-detail__code-toolbar">
-                    {component.files.length > 1 && (
-                      <button className="code-viewer__copy-btn" onClick={handleCopyAll}>
-                        Copy All Files
-                      </button>
-                    )}
-                  </div>
-                  {selectedFileContent !== null && selectedFileMeta ? (
-                    <CodeViewer
-                      code={selectedFileContent}
-                      filename={selectedFileMeta.path.split('/').pop() ?? selectedFileMeta.path}
-                      language={selectedFileMeta.language}
-                    />
-                  ) : (
-                    <div className="component-detail__empty">
-                      <p>Select a file to view its source code.</p>
-                    </div>
-                  )}
-                </div>
-              </>
+              <SourceFileList
+                files={component.files}
+                getContent={getRawFileContent}
+                onCopyAll={handleCopyAll}
+                onCopyFile={copyFileByPath}
+              />
             )}
           </div>
         )}
 
         {activeTab === 'design' && (
           <div className="component-detail__design">
-            {!hasDesignFiles ? (
+            {!hasDesignFile ? (
               <div className="component-detail__empty">
-                <p>No design document found for this component.</p>
+                <p>No design.md available for this component.</p>
               </div>
             ) : (
-              component.designFiles.map((df) => {
-                const content = getRawFileContent(df.path) ?? ''
-                return (
-                  <MarkdownViewer
-                    key={df.path}
-                    content={content}
-                    filename={df.path.split('/').pop() ?? df.path}
-                  />
-                )
-              })
+              <MarkdownViewer
+                content={getRawFileContent(component.designFile!) ?? ''}
+                filename={component.designFile!.split('/').pop() ?? component.designFile!}
+              />
             )}
           </div>
         )}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, type TouchEvent } from 'react'
 import {
   Search, Bell, ArrowRight, Plus, X, Eye, Truck, Check,
   LayoutDashboard, FileText, Folder, Menu, FileSpreadsheet,
@@ -7,8 +7,6 @@ import {
   ChevronDown, Settings, ShieldAlert, LogOut, Clock,
   TrendingUp, AlertCircle, BellRing,
 } from 'lucide-react'
-import { InfiniteNotificationCarousel } from '@/components/ui/infinite-notification-carousel'
-import type { NotificationSlide } from '@/components/ui/infinite-notification-carousel'
 import './index.css'
 
 const PANEL_CLOSED = "M10 5.5 C10 4.793 10 4.439 9.780 4.220 C9.560 4 9.207 4 8.5 4 H8.5 C6.379 4 5.318 4 4.659 4.659 C4 5.318 4 6.379 4 8.5 V15.5 C4 17.621 4 18.682 4.659 19.341 C5.318 20 6.379 20 8.5 20 H8.5 C9.207 20 9.561 20 9.780 19.780 C10 19.561 10 19.207 10 18.5 V5.5 Z"
@@ -178,7 +176,7 @@ function LiveTelemetryGraph({ expectedTotal, collectedTotal }: LiveTelemetryGrap
   )
 }
 
-const notificationsList: NotificationSlide[] = [
+const notificationsList = [
   { type: 'Invoice', ref: '#INV-000042', client: 'Zenith Manufacturing Ltd', amount: '₦2,450,000', time: '12m ago', desc: 'New invoice generated & dispatched.' },
   { type: 'Quotation', ref: '#QUO-000128', client: 'Apex Construction', amount: '₦4,120,000', time: '45m ago', desc: 'Quotation reviewed by client.' },
   { type: 'Invoice', ref: '#INV-000048', client: 'Nova Logistics', amount: '₦820,000', time: '2h ago', desc: 'Payment reminder auto-queued.' },
@@ -193,6 +191,9 @@ export default function ModernWebIntelligenceDashboard() {
   const [activeTenant, setActiveTenant] = useState('BIGDROPS Nigeria Ltd')
   const [collectedAmount, setCollectedAmount] = useState(8920000)
   const [outstandingAmount, setOutstandingAmount] = useState(12540000)
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
+  const touchStartXRef = useRef(0)
+  const touchEndXRef = useRef(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -202,6 +203,13 @@ export default function ModernWebIntelligenceDashboard() {
       setOutstandingAmount((prev) => Math.max(0, prev - inc2))
     }, 5000)
     return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlideIndex((prev) => (prev + 1) % notificationsList.length)
+    }, 4500)
+    return () => clearInterval(timer)
   }, [])
 
   const showToast = (msg: string) => {
@@ -222,12 +230,31 @@ export default function ModernWebIntelligenceDashboard() {
     showToast(`Switched workspace to ${nextTenant}`)
   }
 
-  const handleNotificationAction = (slide: NotificationSlide) => {
-    showToast(`Opened ${slide.type} ${slide.ref}`)
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = event.targetTouches[0].clientX
+  }
+
+  const handleTouchMove = (event: TouchEvent<HTMLDivElement>) => {
+    touchEndXRef.current = event.targetTouches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartXRef.current || !touchEndXRef.current) return
+    const distance = touchStartXRef.current - touchEndXRef.current
+    const minSwipeDistance = 40
+
+    if (distance > minSwipeDistance) {
+      setCurrentSlideIndex((prev) => (prev + 1) % notificationsList.length)
+    } else if (distance < -minSwipeDistance) {
+      setCurrentSlideIndex((prev) => (prev - 1 + notificationsList.length) % notificationsList.length)
+    }
+
+    touchStartXRef.current = 0
+    touchEndXRef.current = 0
   }
 
   return (
-    <div className="dashboard-workspace min-h-screen bg-[#043f2e] flex items-start justify-center p-0 sm:p-4 md:p-6 antialiased">
+    <div className="dashboard-workspace min-h-screen bg-[#043f2e] flex items-center justify-center p-0 sm:p-4 md:p-6 antialiased font-sans">
       <div className="w-full max-w-[430px] h-[100vh] sm:h-[900px] bg-[#eef2e3] relative overflow-hidden sm:rounded-[32px] border-0 sm:border-[8px] border-[#043f2e] flex flex-col justify-between font-graphik">
         <header className="bg-[#fcfcfc] px-4 py-3.5 flex items-center justify-between z-30 shrink-0 border-b border-[#043f2e]/10">
           <div className="flex items-center space-x-2.5">
@@ -369,12 +396,50 @@ export default function ModernWebIntelligenceDashboard() {
               </span>
             </div>
 
-            <div className="bg-[#fcfcfc] rounded-[16px] p-4 border border-[#043f2e]/15 shadow-sm relative overflow-hidden cursor-grab active:cursor-grabbing select-none">
-              <InfiniteNotificationCarousel
-                slides={notificationsList}
-                autoplayInterval={4500}
-                onSlideAction={handleNotificationAction}
-              />
+            <div
+              className="bg-[#fcfcfc] rounded-[16px] p-4 border border-[#043f2e]/15 shadow-sm relative overflow-hidden cursor-grab active:cursor-grabbing select-none"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <div className="flex items-start justify-between mb-2">
+                <div className="flex items-center space-x-2">
+                  <span className="bg-[#043f2e] text-[#c8f169] text-[10px] font-semibold px-2 py-0.5 rounded-[4px] uppercase tracking-[0.06em]">
+                    {notificationsList[currentSlideIndex].type}
+                  </span>
+                  <span className="text-xs font-mono text-[#242423]">{notificationsList[currentSlideIndex].ref}</span>
+                </div>
+                <span className="text-[10px] text-[#767676] font-mono">{notificationsList[currentSlideIndex].time}</span>
+              </div>
+
+              <div className="py-1">
+                <h3 className="text-sm font-semibold text-[#043f2e]">{notificationsList[currentSlideIndex].client}</h3>
+                <p className="text-xs text-[#242423] mt-0.5">{notificationsList[currentSlideIndex].desc}</p>
+              </div>
+
+              <div className="mt-3 pt-2.5 border-t border-[#043f2e]/10 flex items-center justify-between">
+                <span className="font-grenette text-lg text-[#043f2e]">{notificationsList[currentSlideIndex].amount}</span>
+                <button
+                  onClick={() => showToast(`Opened ${notificationsList[currentSlideIndex].type} ${notificationsList[currentSlideIndex].ref}`)}
+                  className="bg-[#c8f169] text-[#000000] text-xs font-semibold px-3 py-1.5 rounded-[4px] transition-transform active:scale-95 flex items-center space-x-1 uppercase tracking-[0.06em]"
+                >
+                  <span>View File</span>
+                  <ArrowRight className="w-3 h-3" />
+                </button>
+              </div>
+
+              <div className="flex justify-center space-x-1.5 mt-3">
+                {notificationsList.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentSlideIndex(idx)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      idx === currentSlideIndex ? 'w-5 bg-[#043f2e]' : 'w-1.5 bg-[#043f2e]/20'
+                    }`}
+                    aria-label={`Slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </section>
 
