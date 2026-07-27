@@ -1,83 +1,165 @@
-[
-# EXECUTION PROMPT – Remove Side Gutters for Full-Width Mobile Line Items
 
-## Load Required Skills
-- `/frontend-design` – apply responsive layout overrides.
-- `/executing-plans` – execute structured changes.
-- `/verification-before-completion` – validate.
 
----
+You are still inventing UI instead of using the existing design system.
 
-## A. Project Context
-The line-item cards in EASEHEALTH and Ditto have large horizontal gaps (side gutters) on mobile screens. The user wants them to extend edge-to-edge, touching the screen wall, instead of floating in the middle with whitespace on the left and right.
+The current Workspace implementation is visually incorrect.
 
----
+Problems visible now:
 
-## B. Target Components
-- **EASEHEALTH**: `src/workspaces/invoice/easehealth/` – find the main container wrapping the line items and the card component.
-- **Ditto**: `src/workspaces/invoice/ditto/` – same.
-- Do **not** touch the shell or other workspaces.
+Tabs are plain text with no styling.
 
----
+Buttons do not match the design language.
 
-## C. Implementation Constraints
-### Mobile Overrides (max-width: 640px)
-- **Remove horizontal padding** from the outermost container that holds the line items – set `padding-left: 0` and `padding-right: 0`.
-- **Remove `max-width` constraints** on mobile so the container is `width: 100%`.
-- **Optional but recommended**: set the card's `border-radius` to `0` on mobile when it spans full width, to avoid awkward rounded corners that bleed into the screen edge. (Check with user if they want this, or keep the radius).
+Icons are missing or inconsistent.
 
-### Desktop Behavior (min-width: 641px)
-- Keep the container centered with a `max-width` (e.g., `max-w-lg` or `max-w-2xl`) and side padding (`px-4` or `px-6`) so it doesn't stretch out on wide monitors.
+Spacing and alignment are incorrect.
 
----
+The interface looks like a temporary developer placeholder rather than BGD UI.
 
-## D. Implementation Example
-In the workspace's CSS or Tailwind utility classes, apply this pattern:
 
-```css
-/* Within the workspace's own CSS */
-@media (max-width: 640px) {
-  .line-items-container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  .line-item-card {
-    border-radius: 0 !important; /* optional: removes corners for edge-to-edge look */
-  }
-}
-```
+Do NOT design new controls.
+
+Reuse the existing design system.
+
+Design references
+
+Study the interaction and layout patterns from:
+
+docs/bgd-ui-prd/model-behaviour.html
+
+
+Use the existing button, tab and toolbar styles from the design assets located in:
+
+docs/Masonry-yard/reui
+
+docs/Masonry-yard/Watermelon
+
+
+Do not recreate these components manually if equivalents already exist.
+
 
 ---
 
-E. Verification
+Workspace Viewer
 
-1. bun run typecheck – no errors.
-2. bun run build – succeeds.
-3. Manual test on a mobile viewport (375px):
-   · Line-item cards must span the full screen width with zero horizontal gaps.
-   · Desktop view (1024px) must remain centered with proper padding.
-4. Save report to docs/Reports/.
+The Workspace viewer should visually match the behaviour defined in model-behaviour.html.
+
+When a workspace opens, immediately display a proper toolbar containing:
+
+Preview
+
+Code
+
+Design.md
+
+
+These must look like actual BGD UI controls.
+
+Not plain text.
+
+Not browser-default buttons.
+
+Use the existing button, segmented control, pill, tab or toolbar components already available in the repository or design system.
+
 
 ---
 
-F. Acceptance Criteria
+Icons
 
-· EASEHEALTH line-item cards touch the screen wall on mobile.
-· Ditto line-item cards touch the screen wall on mobile.
-· Desktop layout remains unchanged and centered.
-· Build and typecheck pass.
-· Manual verification complete.
+Do not leave buttons without icons if the design system already provides them.
+
+Reuse existing icons from the repository.
+
+Examples include:
+
+Preview / Eye
+
+Code / Brackets
+
+Design.md / File Text
+
+Copy
+
+Copy All
+
+Expand
+
+Collapse
+
+
+Use the project's existing icon library.
+
+Do not introduce another icon set.
+
 
 ---
 
-G. Execution Order
+Layout
 
-1. Locate the main container and card component in each workspace.
-2. Apply the mobile CSS overrides (remove side padding/max-width).
-3. Test on mobile and desktop.
-4. Verify and report.
+Match the behaviour document.
 
-```
+The toolbar should:
+
+align correctly
+
+have proper spacing
+
+wrap gracefully on mobile
+
+remain usable on desktop
+
+follow existing padding and radius tokens
+
+use existing colours and typography
+
+
+Do not hardcode arbitrary sizes.
+
+Use the existing design tokens and component primitives.
+
+
+---
+
+Code reuse
+
+Do not build another viewer.
+
+There must only be one implementation of:
+
+Preview
+
+Code
+
+Design.md
+
+
+The Workspace should reuse the same viewer already used elsewhere.
+
+No duplicate components.
+
+No placeholder implementations.
+
+No messages telling users to "go to the Components page."
+
+
+---
+
+Acceptance criteria
+
+Toolbar matches the design language from model-behaviour.html.
+
+Buttons use existing BGD UI components.
+
+Existing icons are reused.
+
+Mobile spacing is clean.
+
+Tabs are properly styled and readable.
+
+Preview, Code and Design.md all function from the Workspace.
+
+No placeholder text.
+
+No duplicated viewer implementation.
+
+Build passes with no runtime errors.
