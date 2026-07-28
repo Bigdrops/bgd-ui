@@ -1,0 +1,807 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Workspace ── */
+.ableton-workspace {
+  font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  background: #ffffff;
+  color: #000000;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ableton-workspace a {
+  color: #0000ff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ableton-workspace a:hover {
+  text-decoration: underline;
+}
+
+/* ── Variables ── */
+:root {
+  --ableton-ink: #000000;
+  --ableton-paper: #ffffff;
+  --ableton-fog: #eeeeee;
+  --ableton-signal-blue: #0000ff;
+  --ableton-coral: #ff8389;
+  --ableton-teal: #00d2be;
+  --ableton-max-w: 1200px;
+  --ableton-gap: 80px;
+}
+
+/* ── Layout ── */
+.ableton-shell {
+  max-width: var(--ableton-max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── Top Nav ── */
+.ableton-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #ffffff;
+  border-bottom: 1px solid #000000;
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.ableton-nav__inner {
+  max-width: var(--ableton-max-w);
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ableton-nav__brand {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #000000;
+  text-transform: uppercase;
+}
+
+.ableton-nav__links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.ableton-nav__links li {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000000;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.ableton-nav__links li:hover {
+  color: #0000ff;
+}
+
+.ableton-nav__links li::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #0000ff;
+  transition: width 0.2s ease;
+}
+
+.ableton-nav__links li:hover::after {
+  width: 100%;
+}
+
+.ableton-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ableton-nav__btn {
+  background: none;
+  border: 1px solid #000000;
+  border-radius: 0;
+  padding: 6px 14px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #000000;
+  transition: background 0.15s, color 0.15s;
+}
+
+.ableton-nav__btn:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+.ableton-nav__btn--primary {
+  background: #000000;
+  color: #ffffff;
+}
+
+.ableton-nav__btn--primary:hover {
+  background: #0000ff;
+  border-color: #0000ff;
+}
+
+/* ── Hero ── */
+.ableton-hero {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  margin-bottom: var(--ableton-gap);
+}
+
+.ableton-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ableton-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.ableton-hero__content {
+  position: absolute;
+  bottom: 48px;
+  left: 48px;
+  right: 48px;
+  z-index: 2;
+}
+
+.ableton-hero__title {
+  font-family: 'Jost', sans-serif;
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 1.0;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.ableton-hero__subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.02em;
+}
+
+/* ── Section ── */
+.ableton-section {
+  padding-bottom: var(--ableton-gap);
+}
+
+.ableton-section + .ableton-section {
+  border-top: 1px solid #000000;
+  padding-top: var(--ableton-gap);
+}
+
+.ableton-section__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.ableton-section__title {
+  font-family: 'Jost', sans-serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: -0.01em;
+}
+
+.ableton-section__filters {
+  display: flex;
+  gap: 16px;
+}
+
+.ableton-section__filter {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000000;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  padding: 0;
+}
+
+.ableton-section__filter:hover {
+  color: #0000ff;
+}
+
+.ableton-section__filter--active {
+  color: #0000ff;
+  font-weight: 700;
+}
+
+/* ── KPI Grid ── */
+.ableton-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid #000000;
+}
+
+.ableton-kpi-card {
+  padding: 28px 24px;
+  border-right: 1px solid #000000;
+  position: relative;
+}
+
+.ableton-kpi-card:last-child {
+  border-right: none;
+}
+
+.ableton-kpi-card__label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #000000;
+  margin-bottom: 12px;
+}
+
+.ableton-kpi-card__value {
+  font-family: 'Jost', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+
+.ableton-kpi-card__delta {
+  font-size: 12px;
+  font-weight: 400;
+  color: #000000;
+  opacity: 0.6;
+}
+
+.ableton-kpi-card__spark {
+  margin-top: 16px;
+}
+
+/* ── Sparkline ── */
+.ableton-sparkline {
+  width: 100%;
+  height: 32px;
+}
+
+.ableton-sparkline svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ── Cash Flow Forecast ── */
+.ableton-cashflow {
+  width: 100%;
+  height: 200px;
+  position: relative;
+}
+
+.ableton-cashflow svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ableton-cashflow__label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  fill: #000000;
+  opacity: 0.5;
+}
+
+.ableton-cashflow__gridline {
+  stroke: #eeeeee;
+  stroke-width: 1;
+}
+
+/* ── Notification Carousel ── */
+.ableton-notifications {
+  position: relative;
+  overflow: hidden;
+}
+
+.ableton-notifications__track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.ableton-notification-slide {
+  min-width: 100%;
+  padding: 32px 0;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.ableton-notification-slide:last-child {
+  border-bottom: none;
+}
+
+.ableton-notification-slide__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.ableton-notification-slide__ref {
+  font-size: 13px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: 0.02em;
+}
+
+.ableton-notification-slide__time {
+  font-size: 12px;
+  font-weight: 400;
+  color: #000000;
+  opacity: 0.4;
+}
+
+.ableton-notification-slide__client {
+  font-size: 15px;
+  font-weight: 400;
+  color: #000000;
+  margin-bottom: 4px;
+}
+
+.ableton-notification-slide__desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000000;
+  opacity: 0.5;
+  margin-bottom: 8px;
+}
+
+.ableton-notification-slide__bottom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ableton-notification-slide__amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: -0.01em;
+}
+
+/* ── Tags ── */
+.ableton-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 0;
+}
+
+.ableton-tag--invoice {
+  background: #ff8389;
+  color: #000000;
+}
+
+.ableton-tag--quotation {
+  background: #00d2be;
+  color: #000000;
+}
+
+.ableton-tag--csr {
+  background: #eeeeee;
+  color: #000000;
+}
+
+.ableton-tag--waybill {
+  background: #eeeeee;
+  color: #000000;
+}
+
+.ableton-tag--correspondence {
+  background: #eeeeee;
+  color: #000000;
+}
+
+.ableton-tag--rfq {
+  background: #eeeeee;
+  color: #000000;
+}
+
+/* ── Document List ── */
+.ableton-doclist {
+  width: 100%;
+}
+
+.ableton-doclist__row {
+  display: grid;
+  grid-template-columns: 100px 130px 1fr 140px 110px 90px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #eeeeee;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.ableton-doclist__row:hover {
+  background: #f5f5f5;
+}
+
+.ableton-doclist__row:last-child {
+  border-bottom: none;
+}
+
+.ableton-doclist__cell {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: 0.01em;
+}
+
+.ableton-doclist__cell--ref {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+.ableton-doclist__cell--amount {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.ableton-doclist__cell--status {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Activity Feed ── */
+.ableton-feed {
+  list-style: none;
+}
+
+.ableton-feed__item {
+  padding: 16px 0;
+  border-bottom: 1px solid #eeeeee;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.ableton-feed__item:last-child {
+  border-bottom: none;
+}
+
+.ableton-feed__time {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #000000;
+  opacity: 0.35;
+  min-width: 60px;
+  flex-shrink: 0;
+}
+
+.ableton-feed__text {
+  font-size: 13px;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1.5;
+}
+
+.ableton-feed__text strong {
+  font-weight: 700;
+}
+
+/* ── Bottom Nav ── */
+.ableton-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: #ffffff;
+  border-top: 1px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.ableton-bottom-nav__links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.ableton-bottom-nav__links li {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000000;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.ableton-bottom-nav__links li:hover {
+  color: #0000ff;
+}
+
+.ableton-bottom-nav__links li.active {
+  color: #0000ff;
+  font-weight: 700;
+}
+
+/* ── Toast ── */
+.ableton-toast {
+  position: fixed;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #000000;
+  color: #ffffff;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 10px 20px;
+  border-radius: 0;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.ableton-toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .ableton-hero__title {
+    font-size: 48px;
+  }
+
+  .ableton-hero__content {
+    left: 24px;
+    right: 24px;
+    bottom: 32px;
+  }
+
+  .ableton-hero {
+    height: 320px;
+  }
+
+  .ableton-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ableton-kpi-card:nth-child(2) {
+    border-right: none;
+  }
+
+  .ableton-kpi-card:nth-child(1),
+  .ableton-kpi-card:nth-child(2) {
+    border-bottom: 1px solid #000000;
+  }
+
+  .ableton-doclist__row {
+    grid-template-columns: 80px 1fr 90px;
+  }
+
+  .ableton-doclist__cell:nth-child(4),
+  .ableton-doclist__cell:nth-child(5),
+  .ableton-doclist__cell:nth-child(6) {
+    display: none;
+  }
+
+  .ableton-nav__links {
+    display: none;
+  }
+
+  .ableton-section {
+    padding-bottom: 48px;
+  }
+
+  .ableton-section + .ableton-section {
+    padding-top: 48px;
+  }
+
+  :root {
+    --ableton-gap: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ableton-hero__title {
+    font-size: 36px;
+  }
+
+  .ableton-hero {
+    height: 260px;
+  }
+
+  .ableton-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ableton-kpi-card {
+    border-right: none !important;
+    border-bottom: 1px solid #000000;
+  }
+
+  .ableton-kpi-card:last-child {
+    border-bottom: none;
+  }
+
+  .ableton-doclist__row {
+    grid-template-columns: 1fr 90px;
+  }
+
+  .ableton-doclist__cell:first-child {
+    display: none;
+  }
+
+  .ableton-bottom-nav__links {
+    gap: 20px;
+  }
+
+  :root {
+    --ableton-gap: 32px;
+  }
+}
+
+/* ── Scrollbar ── */
+.ableton-workspace ::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ableton-workspace ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ableton-workspace ::-webkit-scrollbar-thumb {
+  background: #000000;
+}
+
+/* ── Drawer overlay ── */
+.ableton-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+
+.ableton-drawer-overlay--open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.ableton-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  background: #ffffff;
+  border-right: 1px solid #000000;
+  z-index: 160;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  flex-direction: column;
+}
+
+.ableton-drawer--open {
+  transform: translateX(0);
+}
+
+.ableton-drawer__header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ableton-drawer__title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ableton-drawer__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.ableton-drawer__nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ableton-drawer__nav-item {
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  cursor: pointer;
+  transition: background 0.1s;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.ableton-drawer__nav-item:hover {
+  background: #f5f5f5;
+}
+
+.ableton-drawer__nav-item--active {
+  font-weight: 700;
+  color: #0000ff;
+}
+
+/* ── Animation keyframes ── */
+@keyframes ableton-dash-draw {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.ableton-draw-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: ableton-dash-draw 4s ease-out forwards;
+}

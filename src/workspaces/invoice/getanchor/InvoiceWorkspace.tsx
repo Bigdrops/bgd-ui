@@ -8,70 +8,102 @@ import {
 import { calcTotals, calcRowTotal, money } from "@/lib/calculations";
 import "./index.css";
 
-/* ---------------------------------------------------------
-   DESIGN TOKENS — "New Genre" · achromatic editorial system.
-   No chromatic accents, no box-shadows. Elevation comes from
-   lightness shifts (white canvas → #f5f5f5 card → charred
-   umber dark ground), not shadow or color. The Dawn Arc
-   gradient is the one signature atmospheric element, reserved
-   for the top masthead band only.
---------------------------------------------------------- */
 const token = {
-  bg: "#ffffff",          // Parchment Canvas — page background
-  card: "#f5f5f5",        // Card Surface — flat, no gradient/sheen
-  cardShadow: "none",     // system forbids box-shadows entirely
-  border: "rgba(12,16,24,0.10)",  // hairline divider (Onyx at low opacity)
-  borderStrong: "#9e9fa3",        // Ash Mist — more visible border/focus state
-  ink: "#0c1018",         // Onyx — primary text, never pure black
-  inkSoft: "#6d7074",     // Slate Veil — secondary text/labels
-  inkFaint: "#9e9fa3",    // Ash Mist — muted/placeholder
-  pureBlack: "#000000",   // reserved for max-weight moments (delete, footer)
-  darkGround: "#1e1310",  // Charred Umber — dark bands (group shell, footer)
+  bg: "#e3d7cd",
+  card: "#f0e9e5",
+  cardShadow: "none",
+  surface: "#ffffff",
+  surfaceShadow: "0px 1px 1px 0px rgba(0,0,0,0.06), 0px 2px 1px 0px rgba(0,0,0,0.04), 0px 4px 1px 0px rgba(0,0,0,0.01)",
+  hover: "#f5f2f0",
+  border: "#c9c9c7",
+  borderStrong: "#c9c9c7",
+  ink: "#1e1e1e",
+  inkSoft: "#767676",
+  inkFaint: "#c9c9c7",
+  pureBlack: "#1e1e1e",
+  darkGround: "#1e1e1e",
+  accent: "#ee884f",
   glow: "none",
   glowStrong: "none",
-  dawnArc:
-    "linear-gradient(180deg, rgb(30,19,16) 0%, rgb(24,38,68) 15.26%, rgb(90,118,159) 30.28%, rgb(135,161,196) 43.38%, rgb(193,211,230) 58.83%, rgb(254,249,225) 79.71%, rgb(247,243,240) 100%)",
+  heroGradient: "linear-gradient(180deg, #e8a87a 0%, #f0c9a3 40%, #f0e9e5 100%)",
 };
 
-const fontDisplay = "'Fraunces', ui-serif, Georgia, serif"; // stand-in for Serrif Condensed
-const fontBody = "'Inter', ui-sans-serif, system-ui, sans-serif"; // stand-in for Saans Variable
+const fontBody = "'Archivo', 'Inter', ui-sans-serif, system-ui, sans-serif";
+const fontDisplay = fontBody;
 
 const fontLinks = (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@300;400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600&family=Inter:wght@400;600&display=swap');
   `}</style>
 );
 
 let uid = 100;
 const nextId = () => `id${uid++}`;
 
-interface Section { type: "group" | "item"; id: string; name?: string; description?: string; qty?: number | string; price?: number | string; subDescription?: string; unit?: string; make?: string; items?: Section[]; }
-interface Item { id: string; description: string; qty: number | string; price: number | string; subDescription?: string; unit?: string; make?: string; }
-interface HeaderField { id: string; label: string; value: string; }
-interface Charge { id: string; label: string; value: number; taxable: boolean; }
-interface Bank { id: string; name: string; account: string; }
-interface RefLink { id: string; label: string; url: string; }
-interface ActionMenuItem { icon?: React.ReactNode; label: string; onClick: () => void; danger?: boolean; }
+interface Section {
+  type: "group" | "item";
+  id: string;
+  name?: string;
+  description?: string;
+  qty?: number;
+  price?: number;
+  subDescription?: string;
+  unit?: string;
+  make?: string;
+  items?: Section[];
+}
+
+interface HeaderField {
+  id: string;
+  label: string;
+  value: string;
+}
+
+interface Charge {
+  id: string;
+  label: string;
+  value: number;
+  taxable: boolean;
+}
+
+interface Bank {
+  id: string;
+  name: string;
+  account: string;
+}
+
+interface RefLink {
+  id: string;
+  label: string;
+  url: string;
+}
+
+interface ActionMenuItem {
+  icon?: React.ReactNode;
+  label: string;
+  onClick: () => void;
+  danger?: boolean;
+}
+
 type ActionMenuItems = (ActionMenuItem | { divider: true })[];
 
-/* ---------------------------------------------------------
-   PRIMITIVES
---------------------------------------------------------- */
-function Card({ title, badge, children, right }: { title?: string; badge?: string; children: React.ReactNode; right?: React.ReactNode; }) {
+function Card({ title, badge, children, right }: {
+  title?: string; badge?: string; children: React.ReactNode; right?: React.ReactNode;
+}) {
   return (
     <section
-      className="rounded-2xl border p-2.5 sm:p-4 mb-2.5"
+      className="rounded border p-2.5 sm:p-4 mb-2.5"
       style={{ background: token.card, borderColor: token.border, boxShadow: token.cardShadow }}
     >
       {(title || right) && (
         <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
-          <h2 style={{ fontFamily: fontBody, fontWeight: 500, color: token.ink, letterSpacing: "-0.01em" }} className="text-lg sm:text-xl">
+          <h2 style={{ fontFamily: fontBody, fontWeight: 600, color: token.ink, letterSpacing: "-0.03em" }} className="text-lg sm:text-xl">
             {title}
           </h2>
           {right}
           {badge && (
             <span
-              className="text-[11px] font-medium uppercase tracking-wide px-3 py-1 rounded-full"
+              className="text-[11px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full"
               style={{ color: token.ink, background: token.card, border: `1px solid ${token.borderStrong}` }}
             >
               {badge}
@@ -84,13 +116,15 @@ function Card({ title, badge, children, right }: { title?: string; badge?: strin
   );
 }
 
-function Field({ label, children, className = "" }: { label?: string; children: React.ReactNode; className?: string; }) {
+function Field({ label, children, className = "" }: {
+  label?: string; children: React.ReactNode; className?: string;
+}) {
   return (
     <div className={`flex flex-col gap-1 w-full min-w-0 ${className}`}>
       {label && (
         <label
-          className="text-[10.5px] font-medium uppercase tracking-wide"
-          style={{ color: token.inkSoft, fontFamily: fontBody }}
+          className="text-[10.5px] font-semibold uppercase"
+          style={{ color: token.inkSoft, fontFamily: fontBody, letterSpacing: "0.06em" }}
         >
           {label}
         </label>
@@ -100,15 +134,15 @@ function Field({ label, children, className = "" }: { label?: string; children: 
   );
 }
 
-const inputBase: string =
-  "w-full px-3.5 py-2 text-[15px] outline-none transition-colors duration-150 bg-white";
+const inputBase: string = "w-full px-3.5 py-2 text-[15px] outline-none transition-colors duration-150 bg-white";
+
 function inputStyle(focused: boolean): React.CSSProperties {
   return {
     border: `1px solid ${focused ? token.ink : token.border}`,
     color: token.ink,
     fontFamily: fontBody,
     letterSpacing: "-0.01em",
-    borderRadius: 50,
+    borderRadius: 4,
     boxShadow: "none",
   };
 }
@@ -146,8 +180,7 @@ function Select({ value, onChange, options }: {
       className={inputBase + " appearance-none pr-8 bg-no-repeat"}
       style={{
         ...inputStyle(focused),
-        backgroundImage:
-          "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236f766c' d='M6 8L1 3h10z'/%3E%3C/svg%3E\")",
+        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236f766c' d='M6 8L1 3h10z'/%3E%3C/svg%3E\")",
         backgroundPosition: "right 12px center",
       }}
     >
@@ -169,14 +202,12 @@ function GhostButton({ children, onClick, danger, small }: {
       onClick={onClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className={`inline-flex items-center gap-1.5 rounded-full font-medium uppercase tracking-wide transition-colors ${
-        small ? "text-[11px] px-3 py-1.5" : "text-[13px] px-4 py-2"
-      }`}
+      className={`inline-flex items-center gap-1.5 rounded-full font-semibold uppercase tracking-wide transition-colors ${small ? "text-[11px] px-3 py-1.5" : "text-[13px] px-4 py-2"}`}
       style={{
         fontFamily: fontBody,
         border: `1px solid ${danger && hover ? token.pureBlack : hover ? token.borderStrong : token.border}`,
         color: danger && hover ? token.pureBlack : hover ? token.ink : token.inkSoft,
-        background: danger && hover ? "#fdecea" : hover ? "#fbfbfa" : "white",
+        background: danger && hover ? token.hover : hover ? token.hover : "white",
         minHeight: small ? 34 : 40,
       }}
     >
@@ -194,12 +225,10 @@ function PrimaryButton({ children, onClick, full }: {
       onClick={onClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className={`inline-flex items-center justify-center gap-2 rounded-full text-sm font-medium tracking-wide px-6 py-2.5 transition-all ${
-        full ? "w-full" : ""
-      }`}
+      className={`inline-flex items-center justify-center gap-2 rounded-full text-sm font-semibold tracking-wide px-6 py-2.5 transition-all ${full ? "w-full" : ""}`}
       style={{
         fontFamily: fontBody,
-        background: token.ink,
+        background: token.accent,
         color: "white",
         opacity: hover ? 0.88 : 1,
       }}
@@ -209,8 +238,6 @@ function PrimaryButton({ children, onClick, full }: {
   );
 }
 
-/* Compact icon-only action for row toolbars — every row action (including
-   Insert below) uses this so nothing wraps or overflows on narrow phones. */
 function RowIcon({ label, onClick, danger, tone, children }: {
   label?: string; onClick?: () => void; danger?: boolean; tone?: string; children: React.ReactNode;
 }) {
@@ -238,8 +265,6 @@ function RowIcon({ label, onClick, danger, tone, children }: {
   );
 }
 
-/* Kebab action menu — mirrors spec §12.1 (Scroll to notes, Import,
-   Save, Table settings, Clear all). Card-header-level, not per-row. */
 function ActionMenu({ items }: { items: ActionMenuItems }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -265,8 +290,8 @@ function ActionMenu({ items }: { items: ActionMenuItems }) {
       </button>
       {open && (
         <div
-          className="absolute right-0 top-11 rounded-2xl overflow-hidden z-50"
-          style={{ background: "white", border: `1px solid ${token.border}`, boxShadow: token.cardShadow, minWidth: 190 }}
+          className="absolute right-0 top-11 rounded overflow-hidden z-50"
+          style={{ background: "white", border: `1px solid ${token.border}`, boxShadow: token.surfaceShadow, minWidth: 190 }}
         >
           {items.map((it, i) =>
             "divider" in it ? (
@@ -275,7 +300,7 @@ function ActionMenu({ items }: { items: ActionMenuItems }) {
               <button
                 key={i}
                 onClick={() => { setOpen(false); it.onClick(); }}
-                className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-[13px] font-medium"
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-left text-[13px] font-semibold"
                 style={{ color: it.danger ? token.pureBlack : token.ink }}
               >
                 {it.icon}
@@ -301,7 +326,7 @@ function Collapsible({ label, hint, defaultOpen = false, children }: {
         style={{ minHeight: 40 }}
       >
         <span
-          className="text-[13px] font-medium uppercase tracking-wide"
+          className="text-[13px] font-semibold uppercase tracking-wide"
           style={{ color: token.ink, fontFamily: fontBody }}
         >
           {label}{" "}
@@ -321,8 +346,6 @@ function Collapsible({ label, hint, defaultOpen = false, children }: {
   );
 }
 
-/* Reusable "Label — Value" inline pair, always side by side, even on
-   narrow phones (this is what custom header fields / additional fields use). */
 function LabelValueRow({ label, value, onLabel, onValue, onRemove, labelPh = "Label", valuePh = "Value" }: {
   label: string; value: string; onLabel: (v: string) => void; onValue: (v: string) => void; onRemove: () => void; labelPh?: string; valuePh?: string;
 }) {
@@ -337,9 +360,6 @@ function LabelValueRow({ label, value, onLabel, onValue, onRemove, labelPh = "La
   );
 }
 
-/* Two-option segmented control — used for Discount Type/Timing and WHT
-   Unit. A binary pill toggle reads faster than a dropdown for 2 choices
-   since both options are visible and one tap switches, no menu to open. */
 function Segmented({ value, onChange, options }: {
   value: string; onChange: (v: string) => void; options: { value: string; label: string }[];
 }) {
@@ -354,7 +374,7 @@ function Segmented({ value, onChange, options }: {
           <button
             key={o.value}
             onClick={() => onChange(o.value)}
-            className="flex-1 text-[12px] font-medium uppercase tracking-wide py-2 rounded-full transition-all"
+            className="flex-1 text-[12px] font-semibold uppercase tracking-wide py-2 rounded-full transition-all"
             style={{
               background: active ? token.ink : "transparent",
               color: active ? "white" : token.inkSoft,
@@ -369,14 +389,11 @@ function Segmented({ value, onChange, options }: {
   );
 }
 
-/* ---------------------------------------------------------
-   LINE ITEM ROW
---------------------------------------------------------- */
 function ItemRow({ item, index, isFirst, onChange, onInsertAbove, onInsertBelow, onMoveUp, onMoveDown, onDuplicate, onDelete }: {
-  item: Item; index: number; isFirst?: boolean; onChange: (item: Item) => void; onInsertAbove?: () => void; onInsertBelow: () => void; onMoveUp: () => void; onMoveDown: () => void; onDuplicate: () => void; onDelete: () => void;
+  item: Section; index: number; isFirst?: boolean; onChange: (item: Section) => void; onInsertAbove?: () => void; onInsertBelow: () => void; onMoveUp: () => void; onMoveDown: () => void; onDuplicate: () => void; onDelete: () => void;
 }) {
-  const total = calcRowTotal(Number(item.qty) || 0, Number(item.price) || 0);
-  const taRef = useRef<HTMLTextAreaElement | null>(null);
+  const total = (Number(item.qty) || 0) * (Number(item.price) || 0);
+  const taRef = useRef<HTMLTextAreaElement>(null);
   const [showSub, setShowSub] = useState(!!item.subDescription);
 
   const autoGrow = useCallback((el: HTMLTextAreaElement | null) => {
@@ -390,7 +407,7 @@ function ItemRow({ item, index, isFirst, onChange, onInsertAbove, onInsertBelow,
       {isFirst && onInsertAbove && (
         <button
           onClick={onInsertAbove}
-          className="w-full text-center rounded-xl text-[12px] font-medium uppercase tracking-wide py-2"
+          className="w-full text-center rounded-full text-[12px] font-semibold uppercase tracking-wide py-2"
           style={{ border: `1px dashed ${token.borderStrong}`, color: token.inkSoft, background: "white" }}
         >
           Insert above
@@ -398,10 +415,9 @@ function ItemRow({ item, index, isFirst, onChange, onInsertAbove, onInsertBelow,
       )}
 
       <div
-        className="relative rounded-2xl px-1.5 py-2.5 sm:px-2 sm:py-3 flex flex-col gap-2 bg-white"
-        style={{ border: `1px solid ${token.border}` }}
+        className="relative rounded px-1.5 py-2.5 sm:px-2 sm:py-3 flex flex-col gap-2"
+        style={{ border: `1px solid ${token.border}`, background: token.surface, boxShadow: token.surfaceShadow }}
       >
-        {/* Hanging delete — red X, overlapping the top-right corner */}
         <button
           onClick={onDelete}
           aria-label="Delete row"
@@ -416,7 +432,6 @@ function ItemRow({ item, index, isFirst, onChange, onInsertAbove, onInsertBelow,
         </button>
 
         <div className="flex items-start gap-2 pr-2">
-          {/* Number with move up/down stacked directly beneath it */}
           <div className="flex flex-col items-center gap-1 shrink-0 pt-0.5" style={{ minWidth: 26 }}>
             <span className="text-base font-light" style={{ color: token.inkFaint, fontFamily: fontBody }}>
               {index}
@@ -441,20 +456,19 @@ function ItemRow({ item, index, isFirst, onChange, onInsertAbove, onInsertBelow,
 
           <div className="flex-1 min-w-0 flex flex-col gap-1.5">
             <textarea
-              ref={(el: HTMLTextAreaElement | null) => { if (el) taRef.current = el; autoGrow(el); }}
+              ref={(el: HTMLTextAreaElement | null) => { if (el) { taRef.current = el; autoGrow(el); } }}
               rows={1}
               value={item.description}
               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => { onChange({ ...item, description: e.target.value }); autoGrow(e.target); }}
               placeholder="Description"
               className="w-full resize-none outline-none bg-transparent leading-snug"
-              style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 16, color: token.ink, minHeight: 22, letterSpacing: "-0.01em" }}
+              style={{ fontFamily: fontBody, fontWeight: 600, fontSize: 16, color: token.ink, minHeight: 22, letterSpacing: "-0.01em" }}
             />
 
-            {/* Sub-description — collapsed by default, full-width when open */}
             <div>
               <button
                 onClick={() => setShowSub((s) => !s)}
-                className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide"
+                className="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide"
                 style={{ color: token.inkSoft }}
               >
                 <ChevronDown size={12} style={{ transition: "transform .2s ease", transform: showSub ? "rotate(180deg)" : "none" }} />
@@ -479,29 +493,27 @@ function ItemRow({ item, index, isFirst, onChange, onInsertAbove, onInsertBelow,
               <Field label="Qty">
                 <TextInput
                   type="number" min={0} step={1} align="right"
-                  value={item.qty}
-                  onChange={(v) => onChange({ ...item, qty: v })}
+                  value={item.qty ?? 0}
+                  onChange={(v) => onChange({ ...item, qty: Number(v) || 0 })}
                 />
               </Field>
               <Field label="Price">
                 <TextInput
                   type="number" min={0} step={0.01} align="right"
-                  value={item.price}
-                  onChange={(v) => onChange({ ...item, price: v })}
+                  value={item.price ?? 0}
+                  onChange={(v) => onChange({ ...item, price: Number(v) || 0 })}
                 />
               </Field>
             </div>
 
-            {/* Total — its own full-width, bold bar, unmistakably distinct
-                from the Qty/Price inputs above it. */}
             <div
-              className="flex items-center justify-between rounded-xl px-3 py-2 mt-0.5"
+              className="flex items-center justify-between rounded px-3 py-2 mt-0.5"
               style={{ background: token.ink }}
             >
-              <span className="text-[10.5px] font-medium uppercase tracking-wide" style={{ color: "rgba(255,255,255,0.6)" }}>
+              <span className="text-[10.5px] font-semibold uppercase tracking-wide" style={{ color: "rgba(255,255,255,0.6)" }}>
                 Total
               </span>
-              <span style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 24, color: "white" }}>
+              <span style={{ fontFamily: fontBody, fontWeight: 600, fontSize: 24, color: "white" }}>
                 ${money(total)}
               </span>
             </div>
@@ -511,7 +523,7 @@ function ItemRow({ item, index, isFirst, onChange, onInsertAbove, onInsertBelow,
         <div className="flex items-center gap-2 pt-1.5" style={{ borderTop: `1px solid ${token.border}` }}>
           <button
             onClick={onInsertBelow}
-            className="flex-1 text-center rounded-full text-[12px] font-medium uppercase tracking-wide py-2"
+            className="flex-1 text-center rounded-full text-[12px] font-semibold uppercase tracking-wide py-2"
             style={{ border: `1px solid ${token.ink}`, color: token.ink, background: token.card }}
           >
             Insert below
@@ -523,9 +535,17 @@ function ItemRow({ item, index, isFirst, onChange, onInsertAbove, onInsertBelow,
   );
 }
 
-/* ---------------------------------------------------------
-   MAIN COMPONENT
---------------------------------------------------------- */
+function TotalRow({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="flex justify-between py-1.5 text-[14px]" style={{ borderBottom: `1px solid ${token.border}`, color: token.inkSoft }}>
+      <span>{label}</span>
+      <span style={{ fontWeight: 600, color: token.ink }}>
+        {value < 0 ? "-" : ""}${money(Math.abs(value))}
+      </span>
+    </div>
+  );
+}
+
 export default function InvoiceWorkspace() {
   const [header, setHeader] = useState({
     client: "Acme Corp",
@@ -585,14 +605,13 @@ export default function InvoiceWorkspace() {
     toastTimer.current = setTimeout(() => setToast(""), 2000);
   };
 
-  /* ---- line item helpers ---- */
-  const emptyItem = (): Item => ({ id: nextId(), description: "", qty: 1, price: 0 });
+  const emptyItem = (): Section => ({ type: "item", id: nextId(), description: "", qty: 1, price: 0 });
 
   const updateItemInSections = (itemId: string, updater: (item: Section) => Section) => {
     setSections((prev) =>
       prev.map((s) => {
         if (s.type === "item" && s.id === itemId) return updater(s);
-        if (s.type === "group") return { ...s, items: s.items!.map((it) => (it.id === itemId ? updater(it) : it)) };
+        if (s.type === "group") return { ...s, items: s.items!.map((it: Section) => (it.id === itemId ? updater(it) : it)) };
         return s;
       })
     );
@@ -604,12 +623,12 @@ export default function InvoiceWorkspace() {
       for (const s of prev) {
         if (s.type === "item") {
           next.push(s);
-          if (s.id === itemId) next.push({ type: "item" as const, ...emptyItem() });
+          if (s.id === itemId) next.push(emptyItem());
         } else {
           const items: Section[] = [];
           for (const it of s.items!) {
             items.push(it);
-            if (it.id === itemId) items.push({ type: "item" as const, ...emptyItem() });
+            if (it.id === itemId) items.push(emptyItem());
           }
           next.push({ ...s, items });
         }
@@ -624,12 +643,12 @@ export default function InvoiceWorkspace() {
       const next: Section[] = [];
       for (const s of prev) {
         if (s.type === "item") {
-          if (s.id === itemId) next.push({ type: "item" as const, ...emptyItem() });
+          if (s.id === itemId) next.push(emptyItem());
           next.push(s);
         } else {
           const items: Section[] = [];
           for (const it of s.items!) {
-            if (it.id === itemId) items.push({ type: "item" as const, ...emptyItem() });
+            if (it.id === itemId) items.push(emptyItem());
             items.push(it);
           }
           next.push({ ...s, items });
@@ -646,7 +665,7 @@ export default function InvoiceWorkspace() {
       for (const s of prev) {
         if (s.type === "item") {
           next.push(s);
-          if (s.id === itemId) next.push({ ...s, type: "item" as const, id: nextId() });
+          if (s.id === itemId) next.push({ ...s, id: nextId() });
         } else {
           const items: Section[] = [];
           for (const it of s.items!) {
@@ -664,7 +683,7 @@ export default function InvoiceWorkspace() {
   const deleteItem = (itemId: string) => {
     setSections((prev) =>
       prev
-        .map((s) => (s.type === "group" ? { ...s, items: s.items!.filter((it) => it.id !== itemId) } : s))
+        .map((s) => (s.type === "group" ? { ...s, items: s.items!.filter((it: Section) => it.id !== itemId) } : s))
         .filter((s) => s.type === "group" || s.id !== itemId)
     );
     showToast("Row deleted");
@@ -676,7 +695,7 @@ export default function InvoiceWorkspace() {
       let arr: Section[] | null = null, idx = -1;
       for (const s of next) {
         if (s.type === "group") {
-          const i = s.items!.findIndex((it) => it.id === itemId);
+          const i = s.items!.findIndex((it: Section) => it.id === itemId);
           if (i !== -1) { arr = s.items as Section[]; idx = i; }
         }
       }
@@ -696,18 +715,18 @@ export default function InvoiceWorkspace() {
   };
 
   const addStandaloneRow = () => {
-    setSections((prev) => [...prev, { type: "item" as const, ...emptyItem() }]);
+    setSections((prev) => [...prev, emptyItem()]);
     showToast("Row added");
   };
 
   const addGroup = () => {
-    setSections((prev) => [...prev, { type: "group", id: nextId(), name: "New Group", items: [{ type: "item" as const, ...emptyItem() }] }]);
+    setSections((prev) => [...prev, { type: "group", id: nextId(), name: "New Group", items: [emptyItem()] }]);
     showToast("Group added");
   };
 
   const addItemToGroup = (groupId: string) => {
     setSections((prev) =>
-      prev.map((s) => (s.type === "group" && s.id === groupId ? { ...s, items: [...s.items!, { type: "item" as const, ...emptyItem() }] } : s))
+      prev.map((s) => (s.type === "group" && s.id === groupId ? { ...s, items: [...s.items!, emptyItem()] } : s))
     );
   };
 
@@ -716,7 +735,7 @@ export default function InvoiceWorkspace() {
     setSections((prev) => {
       const g = prev.find((s) => s.type === "group" && s.id === groupId) as Section | undefined;
       const others = prev.filter((s) => !(s.type === "group" && s.id === groupId));
-      const releasedItems: Section[] = ((g?.items as Section[]) || []).map((it) => ({ ...it, type: "item" as const }));
+      const releasedItems: Section[] = ((g?.items as Section[]) || []).map((it) => ({ ...it }));
       return [...others, ...releasedItems];
     });
     showToast("Group deleted");
@@ -732,19 +751,43 @@ export default function InvoiceWorkspace() {
     setSections((prev) => prev.map((s) => (s.type === "group" && s.id === groupId ? { ...s, name } : s)));
   };
 
-  /* ---- flattened numbering ---- */
   const flatOrder = useMemo(() => {
     const order: string[] = [];
     sections.forEach((s) => {
       if (s.type === "item") order.push(s.id);
-      else s.items!.forEach((it) => order.push(it.id));
+      else s.items!.forEach((it: Section) => order.push(it.id));
     });
     return order;
   }, [sections]);
   const numberOf = (id: string) => flatOrder.indexOf(id) + 1;
 
-  /* ---- totals (spec §10.1) ---- */
-  const totals = useMemo(() => calcTotals(sections, discount, charges, vatRate, wht), [sections, discount, vatRate, wht, charges]);
+  const totals = useMemo(() => {
+    let subtotal = 0;
+    sections.forEach((s) => {
+      const items = s.type === "group" ? s.items! : [s];
+      items.forEach((it) => (subtotal += (Number(it.qty) || 0) * (Number(it.price) || 0)));
+    });
+
+    const discountAmt =
+      discount.value > 0
+        ? discount.type === "percentage"
+          ? subtotal * (Number(discount.value) / 100)
+          : Number(discount.value)
+        : 0;
+
+    const taxedCharges = charges.filter((c) => c.taxable).reduce((a, c) => a + (Number(c.value) || 0), 0);
+    const nonTaxedCharges = charges.filter((c) => !c.taxable).reduce((a, c) => a + (Number(c.value) || 0), 0);
+
+    const vatBase = discount.timing === "beforeTax" ? subtotal - discountAmt : subtotal;
+    const vat = vatBase * (Number(vatRate) / 100 || 0);
+
+    const whtBase = subtotal - discountAmt;
+    const whtAmt = wht.rate > 0 ? (wht.unit === "percentage" ? whtBase * (Number(wht.rate) / 100) : Number(wht.rate)) : 0;
+
+    const grandTotal = subtotal - discountAmt + vat + taxedCharges - whtAmt + nonTaxedCharges;
+
+    return { subtotal, discountAmt, taxedCharges, nonTaxedCharges, vat, whtAmt, grandTotal };
+  }, [sections, discount, vatRate, wht, charges]);
 
   const rowCount = flatOrder.length;
 
@@ -752,11 +795,9 @@ export default function InvoiceWorkspace() {
     <div style={{ background: token.bg, minHeight: "100vh", fontFamily: fontBody }} className="pb-24">
       {fontLinks}
 
-      {/* HERO MASTHEAD — the one legitimate use of the Serrif Condensed
-          display face at brand scale (≥48px), on the Dawn Arc gradient. */}
       <div
         className="w-full flex items-start justify-between gap-4 px-4 sm:px-8 py-8 sm:py-10"
-        style={{ background: token.dawnArc }}
+        style={{ background: token.heroGradient }}
       >
         <h1
           style={{
@@ -764,7 +805,7 @@ export default function InvoiceWorkspace() {
             fontWeight: 400,
             color: token.ink,
             lineHeight: 1.05,
-            letterSpacing: "-0.02em",
+            letterSpacing: "-0.03em",
           }}
           className="text-5xl sm:text-6xl"
         >
@@ -786,8 +827,6 @@ export default function InvoiceWorkspace() {
       </div>
 
       <div className="max-w-4xl mx-auto px-1.5 sm:px-4 pt-4 sm:pt-6">
-
-        {/* HEADER */}
         <Card>
           <div className="flex flex-col gap-2.5">
             <Field label="Client">
@@ -813,8 +852,6 @@ export default function InvoiceWorkspace() {
               <TextInput value={header.title} onChange={(v) => setHeader({ ...header, title: v })} />
             </Field>
 
-            {/* Bug fix: Invoice # and PO # share a row, even on narrow phones —
-                both are short fields with no reason to stack. */}
             <div className="grid grid-cols-2 gap-2">
               <Field label="Invoice #">
                 <TextInput value={header.number} onChange={(v) => setHeader({ ...header, number: v })} />
@@ -833,10 +870,8 @@ export default function InvoiceWorkspace() {
               </Field>
             </div>
 
-            {/* Custom header fields: always visible, unlimited, label+value
-                inline on the same row — not a hide/reveal toggle. */}
             <div className="pt-2 flex flex-col gap-2" style={{ borderTop: `1px solid ${token.border}` }}>
-              <span className="text-[10.5px] font-medium uppercase tracking-wide" style={{ color: token.inkSoft }}>
+              <span className="text-[10.5px] font-semibold uppercase tracking-wide" style={{ color: token.inkSoft }}>
                 Custom fields
               </span>
               {customHeaderFields.map((f) => (
@@ -853,7 +888,7 @@ export default function InvoiceWorkspace() {
               ))}
               <button
                 onClick={() => setCustomHeaderFields((fs) => [...fs, { id: nextId(), label: "", value: "" }])}
-                className="text-left text-[12px] font-medium uppercase tracking-wide pb-1 w-fit"
+                className="text-left text-[12px] font-semibold uppercase tracking-wide pb-1 w-fit"
                 style={{ color: token.inkSoft, borderBottom: `1px solid ${token.border}` }}
               >
                 + Add field
@@ -862,12 +897,11 @@ export default function InvoiceWorkspace() {
           </div>
         </Card>
 
-        {/* LINE ITEMS */}
         <Card
           title="Line Items"
           right={
             <span
-              className="text-[11px] font-medium uppercase tracking-wide px-3 py-1 rounded-full ml-auto"
+              className="text-[11px] font-semibold uppercase tracking-wide px-3 py-1 rounded-full ml-auto"
               style={{ color: token.inkSoft, border: `1px solid ${token.border}`, background: "white" }}
             >
               {rowCount} rows
@@ -891,28 +925,26 @@ export default function InvoiceWorkspace() {
           <div className="flex flex-col gap-4">
             {sections.map((s) =>
               s.type === "group" ? (
-                /* Group shell — thick border + solid dark header/footer caps so
-                   it reads as a distinct container, not just another row. */
                 <div
                   key={s.id}
-                  className="rounded-2xl overflow-hidden"
+                  className="rounded overflow-hidden"
                   style={{ border: `2.5px solid ${token.ink}` }}
                 >
                   <div className="flex items-center gap-2 px-2 py-2.5 flex-wrap" style={{ background: token.ink }}>
                     <input
                       value={s.name}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => renameGroup(s.id, e.target.value)}
+                      onChange={(e) => renameGroup(s.id, e.target.value)}
                       className="flex-1 min-w-[100px] bg-transparent outline-none text-white placeholder-white/50"
-                      style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 16, letterSpacing: "-0.01em" }}
+                      style={{ fontFamily: fontBody, fontWeight: 600, fontSize: 16, letterSpacing: "-0.01em" }}
                     />
                     <span
-                      className="text-[10.5px] font-medium uppercase px-2 py-0.5 rounded-full"
+                      className="text-[10.5px] font-semibold uppercase px-2 py-0.5 rounded-full"
                       style={{ background: "rgba(255,255,255,0.12)", color: "white" }}
                     >
                       {s.items!.length} items
                     </span>
-                    <span style={{ fontFamily: fontBody, fontWeight: 500, color: token.ink }}>
-                      ${money(s.items!.reduce((a: number, it: Section) => a + calcRowTotal(Number(it.qty) || 0, Number(it.price) || 0), 0))}
+                    <span style={{ fontFamily: fontBody, fontWeight: 600, color: token.ink }}>
+                      ${money(s.items!.reduce((a: number, it: Section) => a + (Number(it.qty) || 0) * (Number(it.price) || 0), 0))}
                     </span>
                     <button
                       onClick={() => deleteGroup(s.id)}
@@ -928,7 +960,7 @@ export default function InvoiceWorkspace() {
                     {s.items!.map((it) => (
                       <ItemRow
                         key={it.id}
-                        item={it as Item}
+                        item={it as Section}
                         index={numberOf(it.id)}
                         isFirst={numberOf(it.id) === 1}
                         onChange={(next) => updateItemInSections(it.id, () => next as Section)}
@@ -945,7 +977,7 @@ export default function InvoiceWorkspace() {
                   <div className="px-2 py-2 flex justify-center" style={{ background: token.ink }}>
                     <button
                       onClick={() => addItemToGroup(s.id)}
-                      className="inline-flex items-center gap-1.5 text-[12px] font-medium uppercase tracking-wide text-white/85"
+                      className="inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-wide text-white/85"
                     >
                       <Plus size={13} /> Add item to group
                     </button>
@@ -954,7 +986,7 @@ export default function InvoiceWorkspace() {
               ) : (
                 <ItemRow
                   key={s.id}
-                  item={s as Item}
+                  item={s as Section}
                   index={numberOf(s.id)}
                   isFirst={numberOf(s.id) === 1}
                   onChange={(next) => updateItemInSections(s.id, () => next as Section)}
@@ -975,7 +1007,6 @@ export default function InvoiceWorkspace() {
           </div>
         </Card>
 
-        {/* COMMERCIAL TERMS */}
         <Card title="Commercial Terms">
           <div className="grid grid-cols-2 gap-2 mb-1.5">
             <Field label="Payment Terms">
@@ -1008,7 +1039,7 @@ export default function InvoiceWorkspace() {
 
           <Collapsible label="VAT" defaultOpen>
             <Field label="Rate (%)">
-              <TextInput type="number" min={0} step={0.01} value={vatRate} onChange={(v: string) => setVatRate(Number(v) || 0)} />
+              <TextInput type="number" min={0} step={0.01} value={vatRate} onChange={(v) => setVatRate(Number(v) || 0)} />
             </Field>
           </Collapsible>
 
@@ -1038,16 +1069,16 @@ export default function InvoiceWorkspace() {
                       <X size={14} />
                     </RowIcon>
                   </div>
-                  <label className="flex items-center gap-2 text-[12px] font-medium" style={{ color: token.ink }}>
+                  <label className="flex items-center gap-2 text-[12px] font-semibold" style={{ color: token.ink }}>
                     <input
                       type="checkbox"
                       checked={c.taxable}
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => setCharges((cs) => cs.map((x) => (x.id === c.id ? { ...x, taxable: e.target.checked } : x)))}
+                      onChange={(e) => setCharges((cs) => cs.map((x) => (x.id === c.id ? { ...x, taxable: e.target.checked } : x)))}
                       className="w-[16px] h-[16px]"
                       style={{ accentColor: token.ink }}
                     />
                     <span
-                      className="text-[10.5px] uppercase font-medium px-2 py-0.5 rounded-full"
+                      className="text-[10.5px] uppercase font-semibold px-2 py-0.5 rounded-full"
                       style={c.taxable ? { color: "white", background: token.ink } : { color: token.inkFaint, background: token.card }}
                     >
                       {c.taxable ? "Taxable" : "Non-taxable"}
@@ -1057,7 +1088,7 @@ export default function InvoiceWorkspace() {
               ))}
               <button
                 onClick={() => setCharges((cs) => [...cs, { id: nextId(), label: "", value: 0, taxable: false }])}
-                className="text-left text-[12px] font-medium uppercase tracking-wide pb-1 w-fit"
+                className="text-left text-[12px] font-semibold uppercase tracking-wide pb-1 w-fit"
                 style={{ color: token.inkSoft, borderBottom: `1px solid ${token.border}` }}
               >
                 + Add charge
@@ -1079,7 +1110,7 @@ export default function InvoiceWorkspace() {
               ))}
               <button
                 onClick={() => setAdditionalFields((fs) => [...fs, { id: nextId(), label: "", value: "" }])}
-                className="text-left text-[12px] font-medium uppercase tracking-wide pb-1 w-fit"
+                className="text-left text-[12px] font-semibold uppercase tracking-wide pb-1 w-fit"
                 style={{ color: token.inkSoft, borderBottom: `1px solid ${token.border}` }}
               >
                 + Add field
@@ -1088,9 +1119,8 @@ export default function InvoiceWorkspace() {
           </Collapsible>
         </Card>
 
-        {/* PAYMENT DETAILS */}
         <Card title="Payment Details">
-          <label className="text-[10.5px] font-medium uppercase tracking-wide mb-1.5 block" style={{ color: token.inkSoft }}>
+          <label className="text-[10.5px] font-semibold uppercase tracking-wide mb-1.5 block" style={{ color: token.inkSoft }}>
             Bank Account
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
@@ -1100,21 +1130,21 @@ export default function InvoiceWorkspace() {
                 <button
                   key={b.id}
                   onClick={() => { setSelectedBank(b.id); showToast("Bank account selected"); }}
-                  className="flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left"
+                  className="flex items-center gap-3 rounded px-3.5 py-2.5 text-left"
                   style={{
                     border: `1px solid ${selected ? token.ink : token.border}`,
-                    background: selected ? token.card : "white",
-                    boxShadow: selected ? token.glow : "none",
+                    background: selected ? token.card : token.surface,
+                    boxShadow: token.surfaceShadow,
                   }}
                 >
                   <div
-                    className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                    className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
                     style={{ background: token.bg, color: token.inkSoft }}
                   >
                     <Landmark size={16} />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-sm font-medium" style={{ color: token.ink }}>{b.name}</div>
+                    <div className="text-sm font-semibold" style={{ color: token.ink }}>{b.name}</div>
                     <div className="text-xs" style={{ color: token.inkSoft }}>{b.account}</div>
                   </div>
                   {selected && <Check size={16} className="ml-auto shrink-0" style={{ color: token.ink }} />}
@@ -1124,11 +1154,11 @@ export default function InvoiceWorkspace() {
           </div>
 
           <div
-            className="flex items-center justify-between gap-3 rounded-2xl px-3.5 py-2.5 flex-wrap"
+            className="flex items-center justify-between gap-3 rounded px-3.5 py-2.5 flex-wrap"
             style={{ border: `1px solid ${token.border}`, background: "#fbfcfa" }}
           >
             <div>
-              <div className="text-[12px] font-medium uppercase tracking-wide" style={{ color: token.ink }}>
+              <div className="text-[12px] font-semibold uppercase tracking-wide" style={{ color: token.ink }}>
                 Show payment details on invoice
               </div>
               <div className="text-xs" style={{ color: token.inkSoft }}>Display bank account information to the client</div>
@@ -1146,7 +1176,6 @@ export default function InvoiceWorkspace() {
           </div>
         </Card>
 
-        {/* SUMMARY */}
         <Card title="Summary">
           <div className="flex flex-col">
             <TotalRow label="Subtotal" value={totals.subtotal} />
@@ -1165,8 +1194,8 @@ export default function InvoiceWorkspace() {
             ))}
             {wht.rate > 0 && <TotalRow label="WHT" value={-totals.whtAmt} />}
             <div className="flex justify-between items-baseline pt-3 mt-1" style={{ borderTop: `2px solid ${token.ink}` }}>
-              <span style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 20, color: token.ink, letterSpacing: "-0.01em" }}>Grand Total</span>
-              <span style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 32, color: token.ink, letterSpacing: "-0.01em" }}>
+              <span style={{ fontFamily: fontBody, fontWeight: 600, fontSize: 20, color: token.ink, letterSpacing: "-0.03em" }}>Grand Total</span>
+              <span style={{ fontFamily: fontBody, fontWeight: 600, fontSize: 32, color: token.ink, letterSpacing: "-0.03em" }}>
                 ${money(totals.grandTotal)}
               </span>
             </div>
@@ -1176,24 +1205,23 @@ export default function InvoiceWorkspace() {
           </div>
         </Card>
 
-        {/* ADDITIONAL INFORMATION */}
         <div ref={additionalCardRef}>
         <Card title="Additional Information">
           <Collapsible label="Notes" defaultOpen>
             <textarea
               value={notes}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value)}
+              onChange={(e) => setNotes(e.target.value)}
               rows={3}
-              className="w-full rounded-xl px-3 py-2 text-sm outline-none resize-y bg-white"
+              className="w-full rounded px-3 py-2 text-sm outline-none resize-y bg-white"
               style={{ border: `1px solid ${token.border}`, color: token.ink, minHeight: 56 }}
             />
           </Collapsible>
           <Collapsible label="Terms & Conditions">
             <textarea
               value={terms}
-              onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setTerms(e.target.value)}
+              onChange={(e) => setTerms(e.target.value)}
               rows={3}
-              className="w-full rounded-xl px-3 py-2 text-sm outline-none resize-y bg-white"
+              className="w-full rounded px-3 py-2 text-sm outline-none resize-y bg-white"
               style={{ border: `1px solid ${token.border}`, color: token.ink, minHeight: 56 }}
             />
           </Collapsible>
@@ -1208,22 +1236,22 @@ export default function InvoiceWorkspace() {
           </div>
 
           <div className="mt-3">
-            <label className="text-[10.5px] font-medium uppercase tracking-wide mb-1.5 block" style={{ color: token.inkSoft }}>
+            <label className="text-[10.5px] font-semibold uppercase tracking-wide mb-1.5 block" style={{ color: token.inkSoft }}>
               Signature
             </label>
             <div
-              className="flex items-center gap-3 rounded-2xl px-3.5 py-2.5 flex-wrap"
+              className="flex items-center gap-3 rounded px-3.5 py-2.5 flex-wrap"
               style={{
                 border: `1px dashed ${signature ? token.ink : token.borderStrong}`,
-                background: signature ? token.card : "white",
-                boxShadow: signature ? token.glow : "none",
+                background: signature ? token.card : token.surface,
+                boxShadow: token.surfaceShadow,
               }}
             >
               <div className="flex items-center gap-3 flex-1 min-w-[160px]">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "white", border: `1px solid ${token.border}` }}>
+                <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={{ background: "white", border: `1px solid ${token.border}` }}>
                   {signature ? <Check size={17} style={{ color: token.ink }} /> : <PenLine size={17} style={{ color: token.inkSoft }} />}
                 </div>
-                <span className="text-[13px] font-medium" style={{ color: signature ? token.ink : token.inkSoft }}>
+                <span className="text-[13px] font-semibold" style={{ color: signature ? token.ink : token.inkSoft }}>
                   {signature || "Tap to sign or upload"}
                 </span>
               </div>
@@ -1235,10 +1263,8 @@ export default function InvoiceWorkspace() {
             </div>
           </div>
 
-          {/* Reference Links — unlimited, each with an optional label + URL,
-              and its own remove button (spec §9.5). */}
           <div className="mt-3 flex flex-col gap-2">
-            <label className="text-[10.5px] font-medium uppercase tracking-wide block" style={{ color: token.inkSoft }}>
+            <label className="text-[10.5px] font-semibold uppercase tracking-wide block" style={{ color: token.inkSoft }}>
               Reference Links
             </label>
             {refLinks.map((l) => (
@@ -1252,7 +1278,7 @@ export default function InvoiceWorkspace() {
             ))}
             <button
               onClick={() => { setRefLinks((ls) => [...ls, { id: nextId(), label: "", url: "" }]); showToast("Reference link added"); }}
-              className="inline-flex items-center gap-1.5 text-left text-[12px] font-medium uppercase tracking-wide pb-1 w-fit"
+              className="inline-flex items-center gap-1.5 text-left text-[12px] font-semibold uppercase tracking-wide pb-1 w-fit"
               style={{ color: token.inkSoft, borderBottom: `1px solid ${token.border}` }}
             >
               <Link2 size={13} /> Add reference link
@@ -1261,7 +1287,6 @@ export default function InvoiceWorkspace() {
         </Card>
         </div>
 
-        {/* BOTTOM ACTION BAR */}
         <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 sm:gap-3 pt-4 mt-1" style={{ borderTop: `1px solid ${token.border}` }}>
           <GhostButton onClick={() => { if (confirm("Discard changes?")) showToast("Changes discarded"); }}>Cancel</GhostButton>
           <PrimaryButton onClick={() => showToast("Invoice saved successfully")}>
@@ -1270,20 +1295,18 @@ export default function InvoiceWorkspace() {
         </div>
       </div>
 
-      {/* FLOATING SAVE */}
       <button
         onClick={() => showToast("Invoice saved")}
         aria-label="Save invoice"
         className="fixed bottom-6 right-5 sm:bottom-8 sm:right-8 w-14 h-14 rounded-full flex items-center justify-center z-50"
-        style={{ background: token.ink, color: "white" }}
+        style={{ background: token.accent, color: "white" }}
       >
         <Save size={22} />
       </button>
 
-      {/* TOAST */}
       <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] pointer-events-none w-[calc(100%-32px)] max-w-sm">
         <div
-          className="rounded-full px-5 py-2.5 text-sm font-medium text-center transition-all duration-300"
+          className="rounded-full px-5 py-2.5 text-sm font-semibold text-center transition-all duration-300"
           style={{
             background: token.ink,
             color: "white",
@@ -1294,17 +1317,6 @@ export default function InvoiceWorkspace() {
           {toast}
         </div>
       </div>
-    </div>
-  );
-}
-
-function TotalRow({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="flex justify-between py-1.5 text-[14px]" style={{ borderBottom: `1px solid ${token.border}`, color: token.inkSoft }}>
-      <span>{label}</span>
-      <span style={{ fontWeight: 500, color: token.ink }}>
-        {value < 0 ? "-" : ""}${money(Math.abs(value))}
-      </span>
     </div>
   );
 }

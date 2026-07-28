@@ -9,13 +9,12 @@ import {
 // ---------------------------------------------------------
 // IMPORTS FROM YOUR DEDICATED CALCULATIONS FILE
 // ---------------------------------------------------------
-// Ensure these are exported in src/lib/calculations.ts
-import { 
-  calcTotals, 
-  calcRowTotal, 
-  numberToWords, 
-  money 
-} from "@/lib/calculations"; 
+import {
+  calcTotals,
+  calcRowTotal,
+  numberToWords,
+  money
+} from "@/lib/calculations";
 import "./index.css";
 
 interface Section { type: "group" | "item"; id: string; name?: string; description?: string; qty?: number; price?: number; subDescription?: string; unit?: string; make?: string; items?: Section[]; }
@@ -25,26 +24,23 @@ interface Charge { id: string; label: string; value: number; taxable: boolean; }
 interface Bank { id: string; name: string; account: string; }
 interface RefLink { id: string; label: string; url: string; }
 
-/* Contractbook design — cream canvas, gold actions, ultramarine accent, 24px cards */
+/* Typeform design — cream canvas, violet accents, editorial serif headings */
 const token = {
-  bg: "#f0f0ec",
-  card: "#f7f7f3",
-  cardShadow: "none",
-  surface: "#ffffff",
-  border: "#d4d4d0",
-  borderStrong: "#1a1a1a",
-  ink: "#1a1a1a",
-  inkSoft: "#4d4d4d",
-  inkFaint: "#6d6868",
-  gold: "#ffba09",
-  ultramarine: "#1009f6",
-  red: "#ff3b09",
-  black: "#000000",
+  bg: "#faf9fb",
+  card: "#ffffff",
+  cardAlt: "#f5f3f6",
+  border: "#e2dfe4",
+  borderStrong: "#2a222b",
+  ink: "#2a222b",
+  inkSoft: "#655d67",
+  inkFaint: "#8a8390",
+  violet: "#9454ab",
+  red: "#c4283c",
+  black: "#2a222b",
 };
 
+const fontDisplay = "'Playfair Display', serif";
 const fontBody = "'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-
-
 
 let uid = 100;
 const nextId = () => `id${uid++}`;
@@ -55,12 +51,12 @@ const nextId = () => `id${uid++}`;
 function Card({ title, badge, children, right }: { title?: string; badge?: string; children: React.ReactNode; right?: React.ReactNode; }) {
   return (
     <section
-      className="rounded-[24px] border p-3.5 sm:p-5 mb-2.5"
-      style={{ background: token.card, borderColor: token.border, boxShadow: "none" }}
+      className="rounded-[24px] p-3.5 sm:p-5 mb-2.5"
+      style={{ background: token.card, border: `1px solid ${token.border}`, boxShadow: "none" }}
     >
       {(title || right) && (
         <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
-          <h2 style={{ fontFamily: fontBody, fontWeight: 600, color: token.ink }} className="text-lg sm:text-xl">
+          <h2 style={{ fontFamily: fontDisplay, fontWeight: 400, color: token.ink, letterSpacing: "-0.5px" }} className="text-lg sm:text-xl">
             {title}
           </h2>
           {right}
@@ -79,6 +75,17 @@ function Card({ title, badge, children, right }: { title?: string; badge?: strin
   );
 }
 
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <span
+      className="text-[11px] font-medium uppercase tracking-wider"
+      style={{ color: token.violet, fontFamily: fontBody, letterSpacing: "0.08em" }}
+    >
+      {children}
+    </span>
+  );
+}
+
 function Field({ label, children, className = "" }: { label?: string; children: React.ReactNode; className?: string; }) {
   return (
     <div className={`flex flex-col gap-1 w-full min-w-0 ${className}`}>
@@ -92,10 +99,10 @@ function Field({ label, children, className = "" }: { label?: string; children: 
   );
 }
 
-const inputBase = "w-full px-3 py-2 rounded text-[15px] outline-none transition-colors duration-150";
+const inputBase = "w-full px-3 py-2 rounded-[12px] text-[15px] outline-none transition-colors duration-150";
 function inputStyle(focused: boolean) {
   return {
-    border: `1px solid ${focused ? token.ink : '#b3b3b3'}`,
+    border: `1px solid ${focused ? token.ink : token.border}`,
     color: token.ink,
     fontFamily: fontBody,
     background: token.bg,
@@ -125,7 +132,7 @@ function Select({ value, onChange, options, children }: { value: string; onChang
       className={inputBase + " appearance-none pr-8 bg-no-repeat"}
       style={{
         ...inputStyle(focused),
-        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236f766c' d='M6 8L1 3h10z'/%3E%3C/svg%3E\")",
+        backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23655d67' d='M6 8L1 3h10z'/%3E%3C/svg%3E\")",
         backgroundPosition: "right 12px center",
       }}
     >
@@ -138,12 +145,12 @@ function GhostButton({ children, onClick, danger, small }: { children: React.Rea
   const [hover, setHover] = useState(false);
   return (
     <button onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-      className={`inline-flex items-center gap-1.5 rounded-full font-medium uppercase tracking-wide transition-colors ${small ? "text-[11px] px-3 py-1.5" : "text-[13px] px-4 py-2"}`}
+      className={`inline-flex items-center gap-1.5 rounded-[12px] font-medium transition-colors ${small ? "text-[11px] px-3 py-1.5" : "text-[13px] px-[24px] py-[8px]"}`}
       style={{
         fontFamily: fontBody,
-        border: `1px solid ${danger && hover ? token.red : hover ? token.borderStrong : token.border}`,
-        color: danger && hover ? token.red : hover ? token.ink : token.inkSoft,
-        background: danger && hover ? "#fdecea" : hover ? token.card : token.surface,
+        border: hover ? `1px solid ${danger ? token.red : token.borderStrong}` : "1px solid transparent",
+        color: hover ? (danger ? token.red : "#222222") : token.inkSoft,
+        background: hover ? (danger ? "#fdecea" : token.cardAlt) : "transparent",
         minHeight: small ? 34 : 40,
       }}>
       {children}
@@ -155,10 +162,13 @@ function PrimaryButton({ children, onClick, full }: { children: React.ReactNode;
   const [hover, setHover] = useState(false);
   return (
     <button onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-      className={`inline-flex items-center justify-center gap-2 rounded-full text-sm font-semibold tracking-wide px-6 py-2.5 transition-all ${full ? "w-full" : ""}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-[12px] text-sm font-semibold tracking-wide transition-all ${full ? "w-full" : ""}`}
       style={{
-        fontFamily: fontBody, background: token.gold,
-        color: token.black, opacity: hover ? 0.85 : 1,
+        fontFamily: fontBody,
+        background: hover ? "#3d2e40" : token.black,
+        color: "#faf9fb",
+        padding: "8px 24px",
+        opacity: 1,
       }}>
       {children}
     </button>
@@ -169,7 +179,7 @@ function RowIcon({ label, onClick, danger, children }: { label?: string; onClick
   const [hover, setHover] = useState(false);
   return (
     <button onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-      aria-label={label} title={label} className="inline-flex items-center justify-center rounded-full shrink-0"
+      aria-label={label} title={label} className="inline-flex items-center justify-center rounded-[12px] shrink-0"
       style={{
         width: 32, height: 32,
         border: `1px solid ${danger && hover ? token.red : hover ? token.borderStrong : token.border}`,
@@ -274,7 +284,7 @@ const ItemRow = memo(({ item, index, onChange, onInsertBelow, onMoveUp, onMoveDo
   const rowTotal = calcRowTotal(Number(item.qty) || 0, Number(item.price) || 0);
 
   return (
-    <div className="rounded-[24px] p-2.5 sm:p-3 flex flex-col gap-2" style={{ border: `1px solid ${token.border}`, background: token.surface }}>
+    <div className="rounded-[24px] p-2.5 sm:p-3 flex flex-col gap-2" style={{ border: `1px solid ${token.border}`, background: token.card }}>
       <div className="flex items-start gap-2">
         <div className="flex flex-col items-center shrink-0 gap-1 pt-0.5">
           <span className="text-base font-light" style={{ color: token.inkFaint, fontFamily: fontBody, lineHeight: 1 }}>{index}</span>
@@ -306,7 +316,7 @@ const ItemRow = memo(({ item, index, onChange, onInsertBelow, onMoveUp, onMoveDo
             {showSub && (
               <textarea value={item.subDescription ?? ""} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onChange({ ...item, subDescription: e.target.value })}
                 placeholder="Additional details..." rows={2}
-                className="w-full rounded px-2 py-1 text-sm outline-none resize-y mt-1"
+                className="w-full rounded-[12px] px-2 py-1 text-sm outline-none resize-y mt-1"
                 style={{ border: `1px solid ${token.border}`, color: token.ink, background: token.bg }} />
             )}
           </div>
@@ -331,7 +341,7 @@ const ItemRow = memo(({ item, index, onChange, onInsertBelow, onMoveUp, onMoveDo
 
           <div className="flex justify-between items-baseline pt-1.5" style={{ borderTop: `2px solid ${token.ink}` }}>
             <span className="text-[11px] font-medium uppercase tracking-wide" style={{ color: token.inkSoft }}>Total</span>
-            <span className="text-lg font-semibold" style={{ fontFamily: fontBody, color: token.ink }}>${money(rowTotal)}</span>
+            <span className="text-lg font-semibold" style={{ fontFamily: fontDisplay, color: token.ink, letterSpacing: "-0.5px" }}>${money(rowTotal)}</span>
           </div>
         </div>
       </div>
@@ -393,7 +403,7 @@ export default function InvoiceWorkspace() {
   const [toast, setToast] = useState("");
   const [showClearAllModal, setShowClearAllModal] = useState(false);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  
+
   const showToast = (msg: string) => {
     setToast(msg);
     clearTimeout(toastTimer.current);
@@ -457,7 +467,7 @@ export default function InvoiceWorkspace() {
   const addStandaloneRow = useCallback(() => { setSections((prev) => [...prev, emptyItem()]); showToast("Row added"); }, [emptyItem]);
   const addGroup = useCallback(() => { setSections((prev) => [...prev, { type: "group", id: nextId(), name: "New Group", items: [emptyItem()] }]); showToast("Group added"); }, [emptyItem]);
   const addItemToGroup = useCallback((groupId: string) => { setSections((prev) => prev.map((s) => (s.type === "group" && s.id === groupId ? { ...s, items: [...s.items!, emptyItem()] } : s))); }, [emptyItem]);
-  
+
   const deleteGroup = useCallback((groupId: string) => {
     if (!confirm("Delete this group? Items will be ungrouped.")) return;
     setSections((prev) => {
@@ -501,36 +511,26 @@ export default function InvoiceWorkspace() {
   }, [sections]);
   const numberOf = (id: string) => flatOrder.indexOf(id) + 1;
 
-  // Calculations delegated to external file
   const totals = useMemo(() => calcTotals(sections, discount, charges, vatRate, wht), [sections, discount, charges, vatRate, wht]);
   const rowCount = flatOrder.length;
 
   useEffect(() => {
-    const link = document.createElement("link");
-    link.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
-    return () => { document.head.removeChild(link); };
+    const link1 = document.createElement("link");
+    link1.href = "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap";
+    link1.rel = "stylesheet";
+    document.head.appendChild(link1);
+    return () => { document.head.removeChild(link1); };
   }, []);
 
   return (
     <div style={{ background: token.bg, minHeight: "100vh", fontFamily: fontBody }} className="pb-24">
       <div className="max-w-3xl mx-auto px-3 sm:px-6 pt-4 sm:pt-6">
 
-        {/* HEADER */}
-        <Card title="Invoice" right={
-          <div className="flex items-center gap-2 ml-auto">
-            <span className="text-[11px] font-medium uppercase tracking-wide px-3 py-1 rounded-full" style={{ color: token.ultramarine, background: token.bg, border: `1px solid ${token.ultramarine}33` }}>Draft</span>
-            <ActionMenu items={[
-              { icon: <FileText size={15} />, label: "Scroll to notes", onClick: () => additionalCardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }) },
-              { icon: <Upload size={15} />, label: "Import", onClick: () => showToast("Import dialog") },
-              { icon: <Save size={15} />, label: "Save", onClick: () => showToast("Invoice saved") },
-              { icon: <SlidersHorizontal size={15} />, label: "Table settings", onClick: () => showToast("Table settings") },
-              { divider: true },
-              { icon: <Trash2 size={15} />, label: "Clear all", danger: true, onClick: () => setShowClearAllModal(true) },
-            ]} />
+        {/* CUSTOMER */}
+        <Card>
+          <div className="mb-4">
+            <Eyebrow>CUSTOMER</Eyebrow>
           </div>
-        }>
           <div className="flex flex-col gap-2.5">
             <Field label="Client">
               <Select value={header.client} onChange={(v: string) => {
@@ -545,7 +545,16 @@ export default function InvoiceWorkspace() {
                 {clients.map((c) => <option key={c} value={c}>{c}</option>)}
               </Select>
             </Field>
-            <Field label="Title"><TextInput value={header.title} onChange={(v: string) => setHeader({ ...header, title: v })} /></Field>
+            <Field label="Company"><TextInput value={header.title} onChange={(v: string) => setHeader({ ...header, title: v })} /></Field>
+          </div>
+        </Card>
+
+        {/* INVOICE INFORMATION */}
+        <Card>
+          <div className="mb-4">
+            <Eyebrow>INVOICE INFORMATION</Eyebrow>
+          </div>
+          <div className="flex flex-col gap-2.5">
             <div className="grid grid-cols-2 gap-2">
               <Field label="Invoice #"><TextInput value={header.number} onChange={(v: string) => setHeader({ ...header, number: v })} /></Field>
               <Field label="PO #"><TextInput value={header.po} onChange={(v: string) => setHeader({ ...header, po: v })} placeholder="Optional" /></Field>
@@ -581,14 +590,14 @@ export default function InvoiceWorkspace() {
           <div className="flex flex-col gap-2.5">
             {sections.map((s) =>
               s.type === "group" ? (
-                <div key={s.id} className="rounded-2xl overflow-hidden" style={{ border: `2.5px solid ${token.ink}` }}>
+                <div key={s.id} className="rounded-[24px] overflow-hidden" style={{ border: `2.5px solid ${token.ink}` }}>
                   <div className="flex items-center gap-2 px-3 py-2.5 flex-wrap" style={{ background: token.ink }}>
                     <input value={s.name} onChange={(e: ChangeEvent<HTMLInputElement>) => renameGroup(s.id, e.target.value)} className="flex-1 min-w-[100px] bg-transparent outline-none text-white placeholder-white/50" style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 16 }} />
                     <span className="text-[10.5px] font-medium uppercase px-2 py-0.5 rounded-full" style={{ background: "rgba(255,255,255,0.12)", color: "white" }}>{s.items!.length} items</span>
-                    <span style={{ fontFamily: fontBody, fontWeight: 600, color: token.ultramarine }}>${money(s.items!.reduce((a: number, it: Section) => a + calcRowTotal(Number(it.qty) || 0, Number(it.price) || 0), 0))}</span>
+                    <span style={{ fontFamily: fontDisplay, fontWeight: 500, color: token.bg, letterSpacing: "-0.5px" }}>${money(s.items!.reduce((a: number, it: Section) => a + calcRowTotal(Number(it.qty) || 0, Number(it.price) || 0), 0))}</span>
                     <button onClick={() => deleteGroup(s.id)} aria-label="Delete group" className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(255,255,255,0.1)", color: "white" }}><X size={13} /></button>
                   </div>
-                  <div className="p-2.5 flex flex-col gap-2.5" style={{ background: "#fbfcfa" }}>
+                  <div className="p-2.5 flex flex-col gap-2.5" style={{ background: token.bg }}>
                     {s.items!.map((it: Section) => {
                       const cbs = getItemCallbacks(it.id);
                       return <ItemRow key={it.id} item={it as Item} index={numberOf(it.id)} {...cbs} />;
@@ -683,19 +692,19 @@ export default function InvoiceWorkspace() {
             {banks.map((b) => {
               const selected = selectedBank === b.id;
               return (
-                <button key={b.id} onClick={() => { setSelectedBank(b.id); showToast("Bank account selected"); }} className="flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-left"
-                  style={{ border: `1px solid ${selected ? token.ultramarine : token.border}`, background: selected ? token.card : "white", boxShadow: selected ? "none" : "none" }}>
-                  <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style={{ background: token.bg, color: token.inkSoft }}><Landmark size={16} /></div>
+                <button key={b.id} onClick={() => { setSelectedBank(b.id); showToast("Bank account selected"); }} className="flex items-center gap-3 rounded-[24px] px-3.5 py-2.5 text-left"
+                  style={{ border: `1px solid ${selected ? token.ink : token.border}`, background: selected ? token.cardAlt : "white", boxShadow: "none" }}>
+                  <div className="w-8 h-8 rounded-[12px] flex items-center justify-center shrink-0" style={{ background: token.bg, color: token.inkSoft }}><Landmark size={16} /></div>
                   <div className="min-w-0"><div className="text-sm font-medium" style={{ color: token.ink }}>{b.name}</div><div className="text-xs" style={{ color: token.inkSoft }}>{b.account}</div></div>
-                  {selected && <Check size={16} className="ml-auto shrink-0" style={{ color: token.ultramarine }} />}
+                  {selected && <Check size={16} className="ml-auto shrink-0" style={{ color: token.ink }} />}
                 </button>
               );
             })}
           </div>
-          <div className="flex items-center justify-between gap-3 rounded-2xl px-3.5 py-2.5 flex-wrap" style={{ border: `1px solid ${token.border}`, background: "#fbfcfa" }}>
+          <div className="flex items-center justify-between gap-3 rounded-[24px] px-3.5 py-2.5 flex-wrap" style={{ border: `1px solid ${token.border}`, background: token.cardAlt }}>
             <div><div className="text-[12px] font-medium uppercase tracking-wide" style={{ color: token.ink }}>Show payment details on invoice</div><div className="text-xs" style={{ color: token.inkSoft }}>Display bank account information to the client</div></div>
             <button onClick={() => { setShowPayment((s) => !s); showToast(!showPayment ? "Payment details visible" : "Payment details hidden"); }} aria-label={showPayment ? "Hide payment details" : "Show payment details"} className="relative shrink-0 rounded-full transition-colors" style={{ width: 42, height: 22, background: showPayment ? token.ink : token.border }}>
-              <span className="absolute rounded-full bg-white transition-transform" style={{ width: 16, height: 16, top: 3, left: 3, transform: showPayment ? "translateX(20px)" : "none", boxShadow: showPayment ? "none" : "none" }} />
+              <span className="absolute rounded-full bg-white transition-transform" style={{ width: 16, height: 16, top: 3, left: 3, transform: showPayment ? "translateX(20px)" : "none", boxShadow: "none" }} />
             </button>
           </div>
         </Card>
@@ -711,8 +720,8 @@ export default function InvoiceWorkspace() {
             {charges.filter((c) => !c.taxable && Number(c.value) !== 0).map((c) => <TotalRow key={c.id} label={c.label || "Charge"} value={Number(c.value)} />)}
             {wht.rate > 0 && <TotalRow label="WHT" value={-totals.whtAmt} />}
             <div className="flex justify-between items-baseline pt-3 mt-1" style={{ borderTop: `2px solid ${token.ink}` }}>
-              <span style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 20, color: token.ink }}>Grand Total</span>
-              <span style={{ fontFamily: fontBody, fontWeight: 500, fontSize: 24, color: token.ink }}>${money(totals.grandTotal)}</span>
+              <span style={{ fontFamily: fontDisplay, fontWeight: 400, fontSize: 20, color: token.ink, letterSpacing: "-0.5px" }}>Grand Total</span>
+              <span style={{ fontFamily: fontDisplay, fontWeight: 500, fontSize: 24, color: token.ink, letterSpacing: "-0.5px" }}>${money(totals.grandTotal)}</span>
             </div>
             <div className="text-xs italic pt-2 mt-1" style={{ color: token.inkSoft, borderTop: `1px solid ${token.border}` }}>{numberToWords(totals.grandTotal)} dollars</div>
           </div>
@@ -722,10 +731,10 @@ export default function InvoiceWorkspace() {
         <div ref={additionalCardRef}>
           <Card title="Additional Information">
             <Collapsible label="Notes" defaultOpen>
-              <textarea value={notes} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value)} rows={3} className="w-full rounded-xl px-3 py-2 text-sm outline-none resize-y bg-white" style={{ border: `1px solid ${token.border}`, color: token.ink, minHeight: 56 }} />
+              <textarea value={notes} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value)} rows={3} className="w-full rounded-[12px] px-3 py-2 text-sm outline-none resize-y" style={{ border: `1px solid ${token.border}`, color: token.ink, background: token.bg, minHeight: 56 }} />
             </Collapsible>
             <Collapsible label="Terms & Conditions">
-              <textarea value={terms} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setTerms(e.target.value)} rows={3} className="w-full rounded-xl px-3 py-2 text-sm outline-none resize-y bg-white" style={{ border: `1px solid ${token.border}`, color: token.ink, minHeight: 56 }} />
+              <textarea value={terms} onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setTerms(e.target.value)} rows={3} className="w-full rounded-[12px] px-3 py-2 text-sm outline-none resize-y" style={{ border: `1px solid ${token.border}`, color: token.ink, background: token.bg, minHeight: 56 }} />
             </Collapsible>
             <div className="grid grid-cols-2 gap-2 mt-3">
               <Field label="Signatory Name"><TextInput value={signatoryName} onChange={setSignatoryName} placeholder="Full name" /></Field>
@@ -733,9 +742,9 @@ export default function InvoiceWorkspace() {
             </div>
             <div className="mt-3">
               <label className="text-[10.5px] font-medium uppercase tracking-wide mb-1.5 block" style={{ color: token.inkSoft }}>Signature</label>
-              <div className="flex items-center gap-3 rounded-2xl px-3.5 py-2.5 flex-wrap" style={{ border: `1px dashed ${signature ? token.ultramarine : token.borderStrong}`, background: signature ? token.card : "white", boxShadow: signature ? "none" : "none" }}>
+              <div className="flex items-center gap-3 rounded-[24px] px-3.5 py-2.5 flex-wrap" style={{ border: `1px dashed ${signature ? token.ink : token.borderStrong}`, background: signature ? token.cardAlt : "white", boxShadow: "none" }}>
                 <div className="flex items-center gap-3 flex-1 min-w-[160px]">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "white", border: `1px solid ${token.border}` }}>
+                  <div className="w-9 h-9 rounded-[12px] flex items-center justify-center shrink-0" style={{ background: "white", border: `1px solid ${token.border}` }}>
                     {signature ? <Check size={17} style={{ color: token.ink }} /> : <PenLine size={17} style={{ color: token.inkSoft }} />}
                   </div>
                   <span className="text-[13px] font-medium" style={{ color: signature ? token.ink : token.inkSoft }}>{signature || "Tap to sign or upload"}</span>
@@ -770,27 +779,27 @@ export default function InvoiceWorkspace() {
 
       {/* CLEAR ALL CONFIRMATION MODAL */}
       {showClearAllModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" style={{ background: "rgba(24, 26, 23, 0.4)", backdropFilter: "blur(4px)" }}>
-          <div className="w-full max-w-sm rounded-3xl p-5 flex flex-col gap-4" style={{ background: "white", boxShadow: "none", border: `1px solid ${token.border}` }}>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" style={{ background: "rgba(42, 34, 43, 0.4)", backdropFilter: "blur(4px)" }}>
+          <div className="w-full max-w-sm rounded-[24px] p-5 flex flex-col gap-4" style={{ background: "white", boxShadow: "none", border: `1px solid ${token.border}` }}>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: "#fdecea", color: token.red }}><Trash2 size={20} /></div>
+              <div className="w-10 h-10 rounded-[12px] flex items-center justify-center shrink-0" style={{ background: "#fdecea", color: token.red }}><Trash2 size={20} /></div>
               <h3 className="text-lg font-semibold" style={{ fontFamily: fontBody, color: token.ink }}>Clear all items?</h3>
             </div>
             <p className="text-sm" style={{ color: token.inkSoft, lineHeight: 1.5 }}>This action will permanently remove all line items and groups from this invoice. This cannot be undone.</p>
             <div className="flex gap-3 mt-2">
-              <button onClick={() => setShowClearAllModal(false)} className="flex-1 py-2.5 rounded-2xl text-sm font-semibold tracking-wide transition-colors" style={{ border: `1px solid ${token.border}`, color: token.ink, background: "white" }}>Cancel</button>
-              <button onClick={clearAll} className="flex-1 py-2.5 rounded-2xl text-sm font-semibold tracking-wide transition-colors text-white" style={{ background: token.red, boxShadow: "0 4px 12px rgba(209, 69, 59, 0.3)" }}>Yes, clear all</button>
+              <button onClick={() => setShowClearAllModal(false)} className="flex-1 py-2.5 rounded-[12px] text-sm font-semibold tracking-wide transition-colors" style={{ border: `1px solid ${token.border}`, color: token.ink, background: "white" }}>Cancel</button>
+              <button onClick={clearAll} className="flex-1 py-2.5 rounded-[12px] text-sm font-semibold tracking-wide transition-colors text-[#faf9fb]" style={{ background: token.red, boxShadow: "none" }}>Yes, clear all</button>
             </div>
           </div>
         </div>
       )}
 
       {/* FLOATING SAVE BUTTON */}
-      <button onClick={() => showToast("Invoice saved")} aria-label="Save invoice" className="fixed bottom-6 right-5 sm:bottom-8 sm:right-8 w-14 h-14 rounded-full flex items-center justify-center z-50" style={{ background: `linear-gradient(160deg, ${token.gold}, ${token.ultramarine})`, color: "white", boxShadow: "0 8px 24px rgba(16, 9, 246, 0.35)" }}><Save size={22} /></button>
+      <button onClick={() => showToast("Invoice saved")} aria-label="Save invoice" className="fixed bottom-6 right-5 sm:bottom-8 sm:right-8 w-14 h-14 rounded-full flex items-center justify-center z-50" style={{ background: token.black, color: "#faf9fb", boxShadow: "none" }}><Save size={22} /></button>
 
       {/* TOAST */}
       <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] pointer-events-none w-[calc(100%-32px)] max-w-sm">
-        <div className="rounded-full px-5 py-2.5 text-sm font-medium text-center transition-all duration-300" style={{ background: token.ink, color: "white", opacity: toast ? 1 : 0, transform: toast ? "translateY(0) scale(1)" : "translateY(16px) scale(0.95)" }}>{toast}</div>
+        <div className="rounded-full px-5 py-2.5 text-sm font-medium text-center transition-all duration-300" style={{ background: token.ink, color: "#faf9fb", opacity: toast ? 1 : 0, transform: toast ? "translateY(0) scale(1)" : "translateY(16px) scale(0.95)" }}>{toast}</div>
       </div>
     </div>
   );

@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:opsz@36&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap');
+
+.morula-csr {
+  --color-cream: #f7f5f0;
+  --color-ivory: #fefcf7;
+  --color-deep-teal: #1a3c34;
+  --color-forest: #24453d;
+  --color-amber: #d4934b;
+  --color-amber-light: #e8c89e;
+  --color-rose: #c95d6e;
+  --color-charcoal: #2a2825;
+  --color-stone: #8a8580;
+  --color-clay: #c4bcb3;
+  --color-mist: #e3dfd8;
+
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 16px;
+  --radius-input: 10px;
+  --radius-pill: 999px;
+  --radius-sm: 6px;
+}
+
+.morula-csr * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.morula-csr input::-webkit-outer-spin-button,
+.morula-csr input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.morula-csr input[type="number"] { -moz-appearance: textfield; }
+
+.morula-csr input:focus-visible,
+.morula-csr select:focus-visible,
+.morula-csr textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-amber), 0 0 0 4px rgba(212, 147, 75, 0.15);
+}
+
+.morula-csr ::selection {
+  background: var(--color-amber-light);
+  color: var(--color-charcoal);
+}

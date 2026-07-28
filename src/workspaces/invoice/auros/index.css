@@ -1,0 +1,5 @@
+/* Auros invoice workspace — dark terminal, teal/abyss */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
+*:focus-visible { outline: 2px solid #edfffe; outline-offset: 2px; border-radius: 4px; }

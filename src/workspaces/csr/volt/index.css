@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Outfit:wght@300;400;500&display=swap');
+
+.volt-csr {
+  --color-pitch: #090b10;
+  --color-night: #10131c;
+  --color-void: #161a26;
+  --color-cyan: #56f0d4;
+  --color-cyan-dim: rgba(86, 240, 212, 0.12);
+  --color-cyan-glow: rgba(86, 240, 212, 0.25);
+  --color-steel: #6b7280;
+  --color-smoke: #9ca3af;
+  --color-snow: #f0f2f5;
+  --color-border: #1f2330;
+  --color-success: #34d399;
+
+  --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 4px;
+  --radius-input: 2px;
+  --radius-btn: 2px;
+}
+
+.volt-csr * { box-sizing: border-box; margin: 0; padding: 0; }
+
+.volt-csr input::-webkit-outer-spin-button,
+.volt-csr input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.volt-csr input[type="number"] { -moz-appearance: textfield; }
+
+.volt-csr input:focus-visible,
+.volt-csr select:focus-visible,
+.volt-csr textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--color-cyan), 0 0 12px var(--color-cyan-glow);
+}
+
+.volt-csr ::selection {
+  background: var(--color-cyan-dim);
+  color: var(--color-snow);
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px var(--color-cyan-glow); }
+  50% { box-shadow: 0 0 20px var(--color-cyan-glow), 0 0 40px var(--color-cyan-dim); }
+}

@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+.prisma-dashboard {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-feature-settings: 'cv01' 1, 'cv02' 1, 'cv03' 1, 'cv04' 1, 'cv05' 1, 'cv06' 1, 'cv07' 1, 'cv08' 1, 'cv09' 1, 'cv10' 1;
+  color: #111827;
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.prisma-dashboard .font-display {
+  font-family: 'DM Sans', 'Inter', sans-serif;
+  letter-spacing: 0.1em;
+}
+
+.prisma-dashboard .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.prisma-dashboard .no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.prisma-dashboard .live-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(20, 184, 166, 0.12);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 9px;
+  color: #14b8a6;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.prisma-dashboard .pulsing-dot {
+  width: 5px;
+  height: 5px;
+  background-color: #14b8a6;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.6);
+  animation: prisma-pulse 1.5s infinite;
+}
+
+@keyframes prisma-pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.6); }
+  70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(20, 184, 166, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(20, 184, 166, 0); }
+}
+
+.prisma-dashboard .prisma-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 2px;
+}
+
+.prisma-dashboard .prisma-card-bone {
+  background: #f3f4f6;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 2px;
+}
+
+.prisma-dashboard .prisma-btn {
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 12px;
+  transition: all 150ms ease;
+}
+
+.prisma-dashboard .prisma-btn:active {
+  transform: scale(0.97);
+}
+
+.prisma-dashboard .prisma-fab {
+  position: fixed;
+  bottom: max(24px, env(safe-area-inset-bottom, 24px));
+  right: 16px;
+  z-index: 50;
+  width: 52px;
+  height: 52px;
+  border-radius: 6px;
+  background: #14b8a6;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.35), rgba(0, 0, 0, 0.04) 0px 1px 2px;
+  border: none;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.prisma-dashboard .prisma-fab:hover {
+  background: #0d9488;
+  box-shadow: 0 6px 16px rgba(20, 184, 166, 0.45), rgba(0, 0, 0, 0.04) 0px 1px 2px;
+}
+
+.prisma-dashboard .prisma-fab:active {
+  transform: scale(0.95);
+}
+
+.prisma-dashboard .section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.prisma-dashboard .kpi-value {
+  font-family: 'DM Sans', 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.prisma-dashboard .telemetry-event {
+  animation: prisma-slide-in 0.3s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes prisma-slide-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.prisma-dashboard .grid-blueprint {
+  background-image:
+    linear-gradient(rgba(226, 232, 240, 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 232, 240, 0.5) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.prisma-dashboard .code-block {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  background: #1d242f;
+  color: #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  overflow-x: auto;
+}
+
+.prisma-dashboard .code-block .token-keyword {
+  color: #14b8a6;
+}
+
+.prisma-dashboard .code-block .token-string {
+  color: #a5b4fc;
+}
+
+.prisma-dashboard .code-block .token-comment {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.prisma-dashboard .code-block .token-number {
+  color: #fbbf24;
+}
+
+.prisma-dashboard .code-block .token-function {
+  color: #67e8f9;
+}
+
+.prisma-dashboard .progress-track {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.prisma-dashboard .progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.prisma-dashboard .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .prisma-dashboard .prisma-fab {
+    right: 24px;
+    bottom: max(32px, env(safe-area-inset-bottom, 32px));
+  }
+}

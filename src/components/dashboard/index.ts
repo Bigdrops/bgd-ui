@@ -1,1 +1,5 @@
 export { default as ModernWebIntelligenceDashboard } from './modern-web-intelligence-dashboard'
+export { default as DashlaneDashboard } from './dashlane-dashboard'
+export { default as PrismaDashboard } from './prisma-dashboard'
+export { default as PostHogDashboard } from './posthog-dashboard'
+export { default as RivianDashboard } from './rivian-dashboard'

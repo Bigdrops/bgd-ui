@@ -32,6 +32,15 @@ All skills available via slash commands. Type `/` followed by the skill name to 
 | `/oiloil-ui-ux-guide` | Modern, clean UI/UX guidance and design review for web/app interfaces | Getting UX recommendations, design principles, or reviewing existing UI |
 | `/redesign-existing-projects` | Upgrade existing websites/apps to premium quality, audit design, apply high-end standards | Improving an existing project's visual quality without breaking functionality |
 | `/shadcn-ui` | Complete shadcn/ui component library patterns, installation, configuration, React components | Setting up shadcn/ui, building forms with React Hook Form + Zod, theming with Tailwind |
+| `/brandkit` | Premium brand-kit image generation for brand-guidelines boards, logo systems, identity decks | Creating brand identity systems, logo concepts, visual-world presentations |
+| `/gpt-taste` | Elite UX/UI & Advanced GSAP Motion Engineer with AIDA structure and bento grids | Building award-winning landing pages with scroll animations and motion choreography |
+| `/high-end-visual-design` | High-end agency design with Double-Bezel components and fluid motion choreography | Creating $150k+ agency-level digital experiences with haptic depth and micro-interactions |
+| `/imagegen-frontend-mobile` | Premium mobile app screen concept generation for iOS, Android, and cross-platform | Generating app-native screen images and flows — not code, just visual references |
+| `/image-to-code` | Image-first website design to code — generate design images, analyze, then implement | Visual website tasks where design references are generated first, then coded faithfully |
+| `/imagegen-frontend-web` | Premium website design reference image generation — one image per section | Generating conversion-aware landing page and marketing site section references |
+| `/industrial-brutalist-ui` | Swiss typographic print + military terminal aesthetics with analog degradation effects | Data-heavy dashboards, portfolios, or editorial sites with declassified blueprint feel |
+| `/minimalist-ui` | Clean editorial-style interfaces with warm monochrome palette and typographic contrast | Building refined, ultra-minimalist document-style web interfaces |
+| `/stitch-design-taste` | Semantic Design System for Google Stitch — generates agent-friendly DESIGN.md files | Creating premium design systems that Stitch AI can interpret for screen generation |
 
 ## Documents & Files
 
@@ -91,4 +100,3 @@ All skills available via slash commands. Type `/` followed by the skill name to 
 | Skill | Description | When to Use |
 |-------|-------------|-------------|
 | `/humanizer` | Remove AI-generated writing signs from text based on Wikipedia's comprehensive guide | Editing text to sound natural and human-written |
-| `/full-output-enforcement` | Override default truncation, enforce complete code generation | Any task requiring exhaustive, unabridged output |
