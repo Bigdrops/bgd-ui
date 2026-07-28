@@ -45,6 +45,7 @@
 - Vuesax Icons  
 
 ---
+bun add vuesax-icon-pack
 
 **Design Principle**  
 Dense dashboards become easier to scan when spacing, type and colour stay quiet.
